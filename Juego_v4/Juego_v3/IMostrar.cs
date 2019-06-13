@@ -8,6 +8,6 @@ namespace Juego_v3
 {
     interface IMostrar
     {
-        void mostrar(Jugador jug1, Jugador jug2, int res);
+        void mostrar(string res);
     }
 }

@@ -7,8 +7,8 @@
     <ProjectGuid>{1A3DAA0C-4680-4B11-AB3D-6C414A2BA270}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Juego_v4</RootNamespace>
-    <AssemblyName>Juego_v4</AssemblyName>
+    <RootNamespace>Juego_v3</RootNamespace>
+    <AssemblyName>Juego_v3</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Archivo.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Colores.cs" />
     <Compile Include="Consola.cs" />

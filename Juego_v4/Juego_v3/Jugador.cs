@@ -21,5 +21,9 @@ namespace Juego_v3
         {
             this.jugada = _ijugada.pedirJugada(validas);
         }
+        public override string ToString()
+        {
+            return this.Nombre + " - " + this.jugada;
+        }
     }
 }
