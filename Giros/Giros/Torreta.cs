@@ -32,6 +32,7 @@ namespace Giros
             {
                 if (move == "D") { pos += 90; }
                 if (move == "I") { pos -= 90; }
+                 pos = (360 + pos) % 360;
             }
             return pos;
         }
