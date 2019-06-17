@@ -43,5 +43,9 @@ namespace Giros
                         select giro;
             return query.Count();
         }
+         public string listaMovimientos()
+        {
+            return String.Join(",", movimientos.ToArray());
+        }
     }
 }
