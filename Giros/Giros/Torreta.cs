@@ -36,5 +36,12 @@ namespace Giros
             }
             return pos;
         }
+         public int cuenta(string tipo)
+        {
+            var query = from string giro in movimientos
+                        where giro==tipo
+                        select giro;
+            return query.Count();
+        }
     }
 }
