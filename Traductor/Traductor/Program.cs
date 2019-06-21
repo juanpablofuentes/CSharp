@@ -21,6 +21,7 @@ namespace Traductor
             Console.WriteLine(t.search("blue"));
             t.removeTranslation("verde");
             Console.WriteLine(t.search("green"));
+             Console.WriteLine(t.search("green"));
         }
     }
 }
