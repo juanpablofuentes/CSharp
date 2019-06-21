@@ -31,6 +31,7 @@ namespace ListGenerico
             intList.Add(20);
             intList.Add(30);
             intList.Add(40);
+            
 
             List<string> strList = new List<string>();
             strList.Add("one");
@@ -47,15 +48,17 @@ namespace ListGenerico
             List<int> intList2 = new List<int>() { 10, 20, 30, 40 };
 
             intList.ForEach(Console.WriteLine);
+
             Console.WriteLine("-------");
-            intList.ForEach(el=>Console.WriteLine(el));
+            intList.ForEach(elemento=>Console.WriteLine(elemento));
             Console.WriteLine("-------");
-            foreach (var el in intList)
+            foreach (int el in intList)
                 Console.WriteLine(el);
             Console.WriteLine("-------");
             Console.WriteLine(strList[0]);
             Console.WriteLine(strList[2]);
             Console.WriteLine("-------");
+            intList2.Sort();
             Console.WriteLine(intList2.BinarySearch(30)); //Podemos buscar porque está ordenada
             strList.Sort();
             strList.ForEach(Console.WriteLine);
@@ -66,14 +69,33 @@ namespace ListGenerico
             strList.RemoveAt(2); //Elimina el segundo elemento
             strList.ForEach(Console.WriteLine);
             Console.WriteLine("-------");
-            strList.RemoveRange(0, 2);// Elimna los dos primeros
+            strList.RemoveRange(0, 2);// Elimina los dos primeros
             strList.ForEach(Console.WriteLine);
             Console.WriteLine("-------");
             Console.WriteLine(strList.Contains("two"));
             Console.WriteLine(strList.Contains("cuatro"));
             Console.WriteLine(strList.IndexOf("two"));
+            strList.Add("two");
+            strList.Add("dos");
+            strList.Add("two");
+            strList.Add("dos");
+            int pos = strList.IndexOf("two");
+            while (pos != -1)
+            {
+                Console.WriteLine(pos);
+                pos = strList.IndexOf("two",pos+1);
+            }
+            Console.WriteLine("-------");
+            Console.WriteLine(intList2.Find(esPositivo));
+            Console.WriteLine("-------");
+            Console.WriteLine(intList2.Find(el => el > 20));
+            Console.WriteLine("-------");
+            List<int> res = intList2.FindAll(el => el > 20);
+            res.ForEach(Console.WriteLine);
+            Console.WriteLine("-------");
             Console.WriteLine(intList2.TrueForAll(esPositivo));
             Console.WriteLine(intList2.TrueForAll(el=>el>0));
+          
         }
     }
 }
