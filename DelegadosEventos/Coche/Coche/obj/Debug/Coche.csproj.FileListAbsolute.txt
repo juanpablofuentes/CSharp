@@ -1,0 +1,6 @@
+C:\Users\incid\Documents\CSharp\DelegadosEventos\Coche\Coche\bin\Debug\Coche.exe.config
+C:\Users\incid\Documents\CSharp\DelegadosEventos\Coche\Coche\bin\Debug\Coche.exe
+C:\Users\incid\Documents\CSharp\DelegadosEventos\Coche\Coche\bin\Debug\Coche.pdb
+C:\Users\incid\Documents\CSharp\DelegadosEventos\Coche\Coche\obj\Debug\Coche.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\DelegadosEventos\Coche\Coche\obj\Debug\Coche.exe
+C:\Users\incid\Documents\CSharp\DelegadosEventos\Coche\Coche\obj\Debug\Coche.pdb
