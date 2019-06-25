@@ -1,0 +1,6 @@
+C:\Users\incid\Documents\CSharp\Katas\DilemaPrisionero\DilemaPrisionero\bin\Debug\DilemaPrisionero.exe.config
+C:\Users\incid\Documents\CSharp\Katas\DilemaPrisionero\DilemaPrisionero\bin\Debug\DilemaPrisionero.exe
+C:\Users\incid\Documents\CSharp\Katas\DilemaPrisionero\DilemaPrisionero\bin\Debug\DilemaPrisionero.pdb
+C:\Users\incid\Documents\CSharp\Katas\DilemaPrisionero\DilemaPrisionero\obj\Debug\DilemaPrisionero.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\Katas\DilemaPrisionero\DilemaPrisionero\obj\Debug\DilemaPrisionero.exe
+C:\Users\incid\Documents\CSharp\Katas\DilemaPrisionero\DilemaPrisionero\obj\Debug\DilemaPrisionero.pdb
