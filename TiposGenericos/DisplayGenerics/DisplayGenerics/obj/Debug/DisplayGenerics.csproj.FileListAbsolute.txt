@@ -1,0 +1,6 @@
+C:\Users\incid\Documents\CSharp\TiposGenericos\DisplayGenerics\DisplayGenerics\bin\Debug\DisplayGenerics.exe.config
+C:\Users\incid\Documents\CSharp\TiposGenericos\DisplayGenerics\DisplayGenerics\bin\Debug\DisplayGenerics.exe
+C:\Users\incid\Documents\CSharp\TiposGenericos\DisplayGenerics\DisplayGenerics\bin\Debug\DisplayGenerics.pdb
+C:\Users\incid\Documents\CSharp\TiposGenericos\DisplayGenerics\DisplayGenerics\obj\Debug\DisplayGenerics.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\TiposGenericos\DisplayGenerics\DisplayGenerics\obj\Debug\DisplayGenerics.exe
+C:\Users\incid\Documents\CSharp\TiposGenericos\DisplayGenerics\DisplayGenerics\obj\Debug\DisplayGenerics.pdb
