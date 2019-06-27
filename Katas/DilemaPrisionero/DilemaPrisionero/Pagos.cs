@@ -34,7 +34,7 @@ namespace DilemaPrisionero
         }
         public Pago Evaluar(int p1,int p2)
         {
-            return Pago[p1, p2];
+            return Matriz[p1, p2];
         }
     }
 }

@@ -1,0 +1,1 @@
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\StackQueueGenerico\StackQueueGenerico\bin\Debug\StackQueueGenerico.exe.config

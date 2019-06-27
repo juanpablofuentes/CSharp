@@ -12,11 +12,15 @@ namespace Coche
         {
             // Crear objeto
             Coche c1 = new Coche("Panda", 100, 10);
-            c1.AlLimite+=CocheAlLimite;
+            c1.AlLimite += CocheAlLimite;
             c1.AlLimite += CocheCrítico;
             c1.Explotar += CocheExplotado;
+            //Delegado anónimo
+            c1.Explotar += delegate (object sender, ArgumentoEventosCoche e)
+         {
+             Console.WriteLine("Mensaje de anónimo: {0}", e.Mensaje);
+         };
 
-        
             // Acelerar
             Console.WriteLine("***** acelerando *****");
             for (int i = 0; i < 6; i++)
@@ -33,6 +37,7 @@ namespace Coche
 
             Console.ReadLine();
         }
+
         public static void CocheAlLimite(object sender, ArgumentoEventosCoche e)
         { Console.WriteLine(e.Mensaje); }
 

@@ -1,0 +1,6 @@
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\Tareas\Tareas\bin\Debug\Tareas.exe.config
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\Tareas\Tareas\bin\Debug\Tareas.exe
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\Tareas\Tareas\bin\Debug\Tareas.pdb
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\Tareas\Tareas\obj\Debug\Tareas.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\Tareas\Tareas\obj\Debug\Tareas.exe
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\Tareas\Tareas\obj\Debug\Tareas.pdb

@@ -9,10 +9,10 @@ namespace Herencia
 {
     class Funcionario : Persona
     {
-        private Queue fila;
+        private Queue<Persona> fila;
         public Funcionario(string nombre) : base(nombre)
         {
-            fila = new Queue();
+            fila = new Queue<Persona>();
         }
         public void turno(Persona p)
         {
@@ -24,7 +24,7 @@ namespace Herencia
             Console.WriteLine("Añadido a la fila "+p.Nombre);
         }
         public void atender() {
-            Persona p = (Persona)fila.Dequeue();
+            Persona p = fila.Dequeue();
             p.saludo();
             Console.WriteLine("Atendido "+p.Nombre);
         }
