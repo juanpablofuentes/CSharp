@@ -1,0 +1,6 @@
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\Ventas\Ventas\bin\Debug\Ventas.exe.config
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\Ventas\Ventas\bin\Debug\Ventas.exe
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\Ventas\Ventas\bin\Debug\Ventas.pdb
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\Ventas\Ventas\obj\Debug\Ventas.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\Ventas\Ventas\obj\Debug\Ventas.exe
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\Ventas\Ventas\obj\Debug\Ventas.pdb

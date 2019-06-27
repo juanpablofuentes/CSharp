@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tareas
 {
-    class Programa
+    class Programa:IEnumerable<Tarea>
     {
         private Queue<Tarea> Lista = new Queue<Tarea>();
         public void add(Tarea t)
@@ -28,7 +29,18 @@ namespace Tareas
         }
         public override string ToString()
         {
+           
             return String.Join(",", Lista);
+        }
+
+        public IEnumerator<Tarea> GetEnumerator()
+        {
+            return Lista.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return Lista.GetEnumerator(); ;
         }
     }
 }

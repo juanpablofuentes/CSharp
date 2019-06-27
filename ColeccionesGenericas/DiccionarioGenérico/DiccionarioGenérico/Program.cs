@@ -28,20 +28,20 @@ namespace DiccionarioGenérico
             //Recorrer un diccionario
             foreach (KeyValuePair<int, string> item in dict)
             {
-                Console.WriteLine("Key: {0}, Value: {1}", item.Key, item.Value);
+                Console.WriteLine("Clave: {0}, Valor: {1}", item.Key, item.Value);
             }
             Console.WriteLine("-----");
 
             for (int i = 0; i < dict.Count; i++)
             {
-                Console.WriteLine("Key: {0}, Value: {1}",
+                Console.WriteLine("Clave: {0}, Valor: {1}",
                                                         dict.Keys.ElementAt(i),
                                                         dict[dict.Keys.ElementAt(i)]);
             }
             Console.WriteLine("-----");
             foreach (int key in dict.Keys)
             {
-                Console.WriteLine("Key: {0}, Value: {1}", key, dict[key]);
+                Console.WriteLine("Clave: {0}, Valor: {1}", key, dict[key]);
             }
             Console.WriteLine("-----");
 

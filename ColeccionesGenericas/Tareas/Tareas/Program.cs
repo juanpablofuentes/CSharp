@@ -20,6 +20,13 @@ namespace Tareas
             Console.WriteLine(p.tiempo());
             p.optimizar();
             Console.WriteLine(p);
+            Console.WriteLine(p.procesar());
+            Console.WriteLine(p);
+            foreach(Tarea t in p)
+            {
+                Console.WriteLine(t.Nombre);
+            }
+
 
         }
     }
