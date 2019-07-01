@@ -18,6 +18,16 @@ namespace Generics
 
             strGenericClass.propiedadGenerica = "Ejemplo de propiedad genérica";
             string result = strGenericClass.metodoGenerico("Parámetro genérico");
+
+            Prueba<int> p = new Prueba<int>(10);
+            Console.WriteLine(p.igual(20));
+            Console.WriteLine(p.igual(10));
+
+            Persona juan = new Persona("Juan");
+            Prueba<Persona> p2 = new Prueba<Persona>(juan);
+            Console.WriteLine(p2.igual(juan));
+            Console.WriteLine(p2.igual(new Persona("Juan")));
+            
         }
     }
 }

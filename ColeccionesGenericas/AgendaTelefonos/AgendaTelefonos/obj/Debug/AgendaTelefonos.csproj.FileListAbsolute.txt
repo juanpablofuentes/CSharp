@@ -1,0 +1,6 @@
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\AgendaTelefonos\AgendaTelefonos\bin\Debug\AgendaTelefonos.exe.config
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\AgendaTelefonos\AgendaTelefonos\bin\Debug\AgendaTelefonos.exe
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\AgendaTelefonos\AgendaTelefonos\bin\Debug\AgendaTelefonos.pdb
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\AgendaTelefonos\AgendaTelefonos\obj\Debug\AgendaTelefonos.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\AgendaTelefonos\AgendaTelefonos\obj\Debug\AgendaTelefonos.exe
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\AgendaTelefonos\AgendaTelefonos\obj\Debug\AgendaTelefonos.pdb

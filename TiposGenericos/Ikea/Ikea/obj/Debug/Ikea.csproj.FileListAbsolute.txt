@@ -4,3 +4,6 @@ c:\users\incid\documents\visual studio 2015\Projects\Ikea\Ikea\bin\Debug\Ikea.pd
 c:\users\incid\documents\visual studio 2015\Projects\Ikea\Ikea\obj\Debug\Ikea.csprojResolveAssemblyReference.cache
 c:\users\incid\documents\visual studio 2015\Projects\Ikea\Ikea\obj\Debug\Ikea.exe
 c:\users\incid\documents\visual studio 2015\Projects\Ikea\Ikea\obj\Debug\Ikea.pdb
+C:\Users\incid\Documents\CSharp\TiposGenericos\Ikea\Ikea\bin\Debug\Ikea.exe.config
+C:\Users\incid\Documents\CSharp\TiposGenericos\Ikea\Ikea\obj\Debug\Ikea.exe
+C:\Users\incid\Documents\CSharp\TiposGenericos\Ikea\Ikea\obj\Debug\Ikea.pdb

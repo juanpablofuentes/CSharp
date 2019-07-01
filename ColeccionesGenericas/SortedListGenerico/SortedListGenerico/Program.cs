@@ -15,15 +15,16 @@ namespace SortedListGenerico
                 return y.CompareTo(x);
             }
         }
+      
         static void Main(string[] args)
         {
 
             SortedList<string, string> sList = new SortedList<string, string>(new InvertedComparer());
             sList.Add("ana", "Ana Pérez");
-            sList.Add("eva", "Eva Pi");
-            sList.Add("juan", "Juan Buj");
-            sList.Add("rosa", "Rosa Sanz");
-            sList.Add("pedro", "Pedro Sánchez");
+            sList.Add("evaa", "Eva Pi");
+            sList.Add("juanaa", "Juan Buj");
+            sList.Add("rosaaaa", "Rosa Sanz");
+            sList.Add("pedroaaaa", "Pedro Sánchez");
             foreach(string valor in sList.Values)
             {
                 Console.WriteLine(valor);

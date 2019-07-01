@@ -22,6 +22,7 @@ namespace DisplayGenerics
             jardin.add(new Planta("Ficus"));
             jardin.add(new Planta("Abeto"));
             jardin.add(new Planta("Margarita"));
+          //  jardin.add(new Animal("Jabalí")); Error porque no se puede añadir un animal
             jardin.mostrar();
         }
     }

@@ -34,8 +34,8 @@ namespace Ventas
         }
         public string mejorVendedor()
         {
-            string mejor = "";
-            int venta = 0;
+            string mejor = lista.Keys.ElementAt(0);
+            int venta = lista.Values.ElementAt(0);
             foreach(string v in lista.Keys)
             {
                 if (lista[v] > venta)

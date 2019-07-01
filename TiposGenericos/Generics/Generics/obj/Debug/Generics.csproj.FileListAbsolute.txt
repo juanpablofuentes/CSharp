@@ -1,0 +1,6 @@
+C:\Users\incid\Documents\CSharp\TiposGenericos\Generics\Generics\bin\Debug\Generics.exe.config
+C:\Users\incid\Documents\CSharp\TiposGenericos\Generics\Generics\bin\Debug\Generics.exe
+C:\Users\incid\Documents\CSharp\TiposGenericos\Generics\Generics\bin\Debug\Generics.pdb
+C:\Users\incid\Documents\CSharp\TiposGenericos\Generics\Generics\obj\Debug\Generics.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\TiposGenericos\Generics\Generics\obj\Debug\Generics.exe
+C:\Users\incid\Documents\CSharp\TiposGenericos\Generics\Generics\obj\Debug\Generics.pdb

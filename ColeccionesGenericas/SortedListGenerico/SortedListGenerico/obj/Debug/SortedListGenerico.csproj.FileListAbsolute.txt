@@ -1,0 +1,6 @@
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\SortedListGenerico\SortedListGenerico\bin\Debug\SortedListGenerico.exe.config
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\SortedListGenerico\SortedListGenerico\bin\Debug\SortedListGenerico.exe
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\SortedListGenerico\SortedListGenerico\bin\Debug\SortedListGenerico.pdb
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\SortedListGenerico\SortedListGenerico\obj\Debug\SortedListGenerico.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\SortedListGenerico\SortedListGenerico\obj\Debug\SortedListGenerico.exe
+C:\Users\incid\Documents\CSharp\ColeccionesGenericas\SortedListGenerico\SortedListGenerico\obj\Debug\SortedListGenerico.pdb
