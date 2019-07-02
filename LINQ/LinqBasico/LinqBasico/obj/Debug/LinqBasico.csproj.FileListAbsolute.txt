@@ -1,0 +1,6 @@
+C:\Users\incid\Documents\CSharp\LINQ\LinqBasico\LinqBasico\bin\Debug\LinqBasico.exe.config
+C:\Users\incid\Documents\CSharp\LINQ\LinqBasico\LinqBasico\bin\Debug\LinqBasico.exe
+C:\Users\incid\Documents\CSharp\LINQ\LinqBasico\LinqBasico\bin\Debug\LinqBasico.pdb
+C:\Users\incid\Documents\CSharp\LINQ\LinqBasico\LinqBasico\obj\Debug\LinqBasico.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\LINQ\LinqBasico\LinqBasico\obj\Debug\LinqBasico.exe
+C:\Users\incid\Documents\CSharp\LINQ\LinqBasico\LinqBasico\obj\Debug\LinqBasico.pdb

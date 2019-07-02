@@ -45,6 +45,7 @@ namespace Basicas
             Console.WriteLine(lp);
             lp -= r;
             Console.WriteLine(lp);
+            
         }
     }
 }
