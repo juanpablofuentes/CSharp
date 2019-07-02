@@ -43,8 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IGiros.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Regimiento.cs" />
+    <Compile Include="Tanque.cs" />
+    <Compile Include="Torreta.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -48,6 +48,9 @@
     <Compile Include="IEstrategia.cs" />
     <Compile Include="Juego.cs" />
     <Compile Include="Jugador.cs" />
+    <Compile Include="PagoAmigoEnemigo.cs" />
+    <Compile Include="PagoClasico.cs" />
+    <Compile Include="PagoGallina.cs" />
     <Compile Include="Pagos.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

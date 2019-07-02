@@ -10,12 +10,7 @@ namespace DilemaPrisionero
     {
         static void Main(string[] args)
         {
-            IEstrategia c = new espejo();
-            Console.WriteLine(c.decision(null));
-            Console.WriteLine(c.decision(new List<int>() { 0 }));
-            Console.WriteLine(c.decision(new List<int>() { 0,0,1, 1 }));
-            return;
-
+          
             Jugador Panfilo = new Jugador("Panfilo", new confiado());
             Jugador Maquiavelo = new Jugador("Maquiavelo", new aprovechado());
             Jugador Tuntun = new Jugador("Tuntún", new aleatorio());
@@ -27,7 +22,7 @@ namespace DilemaPrisionero
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             //Console.WriteLine(ronda);
             //Console.WriteLine(donde.Dinero);
-            Juego dilema = new Juego();
+            Juego dilema = new Juego(new List<Jugador> { Panfilo, Tuntun, donde });
             dilema.Jugadores.Add(Panfilo);
             dilema.Jugadores.Add(Maquiavelo);
             dilema.Jugadores.Add(Tuntun);

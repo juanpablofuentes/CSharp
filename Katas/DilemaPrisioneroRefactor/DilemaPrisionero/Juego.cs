@@ -11,8 +11,25 @@ namespace DilemaPrisionero
         public List<Jugador> Jugadores = new List<Jugador>();
         private List<Enfrentamiento> enfrentamientos = new List<Enfrentamiento>();
         private int rondas = 50;
-        private Pagos evaluacion = new Pagos();
+        private Pagos evaluacion ;
         
+        public Juego(List<Jugador> jugadores, Pagos pagos=null, int numRondas=50)
+        {
+            if (jugadores.Count < 2)
+            {
+                throw new Exception("Jugadores insuficientes");
+            }
+            Jugadores = jugadores;
+            if (pagos == null)
+            {
+                evaluacion = new PagoClasico();
+            }
+            else
+            {
+                evaluacion = pagos;
+            }
+            rondas = numRondas;
+        }
         private void crearEnfrentamientos()
         {
             enfrentamientos.Clear();
@@ -53,8 +70,24 @@ namespace DilemaPrisionero
         public List<Jugador> Jugadores = new List<Jugador>();
         private Queue<Enfrentamiento> enfrentamientos = new Queue<Enfrentamiento>();
         private int rondas = 50;
-        private Pagos evaluacion = new Pagos();
-
+        private Pagos evaluacion ;
+        public JuegoQueue(List<Jugador> jugadores, Pagos pagos = null, int numRondas = 50)
+        {
+            if (jugadores.Count < 2)
+            {
+                throw new Exception("Jugadores insuficientes");
+            }
+            Jugadores = jugadores;
+            if (pagos == null)
+            {
+                evaluacion = new PagoClasico();
+            }
+            else
+            {
+                evaluacion = pagos;
+            }
+            rondas = numRondas;
+        }
         private void crearEnfrentamientos()
         {
             enfrentamientos.Clear();

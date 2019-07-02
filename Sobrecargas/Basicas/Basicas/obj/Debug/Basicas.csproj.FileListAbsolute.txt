@@ -1,0 +1,6 @@
+C:\Users\incid\Documents\CSharp\Sobrecargas\Basicas\Basicas\bin\Debug\Basicas.exe.config
+C:\Users\incid\Documents\CSharp\Sobrecargas\Basicas\Basicas\bin\Debug\Basicas.exe
+C:\Users\incid\Documents\CSharp\Sobrecargas\Basicas\Basicas\bin\Debug\Basicas.pdb
+C:\Users\incid\Documents\CSharp\Sobrecargas\Basicas\Basicas\obj\Debug\Basicas.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\Sobrecargas\Basicas\Basicas\obj\Debug\Basicas.exe
+C:\Users\incid\Documents\CSharp\Sobrecargas\Basicas\Basicas\obj\Debug\Basicas.pdb
