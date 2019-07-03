@@ -12,7 +12,7 @@ namespace Coche
         {
             // Crear objeto
             Coche c1 = new Coche("Panda", 100, 10);
-            c1.RegistrarManejador(new Coche.ManejarMotor(EventoCoche));
+            c1.RegistrarManejador(EventoCoche);
 
             // Registramos otro
             Coche.ManejarMotor handler2 = new Coche.ManejarMotor(EventoCoche2);

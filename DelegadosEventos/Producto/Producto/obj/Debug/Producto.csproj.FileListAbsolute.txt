@@ -1,0 +1,6 @@
+C:\Users\incid\Documents\CSharp\DelegadosEventos\Producto\Producto\bin\Debug\Producto.exe.config
+C:\Users\incid\Documents\CSharp\DelegadosEventos\Producto\Producto\bin\Debug\Producto.exe
+C:\Users\incid\Documents\CSharp\DelegadosEventos\Producto\Producto\bin\Debug\Producto.pdb
+C:\Users\incid\Documents\CSharp\DelegadosEventos\Producto\Producto\obj\Debug\Producto.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\DelegadosEventos\Producto\Producto\obj\Debug\Producto.exe
+C:\Users\incid\Documents\CSharp\DelegadosEventos\Producto\Producto\obj\Debug\Producto.pdb

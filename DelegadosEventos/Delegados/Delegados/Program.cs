@@ -19,6 +19,7 @@ namespace Delegados
             eva.ejecutar(e);
             e = despedido;
             eva.ejecutar(e);
+            eva.ejecutar(promocionar);
             int num = 1000;
 
             delegado(num);
@@ -38,6 +39,12 @@ namespace Delegados
             delegado -= ImprimirNumero;
             delegado(num);
             Console.WriteLine("------");
+
+            e = bienvenida;
+            e += promocionar;
+
+            eva.ejecutar(e);
+
 
             Numeros n = new Numeros();
             n.lista.Add(10);
@@ -73,7 +80,7 @@ namespace Delegados
         }
          public static void promocionar(string nombre)
         {
-            Console.WriteLine(nombre + " te hemos subido ell sueldo");
+            Console.WriteLine(nombre + " te hemos subido el sueldo");
         }
         public static void ImprimirNumero(int num)
         {

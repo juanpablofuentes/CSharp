@@ -25,7 +25,7 @@ namespace Coche
             Nombre = nombre;
         }
 
-     
+
         // 1) Definir el delegado.
         public delegate void ManejarMotor(string mensaje);
 
@@ -35,9 +35,7 @@ namespace Coche
         // 3) Añadir manejadores.
         public void RegistrarManejador(ManejarMotor metodo)
         {
-            // listOfHandlers = methodToCall;
-            // listOfHandlers += methodToCall; 
-            // listOfHandlers += methodToCall; 
+
             if (listaManejadores == null)
                 listaManejadores = metodo;
             else
@@ -66,12 +64,15 @@ namespace Coche
                 // Is this car 'almost dead'?
                 if (10 == (Limite - Velocidad) && listaManejadores != null)
                 {
-                 
+
                     listaManejadores("Cuidado que explota");
                 }
 
                 if (Velocidad >= Limite)
+                {
                     estaMuerto = true;
+                    listaManejadores("te has cargado el motor");
+                }
                 else
                     Console.WriteLine("Velocidad = {0}", Velocidad);
             }
@@ -81,6 +82,6 @@ namespace Coche
             Velocidad = 0;
             estaMuerto = false;
         }
-  
+
     }
 }
