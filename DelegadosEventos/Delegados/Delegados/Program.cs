@@ -8,13 +8,17 @@ namespace Delegados
 {
     public delegate double operacion(double value);
     public delegate void Imprimir(int value);
-
+    public delegate void Empresa(string nombre);
     class Program
     {
         static void Main(string[] args)
         {
             Imprimir delegado = ImprimirNumero;
-
+            Empresa e = bienvenida;
+            Empleado eva = new Empleado("Eva");
+            eva.ejecutar(e);
+            e = despedido;
+            eva.ejecutar(e);
             int num = 1000;
 
             delegado(num);
@@ -59,11 +63,26 @@ namespace Delegados
             Console.WriteLine(n);
             Console.WriteLine("------");
         }
+        public static void bienvenida(string nombre)
+        {
+            Console.WriteLine("Hola " + nombre);
+        }
+        public static void despedido(string nombre)
+        {
+            Console.WriteLine(nombre + " estás despedido");
+        }
+         public static void promocionar(string nombre)
+        {
+            Console.WriteLine(nombre + " te hemos subido ell sueldo");
+        }
         public static void ImprimirNumero(int num)
         {
             Console.WriteLine("Numero: {0,-12:N0}", num);
         }
-
+        public static void ImprimirNumero(double num)
+        {
+            Console.WriteLine("Numero: {0,-12:N0}", num);
+        }
         public static void ImprimirMoneda(int money)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
