@@ -16,9 +16,11 @@ namespace EventoSencillo
             cc.Saldo += 900;
             cc.Saldo -= 90;
         }
+        //Puedo suscribir este método porque tiene la firma del delegado
         static void avisoCliente(string mensaje)
         {
             Console.WriteLine(mensaje);
         }
+     
     }
 }

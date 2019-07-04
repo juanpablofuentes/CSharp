@@ -11,11 +11,14 @@ namespace Coche
         // Internal state data.
         public int Velocidad { get; set; }
         public int Limite { get; set; } = 100;
-        public string Nombre { get; set; }
+        public string Nombre { get;  set; }
 
         // ¿Marcha el coche?
         private bool estaMuerto;
-
+        public bool Muerto
+        {
+            get { return estaMuerto; }
+        }
         // Class constructors.
         public Coche() { }
         public Coche(string nombre, int limite, int velocidad)
@@ -56,8 +59,10 @@ namespace Coche
                     AlLimite?.Invoke("Cuidado que explota");
                 }
 
-                if (Velocidad >= Limite)
+                if (Velocidad >= Limite) { 
                     estaMuerto = true;
+                    Explotar?.Invoke("Has explotado el motor");
+                }
                 else
                     Console.WriteLine("Velocidad = {0}", Velocidad);
             }

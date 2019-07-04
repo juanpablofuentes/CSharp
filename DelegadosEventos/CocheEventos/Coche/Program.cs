@@ -29,6 +29,7 @@ namespace Coche
             // Ya no salen mayúsculas
             Console.WriteLine("***** Acelerando *****");
             for (int i = 0; i < 12; i++)
+                if (!c1.Muerto)
                 c1.Acelerar(10);
 
             Console.ReadLine();

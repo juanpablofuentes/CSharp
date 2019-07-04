@@ -9,4 +9,5 @@ C:\Users\incid\Documents\CSharp\DelegadosEventos\CocheEventos\Coche\obj\Debug\Co
 C:\Users\incid\Documents\CSharp\DelegadosEventos\CocheEventos\Coche\obj\Debug\Coche.pdb
 C:\Users\incid\Documents\CSharp\DelegadosEventos\CocheEventos\Coche\bin\Debug\Coche.exe
 C:\Users\incid\Documents\CSharp\DelegadosEventos\CocheEventos\Coche\bin\Debug\Coche.pdb
-C:\Users\incid\Documents\CSharp\DelegadosEventos\CocheEventos\Coche\obj\Debug\Coche.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\DelegadosEventos\CocheEventos\Coche\obj\Debug\Coche.csprojAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\DelegadosEventos\CocheEventos\Coche\obj\Debug\Coche.csproj.CoreCompileInputs.cache

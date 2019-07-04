@@ -3,3 +3,5 @@ C:\Users\incid\Documents\CSharp\DelegadosEventos\EventoSencillo\EventoSencillo\b
 C:\Users\incid\Documents\CSharp\DelegadosEventos\EventoSencillo\EventoSencillo\bin\Debug\EventoSencillo.pdb
 C:\Users\incid\Documents\CSharp\DelegadosEventos\EventoSencillo\EventoSencillo\obj\Debug\EventoSencillo.exe
 C:\Users\incid\Documents\CSharp\DelegadosEventos\EventoSencillo\EventoSencillo\obj\Debug\EventoSencillo.pdb
+C:\Users\incid\Documents\CSharp\DelegadosEventos\EventoSencillo\EventoSencillo\obj\Debug\EventoSencillo.csprojAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\DelegadosEventos\EventoSencillo\EventoSencillo\obj\Debug\EventoSencillo.csproj.CoreCompileInputs.cache
