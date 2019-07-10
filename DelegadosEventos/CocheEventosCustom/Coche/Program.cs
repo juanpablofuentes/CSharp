@@ -39,7 +39,13 @@ namespace Coche
         }
 
         public static void CocheAlLimite(object sender, ArgumentoEventosCoche e)
-        { Console.WriteLine(e.Mensaje); }
+        {
+            if (sender is Coche c)
+            {
+                Console.WriteLine(e.Mensaje);
+                Console.WriteLine("Ibas a " + c.Velocidad + ", cerca del límite del coche que es " + c.Limite);
+            }
+        }
 
         public static void CocheCrítico(object sender, ArgumentoEventosCoche e)
         { Console.WriteLine("=> Mensaje crítico: {0}", e.Mensaje); }

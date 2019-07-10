@@ -43,10 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blob.cs" />
+    <Compile Include="ListadeBlobs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Punto.cs" />
     <Compile Include="Puntos.cs" />
+    <Compile Include="Test01.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

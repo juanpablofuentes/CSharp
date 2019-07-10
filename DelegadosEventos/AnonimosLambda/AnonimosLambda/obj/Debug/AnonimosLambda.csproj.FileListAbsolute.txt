@@ -1,6 +1,7 @@
 C:\Users\incid\Documents\CSharp\DelegadosEventos\AnonimosLambda\AnonimosLambda\bin\Debug\AnonimosLambda.exe.config
 C:\Users\incid\Documents\CSharp\DelegadosEventos\AnonimosLambda\AnonimosLambda\bin\Debug\AnonimosLambda.exe
 C:\Users\incid\Documents\CSharp\DelegadosEventos\AnonimosLambda\AnonimosLambda\bin\Debug\AnonimosLambda.pdb
-C:\Users\incid\Documents\CSharp\DelegadosEventos\AnonimosLambda\AnonimosLambda\obj\Debug\AnonimosLambda.csprojResolveAssemblyReference.cache
 C:\Users\incid\Documents\CSharp\DelegadosEventos\AnonimosLambda\AnonimosLambda\obj\Debug\AnonimosLambda.exe
 C:\Users\incid\Documents\CSharp\DelegadosEventos\AnonimosLambda\AnonimosLambda\obj\Debug\AnonimosLambda.pdb
+C:\Users\incid\Documents\CSharp\DelegadosEventos\AnonimosLambda\AnonimosLambda\obj\Debug\AnonimosLambda.csprojAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\DelegadosEventos\AnonimosLambda\AnonimosLambda\obj\Debug\AnonimosLambda.csproj.CoreCompileInputs.cache

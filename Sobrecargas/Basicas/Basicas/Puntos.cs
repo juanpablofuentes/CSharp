@@ -33,6 +33,7 @@ namespace Basicas
             get { return lista[index]; }
             set { lista.Insert(index, value); }
         }
+   
         public IEnumerator<Punto> GetEnumerator()
         {
             return lista.GetEnumerator();

@@ -32,20 +32,22 @@ namespace Basicas
             X = x;
             Y = y;
         }
-        //Sobrecarga to string
+        //sobreescritura to string
         public override string ToString()
         {
             return $"[{X},{Y}]";
         }
-        //Sobrecarga equals
+        //sobreescritura equals
         public override bool Equals(object obj)
         {
-            if (!(obj is Punto)) return false;
-
-            Punto p = (Punto)obj;
-            return X == p.X && Y == p.Y;
+            if (obj is Punto p)
+            {
+                return X == p.X && Y == p.Y;
+            }
+            return false;
+            
         }
-        //Sobrecarga hashcode (igual punto tendrá igual hashcode)
+        //sobreescritura hashcode (igual punto tendrá igual hashcode)
         public override int GetHashCode()
         {
             return this.ToString().GetHashCode();
@@ -58,32 +60,40 @@ namespace Basicas
             return 0;
         }
 
-        //SObrecarga operador igual
+        //sobreescritura operador igual
         public static bool operator ==(Punto obj1, Punto obj2)
         {
             return (obj1.Equals(obj2));
         }
-        //SObrecarga operador distinto (obligatorio si sobrecargamos el = y viceversa)
+        //sobreescritura operador distinto (obligatorio si sobreescrituramos el = y viceversa)
         public static bool operator !=(Punto obj1, Punto obj2)
         {
             return !(obj1.Equals(obj2));
         }
-        //Sobrecarga operaciones (el += y el -= está incluídas)
-        public static Punto operator +(Punto p1, Punto p2) => new Punto(p1.X + p2.X, p1.Y + p2.Y);
-      
+        //sobreescritura operaciones (el += y el -= está incluídas)
+
+
+        // public static Punto operator +(Punto p1, Punto p2) => new Punto(p1.X + p2.X, p1.Y + p2.Y);
+        public static Punto operator +(Punto p1, Punto p2)
+        {
+            return new Punto(p1.X + p2.X, p1.Y + p2.Y);
+        }
+
         public static Punto operator -(Punto p1, Punto p2) => new Punto(p1.X - p2.X, p1.Y - p2.Y);
 
-        // Sobrecarga ++ y -- sumando o restando la unidad a las dos coordenadas
+        // sobreescritura ++ y -- sumando o restando la unidad a las dos coordenadas
         public static Punto operator ++(Punto p1) => new Punto(p1.X + 1, p1.Y + 1);
         
         public static Punto operator --(Punto p1) => new Punto(p1.X - 1, p1.Y - 1);
 
+
         public static Punto operator *(Punto p1, double n) => new Punto(p1.X*n, p1.Y*n);
+        public static Punto operator *(double n,Punto p1 ) => new Punto(p1.X * n, p1.Y * n);
         public static Punto operator *(Punto p1, Punto p2) => new Punto(p1.X * p2.Y, p1.Y * p2.X);
 
         public static Punto operator /(Punto p1, double n) => new Punto(p1.X/n, p1.Y/n);
 
-        // Sobrecarga de las comparaciones
+        // sobreescritura de las comparaciones
         public static bool operator <(Punto p1, Punto p2) => p1.CompareTo(p2) < 0;
         public static bool operator >(Punto p1, Punto p2) => p1.CompareTo(p2) > 0;
         public static bool operator <=(Punto p1, Punto p2) => p1.CompareTo(p2) <= 0;

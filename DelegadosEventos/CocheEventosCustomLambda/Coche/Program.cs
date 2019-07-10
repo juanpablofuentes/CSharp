@@ -25,7 +25,7 @@ namespace Coche
             for (int i = 0; i < 6; i++)
                 c1.Acelerar(20);
 
-         
+
             c1.Velocidad = 0;
             c1.restaurar();
             // Ya no salen mayúsculas
