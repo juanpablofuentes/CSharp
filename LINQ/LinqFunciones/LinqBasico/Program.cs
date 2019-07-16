@@ -22,8 +22,10 @@ namespace LinqBasico
                 new Alumno("Quim",32,1.7),
             };
             //Seleccionamos una condición
-            var res = listaAlumnos.Where(s => s.Nota >= 5);
+            var res = listaAlumnos.Where(aprobado);
             Console.WriteLine(String.Join(", ",res));
+            res = listaAlumnos.Where(s => s.Nota >= 5);
+            Console.WriteLine(String.Join(", ", res));
             //Seleccionamos un índice
             res = listaAlumnos.Where((s,index) => index%2==0);
             Console.WriteLine(String.Join(", ", res));
@@ -58,6 +60,12 @@ namespace LinqBasico
             Console.WriteLine(listaAlumnos.Aggregate<Alumno,string>(
                                         "Alumnos: ",  // seed value
                                         (str, s) => str += s.Nombre + ","));
+        }
+
+
+        static bool aprobado(Alumno al)
+        {
+            return al.Nota >= 5;
         }
     }
 }

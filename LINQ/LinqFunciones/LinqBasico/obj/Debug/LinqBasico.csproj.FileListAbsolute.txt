@@ -9,4 +9,5 @@ C:\Users\incid\Documents\CSharp\LINQ\LinqFunciones\LinqBasico\obj\Debug\LinqBasi
 C:\Users\incid\Documents\CSharp\LINQ\LinqFunciones\LinqBasico\obj\Debug\LinqBasico.pdb
 C:\Users\incid\Documents\CSharp\LINQ\LinqFunciones\LinqBasico\bin\Debug\LinqBasico.exe
 C:\Users\incid\Documents\CSharp\LINQ\LinqFunciones\LinqBasico\bin\Debug\LinqBasico.pdb
-C:\Users\incid\Documents\CSharp\LINQ\LinqFunciones\LinqBasico\obj\Debug\LinqBasico.csprojResolveAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\LINQ\LinqFunciones\LinqBasico\obj\Debug\LinqBasico.csprojAssemblyReference.cache
+C:\Users\incid\Documents\CSharp\LINQ\LinqFunciones\LinqBasico\obj\Debug\LinqBasico.csproj.CoreCompileInputs.cache

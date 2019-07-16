@@ -36,31 +36,38 @@ namespace LinqBasico
             }
             Console.WriteLine(String.Join(",", res2));
             //Sólo los aprobados
-             res = from alumno in listaAlumnos where alumno.Nota>=5 select alumno;
-           
+            res = from alumno in listaAlumnos where alumno.Nota >= 5 select alumno;
+
             Console.WriteLine(String.Join(" | ", res));
             listaAlumnos.Add(new Alumno("Einstein", 50, 10));
             //Vuelve a ejecutarse la consulta LINQ
             Console.WriteLine(String.Join(" | ", res));
+
             //Ejecución inmediata
             List<Alumno> inmediato = (from alumno in listaAlumnos where alumno.Nota >= 5 select alumno).ToList<Alumno>();
             //Podemos usar las funciones de los enumerables
             Console.WriteLine(res.Count());
+
             Console.WriteLine(String.Join(" | ", res.Reverse()));
             //Ordenadr ascendente o descendente
             res = from alumno in listaAlumnos where alumno.Nota >= 5 orderby alumno.Nota descending select alumno;
             Console.WriteLine(String.Join(" | ", res));
+
+
             //Agrupando
-            var agrupado = from alumno in listaAlumnos group alumno by alumno.Edad;
-            foreach(var grupo in agrupado)
+            var agrupado = from alumno in listaAlumnos group alumno by alumno.Nombre.Length;
+            Console.WriteLine(  String.Join(",",agrupado.First())); 
+            Console.WriteLine(agrupado.Count());
+            foreach (var grupo in agrupado)
             {
-                Console.WriteLine("Agrupado por el valor: "+grupo.Key);
-                foreach(Alumno al in grupo)
+                Console.WriteLine("Agrupado por el valor: " + grupo.Key + " valores " + grupo.Count());
+                foreach (Alumno al in grupo)
                 {
                     Console.WriteLine(al);
                 }
             }
-             agrupado = from alumno in listaAlumnos group alumno by alumno.Edad into g orderby g.Key descending select g;
+
+            agrupado = from alumno in listaAlumnos group alumno by alumno.Edad into g orderby g.Key descending select g;
             foreach (var grupo in agrupado)
             {
                 Console.WriteLine("Agrupado por el valor: " + grupo.Key);
@@ -68,6 +75,13 @@ namespace LinqBasico
                 {
                     Console.WriteLine(al);
                 }
+            }
+            Console.WriteLine("-----");
+            agrupado = from alumno in listaAlumnos group alumno by alumno.Nombre.Length into g where g.Sum(al=>al.Nota) > 10 orderby g.Key descending select g;
+            foreach (var grupo in agrupado)
+            {
+                Console.WriteLine("Agrupado por el valor: " + grupo.Key);
+                Console.WriteLine(String.Join(",", grupo));
             }
         }
     }
