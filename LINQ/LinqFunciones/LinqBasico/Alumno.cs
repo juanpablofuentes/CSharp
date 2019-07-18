@@ -21,5 +21,13 @@ namespace LinqBasico
         {
             return Nombre+" - "+Edad+" - "+Nota;
         }
+        public override bool Equals(object obj)
+        {
+            return this.ToString().Equals(obj.ToString());
+        }
+        public override int GetHashCode()
+        {
+            return this.ToString().GetHashCode();
+        }
     }
 }
