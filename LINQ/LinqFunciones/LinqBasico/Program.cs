@@ -61,11 +61,11 @@ namespace LinqBasico
 
           //  Concatenar dos listas
             IEnumerable<Alumno> lista3 = listaAlumnos.Concat(listaAlumnos2);
-
+            Console.WriteLine("Concatenar:");
             Console.WriteLine(String.Join(",",lista3));
-            Console.WriteLine("--");
+            Console.WriteLine("Distintos:");
             Console.WriteLine(String.Join(",",lista3.Distinct()));
-            Console.WriteLine("--");
+            Console.WriteLine("Excepto");
             Console.WriteLine(String.Join(",",lista3.Except(listaAlumnos)));
             Console.WriteLine("--");
             Console.WriteLine(String.Join(",",lista3.Intersect(listaAlumnos)));
@@ -76,7 +76,27 @@ namespace LinqBasico
             Console.WriteLine("--");
             Console.WriteLine(String.Join(",", lista3.SkipWhile(el=>el.Edad<30)));
         }
+       
 
+    }
+    public struct Coords
+    {
+        public int x, y;
 
+        public Coords(int p1, int p2)
+        {
+            x = p1;
+            y = p2;
+        }
+    }
+    public struct Punto
+    {
+        public int x;
+        public int y;
+        public Punto(int X, int Y)
+        {
+            x = X;
+            y = Y;
+        }
     }
 }

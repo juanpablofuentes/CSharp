@@ -11,11 +11,13 @@ namespace LinqBasico
         public string Nombre { get; set; }
         public int Edad { get; set; }
         public double Nota { get; set; }
+        public Punto p;
         public Alumno(string nombre, int edad, double nota)
         {
             Nombre = nombre;
             Edad = edad;
             Nota = nota;
+            
         }
         public override string ToString()
         {
