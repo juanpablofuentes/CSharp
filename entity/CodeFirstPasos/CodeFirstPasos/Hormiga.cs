@@ -12,6 +12,6 @@ namespace CodeFirstPasos
         public int Edad { get; set; }
         public string JuegoFavorito { get; set; }
         public string Apodo { get; set; }
-
+        public bool Vuela { get; set; }
     }
 }

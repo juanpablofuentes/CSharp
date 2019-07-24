@@ -9,7 +9,7 @@ namespace CodeFirstPasos
     {
         public Contexto()
         {
-            this.Database.Migrate();
+           // this.Database.Migrate();
         }
         public Contexto(DbContextOptions<Contexto> options) : base(options)
         {
