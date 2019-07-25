@@ -20,6 +20,7 @@ namespace Aeropuerto
 
         public virtual DbSet<Avion> Aviones { get; set; }
         public virtual DbSet<Piloto> Pilotos { get; set; }
+        public virtual DbSet<Vuelo> Vuelos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

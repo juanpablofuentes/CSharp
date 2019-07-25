@@ -22,13 +22,13 @@ namespace Aeropuerto.Migrations
                 {
                     table.PrimaryKey("PK_Vuelo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vuelo_Aviones_IdAvion",
+                        name: "ForeignKey_Vuelo_Avion",
                         column: x => x.IdAvion,
                         principalTable: "Aviones",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "ForeignKey_Vuelo_Avion",
+                        name: "ForeignKey_Vuelo_Piloto",
                         column: x => x.IdPiloto,
                         principalTable: "Pilotos",
                         principalColumn: "Id",
