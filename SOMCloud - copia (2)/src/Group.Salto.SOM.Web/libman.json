@@ -1,0 +1,53 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "cdnjs",
+      "library": "jquery-validation-unobtrusive@3.2.9",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "library": "jquery-migrate@3.0.1",
+      "destination": "wwwroot/lib/jquery-migrate/"
+    },
+    {
+      "library": "modernizr@2.8.3",
+      "destination": "wwwroot/lib/modernizr/"
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/lib/toastr.js/"
+    },
+    {
+      "library": "twitter-bootstrap@4.1.3",
+      "destination": "wwwroot/lib/bootstrap/4.1.3"
+    },
+    {
+      "library": "popper.js@1.14.7",
+      "destination": "wwwroot/lib/popper.js/",
+      "files": [
+        "umd/popper.js"
+      ]
+    },
+    {
+      "library": "moment.js@2.22.2",
+      "destination": "wwwroot/lib/moment-js/",
+      "files": [
+        "moment.min.js",
+        "moment.js"
+      ]
+    },
+    {
+      "library": "Readmore.js@2.2.1",
+      "destination": "wwwroot/lib/readmore-js"
+    },
+    {
+      "library": "highcharts@4.0.0",
+      "destination": "wwwroot/lib/HighCharts/highcharts/",
+      "files": [
+        "modules/exporting.js"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+﻿@using Group.Salto.Common.Constants.People
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.SOM.Web.Models.PeopleVisible
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Controls.Table
+@model ResultViewModel<PeoplesVisibleViewModel>
+@{
+    var title = @Html.GetLocalizedText(PeopleConstants.PeopleVisiblePageTitle);
+}
+
+<h1 class="page-title">@title</h1>
+@{
+    var table = Html.GetMultiSelectTableFor(Model.Data.PeoplesVisibles, au => au.Id, Model.Data.PeopleVisibleFilters, TranslationHelper.GetTranslationService());
+    table.SetColumns(m => m.Name, m => m.FisrtSurname, m => m.SecondSurname, m => m.Email, m => m.Extension, m => m.Telephone, m => m.Company, m => m.Department);
+    table.SetSortingColumns(m => m.Name, m => m.FisrtSurname, m => m.SecondSurname, m => m.Email, m => m.Extension, m => m.Telephone, m => m.Company, m => m.Department);
+    table.ShowSelectColumn = false;
+    table.TableCssClass = "table table-striped table-hover";
+    table.TableHeaderCssClass = "thead-som";
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <partial name="_PeopleVisibleFilter" model="@Model.Data.PeopleVisibleFilters" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Data.PeoplesVisibles.Any())
+            {
+                <div class="table-responsive workstation-table" id="multigridContainerId">
+                    @table.Render("PeopleVisibleGrid")
+                </div>
+                <partial name="_Pager" for="@Model.Data.PeopleVisibleFilters" />
+            }
+            else
+            {
+                <partial name="_NoRecords" />
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/PeopleVisible/PeopleVisible.js"></script>
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/AutocompleteControl.js"></script>
+    <script>
+        var knowledgeComboFilter;
+        var departmentAutoComplete;
+        var workCenterAutoComplete;
+        var companyComboFilter;
+
+        (function ($) {
+            $(document).ready(function () {
+                app.peopleVisible.Init();
+                MultiTableScript("PeopleVisibleGrid");
+                var page = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.PeopleVisibleFilters));
+                pager.PagerSelector.Init({ PageData: page });
+
+                var knowledgeSelected = {
+                    key: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.PeopleVisibleFilters?.KnowledgeId)),
+                    value: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.PeopleVisibleFilters?.KnowledgeText))
+                };
+
+                knowledgeComboFilter = new autocomplete();
+                knowledgeComboFilter.Init("#kwnoledgeComboFilter",
+                {
+                    initValue: knowledgeSelected,
+                    urlData: '@Url.Action("GetKnowledge", "PeopleVisible")',
+                    minimumCharacters: 0,
+                    selectedItemProperty: 'KnowledgeId',
+                    selectedTextProperty: 'KnowledgeText',
+                    hasDefaultItem: true,
+                    nColumns: false,
+                    defaultItemContent: "",
+                    defaultItemContent: ""
+                });
+
+                var departmentSelected = {
+                    key: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.PeopleVisibleFilters?.DepartmentId)),
+                    value: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.PeopleVisibleFilters?.DepartmentText))
+                };
+
+                departmentAutoComplete = new autocomplete();
+                departmentAutoComplete.Init("#depatmentComboFilter",
+                {
+                    initValue: departmentSelected,
+                    urlData: '@Url.Action("GetDepartments", "PeopleVisible")',
+                    minimumCharacters: 0,
+                    selectedItemProperty: 'DepartmentId',
+                    selectedTextProperty: 'DepartmentText',
+                    hasDefaultItem: true,
+                    defaultItemContent: ""
+                });
+
+                 var workCenterSelected = {
+                    key: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.PeopleVisibleFilters?.WorkCenterId)),
+                    value: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.PeopleVisibleFilters?.WorkCenterText))
+                };
+
+                workCenterAutoComplete = new autocomplete();
+                workCenterAutoComplete.Init("#WorkCenterComboFilter",
+                {
+                    initValue: workCenterSelected,
+                    urlData: '@Url.Action("GetWorkCenter", "PeopleVisible")',
+                    minimumCharacters: 0,
+                    selectedItemProperty: 'WorkCenterId',
+                    selectedTextProperty: 'WorkCenterText',
+                    hasDefaultItem: true,
+                    defaultItemContent: ""
+                });
+
+                var companySelected = {
+                    key: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.PeopleVisibleFilters?.CompanyId)),
+                    value: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.PeopleVisibleFilters?.CompanyText))
+                };
+
+                companyComboFilter = new autocomplete();
+                companyComboFilter.Init("#companyComboFilter",
+                {
+                    initValue: companySelected,
+                    urlData: '@Url.Action("GetCompanies", "PeopleVisible")',
+                    minimumCharacters: 0,
+                    selectedItemProperty: 'CompanyId',
+                    selectedTextProperty: 'CompanyText',
+                    setEvent: companySetted,
+                    hasDefaultItem: true,
+                    defaultItemContent: ""
+                });
+
+                function companySetted(item, initialLoad) {
+                    if (item === null || item === undefined) {
+                        departmentAutoComplete.Clean();
+                        workCenterAutoComplete.Clean();
+                    }
+                    else {
+                        departmentAutoComplete.ChangeData(item.key, !initialLoad);
+                        workCenterAutoComplete.ChangeData(item.key, !initialLoad);
+                    }
+                };
+            });
+        })(jQuery);
+    </script>
+}

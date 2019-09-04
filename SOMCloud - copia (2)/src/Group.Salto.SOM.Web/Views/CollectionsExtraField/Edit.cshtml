@@ -1,0 +1,91 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.CollectionsExtraField
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Models.CollectionsExtraField;
+@using Group.Salto.SOM.Web.Models.ExtraFields;
+@using Group.Salto.Common.Constants.ExtraFields;
+@using Group.Salto.Common.Enums
+
+@model ResultViewModel<CollectionsExtraFieldDetailViewModel>
+@{
+    var title = @Html.GetLocalizedText(CollectionsExtraFieldConstants.CollectionsExtraFieldEditPageTitle);
+    ViewData["Title"] = title;
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-12">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2><span asp-localized-key="@CollectionsExtraFieldConstants.CollectionsExtraFieldEditPageTitle"></span>&nbsp;<span class="text-muted">#@Model.Data.Id</span></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="CollectionsExtraField" asp-action="Edit" method="post" class="form-horizontal">
+                    <partial name="_CollectionsExtraFieldForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Modals {
+    <div id="extrafieldsmodal-placeholder"></div>
+}
+<popup Text="@Html.GetLocalizedText(CollectionsExtraFieldConstants.CollectionsExtraFieldCannotDeleteClosingCodeMessage)"
+       Id="confirmationModal"
+       show-cancel-button="false"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"></popup>
+@section scripts {
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Common/ui.js"></script>
+    <script src="~/js/Controls/ModalFromList.js"></script>
+    <script src="~/js/ExtraFields/ExtraFieldDetailModal.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script language="javascript">
+        var selectedExtraFieldsType = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.ExtraFieldsTypes));
+        var selectedExtraFields = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.ExtraFieldsSelected));
+        (function ($) {
+            $(document).ready(function () {
+                var onCreateOverride = function () {
+                    app.extrafields.detailModal.OnCreate();
+                };
+                var onEditOverride = function () {
+                    app.extrafields.detailModal.OnEdit();
+                };
+                var onSaveModalOverride = function (item) {
+                    app.extrafields.detailModal.OnSaveModal(item);
+                };
+                var onValidationErrorOverride = function () {
+                    app.extrafields.detailModal.onValidationError();
+                };
+                var modalList = new modalFromList(onCreateOverride, onEditOverride, onSaveModalOverride, onValidationErrorOverride);
+                modalList.Init("#ExtraFieldsContainer",
+                {
+                    selectedItems: selectedExtraFields,
+                    collectionPropertyId: "@nameof(CollectionsExtraFieldDetailViewModel.ExtraFieldsSelected)",
+                    collectionPropertyName: "@nameof(CollectionsExtraFieldDetailViewModel.ExtraFieldsSelected)",
+                    linkText: "@Html.GetLocalizedText(@LocalizationsConstants.Add)",
+                    modalName: '@ExtraFieldsConstants.ExtraFieldsModal',
+                    id: '@nameof(ExtraFieldsBaseViewModel.ExtraFieldsId)',
+                    columnsText : '@Html.GetLocalizedText(CollectionsExtraFieldConstants.CollectionsExtraFieldName),@Html.GetLocalizedText(CollectionsExtraFieldConstants.CollectionsExtraFieldDescription),@Html.GetLocalizedText(CollectionsExtraFieldConstants.CollectionsExtraFieldType),@Html.GetLocalizedText(CollectionsExtraFieldConstants.CollectionsExtraFieldErp),@Html.GetLocalizedText(CollectionsExtraFieldConstants.CollectionsExtraFieldAllowedStringValues),@Html.GetLocalizedText(CollectionsExtraFieldConstants.CollectionsExtraFieldMultipleChoice),@Html.GetLocalizedText(CollectionsExtraFieldConstants.CollectionsExtraFieldIsMandatory), @Html.GetLocalizedText(CollectionsExtraFieldConstants.CollectionsExtraFieldDelSystem), @Html.GetLocalizedText(CollectionsExtraFieldConstants.CollectionsExtraFieldPosition)',
+                    columnsValues: '@nameof(ExtraFieldsBaseViewModel.ExtraFieldsName),@nameof(ExtraFieldsBaseViewModel.ExtraFieldsDescription),@nameof(ExtraFieldsBaseViewModel.TypeName),@nameof(ExtraFieldsBaseViewModel.ErpSystemInstanceQueryName),@nameof(ExtraFieldsBaseViewModel.AllowedStringValues),@nameof(ExtraFieldsBaseViewModel.MultipleChoice),@nameof(ExtraFieldsBaseViewModel.IsMandatory),@nameof(ExtraFieldsBaseViewModel.DelSystem),@nameof(ExtraFieldsBaseViewModel.Position)',
+                    columnsModal: '@nameof(ExtraFieldsBaseViewModel.ExtraFieldsId),@nameof(ExtraFieldsBaseViewModel.ExtraFieldsName),@nameof(ExtraFieldsBaseViewModel.ExtraFieldsDescription),@nameof(ExtraFieldsBaseViewModel.TypeId),@nameof(ExtraFieldsBaseViewModel.TypeName),@nameof(ExtraFieldsBaseViewModel.ErpSystemInstanceQueryId),@nameof(ExtraFieldsBaseViewModel.ErpSystemInstanceQueryName),@nameof(ExtraFieldsBaseViewModel.AllowedStringValues),@nameof(ExtraFieldsBaseViewModel.MultipleChoice),@nameof(ExtraFieldsBaseViewModel.IsMandatory),@nameof(ExtraFieldsBaseViewModel.DelSystem),@nameof(ExtraFieldsBaseViewModel.Position),@nameof(ExtraFieldsBaseViewModel.ExtraFieldsSystemId),@nameof(ExtraFieldsBaseViewModel.ExtraFieldsRegularId),@nameof(ExtraFieldsBaseViewModel.NewExtraFieldsRegularName)',
+                    dataUrl: '@Url.Action("ExtraFieldsModal", "ExtraFields")',
+                    placeholderElement: 'extrafieldsmodal-placeholder',
+                    saveButton: 'ExtraFieldsConfirmSave',
+                    initialIdValue: 1,
+                    textYes: '@Html.GetLocalizedText(LocalizationsConstants.Yes)',
+                    textNo: '@Html.GetLocalizedText(LocalizationsConstants.No)',
+                    state: '@nameof(ExtraFieldsBaseViewModel.State)',
+                    withOrder: false,
+                    showButtonOnTheGrid: false,
+                    containerBtnCreate: '#createExtraFieldsContainer'
+                    });
+
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ExtraFieldsCollection, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSaveCollectionsExtraField", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

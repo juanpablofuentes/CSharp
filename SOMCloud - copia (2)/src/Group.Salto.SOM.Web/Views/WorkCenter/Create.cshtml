@@ -1,0 +1,85 @@
+﻿@using Group.Salto.SOM.Web.Models.WorkCenter;
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Extensions;
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Constants.WorkCenter;
+@using Group.Salto.Common.Enums;
+@model ResultViewModel<WorkCenterDetailViewModel>
+
+@{
+    ViewData["Title"] = @Html.GetLocalizedText(WorkCenterConstants.WorkCenterCreateTitle);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-6">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="@WorkCenterConstants.WorkCenterCreateTitle"></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="WorkCenter" asp-action="Create" method="post" class="form-horizontal">
+                    <partial name="_WorkCenterForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/js/WorkCenter/WorkCenterEdit.js"></script>
+    <script src="~/js/tabModule.js"></script>
+    <script src="~/js/countryCitySelector.js"></script>
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Common/ui.js"></script>
+    <script src="~/js/People/PeopleApi.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                var countries = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.Countries?.Select(x=>new{key=x.Key, value=x.Value})));
+
+                new countryCitySelector().Init("#countrySelector",
+                    {
+                        countriesToSelect: countries,
+                        countrySelectedProperty: "CountrySelected",
+                        citySelectedProperty: "MunicipalitySelected",
+                        stateSelectedProperty: "StateSelected",
+                        regionSelectedProperty: "RegionSelected",
+                        urlCities: '@Url.Action("GetMunicipalitiesByState", "Country")',
+                        urlRegions: '@Url.Action("GetRegionsByCountry", "Country")',
+                        urlStates: '@Url.Action("GetStatesByRegion", "Country")',
+                        defaultOptionText: '@Html.GetLocalizedText(LocalizationsConstants.DefaultOption)',
+                        selectedCountry: '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.CountrySelected ?? 0))',
+                        selectedCity: '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.MunicipalitySelected ?? 0))',
+                        selectedState: '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.StateSelected ?? 0))',
+                        selectedRegion: '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.RegionSelected ?? 0))',
+                        countryText: '@Html.GetLocalizedText(LocalizationsConstants.Country)',
+                        regionText: '@Html.GetLocalizedText(LocalizationsConstants.Region)',
+                        stateText: '@Html.GetLocalizedText(LocalizationsConstants.State)',
+                        cityText: '@Html.GetLocalizedText(LocalizationsConstants.City)',
+                    });
+
+                app.peopleapi.Init({
+                    elementSelected: 'CompanySelected',
+                    elementFiltered: 'ResponsableSelected'
+                });
+
+                var companyId = @Model.Data.WorkCenterFromCompanyId ? @Model.Data.WorkCenterFromCompanyId : -1;
+                app.WorkCenterEdit.Init({
+                    companyId: companyId
+                });
+
+                $("#CancelCreateWorkCenter").click(function () {
+                    var urlDetailCompany = "@Url.Action("Detail", "Company", new { id= "companyIdFrom" })";
+                    var urlIndexWorkCenter = "@Url.Action("Index", "WorkCenter")";
+                    app.WorkCenterEdit.EditWorkCenter(companyId, urlDetailCompany, urlIndexWorkCenter);
+                });
+
+                var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.WorkCenters, ActionEnum.Create).ToString().ToLower();
+                app.common.authorization.disable("btnSaveWorkCenter", saveCreate);
+            })
+        })(jQuery);
+
+    </script>
+}

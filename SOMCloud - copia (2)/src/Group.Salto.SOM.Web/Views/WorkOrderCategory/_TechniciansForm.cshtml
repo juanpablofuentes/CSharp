@@ -1,0 +1,19 @@
+﻿@using Group.Salto.SOM.Web.Models.WorkOrderCategory
+@using Group.Salto.Common.Constants.WorkOrderCategory
+@using Group.Salto.SOM.Web.Extensions
+@model GenericEditViewModel
+<div class="row">
+    <div class="col-12 col-sm-4">
+        <div class="form-group">
+            <label><span asp-localized-key="@WorkOrderCategoryConstants.WOCategoryTechniciansDefaultTechnicalCodeText"></span></label>
+            <input asp-for="DefaultTechnicalCode" class="form-control" placeholder="@Html.GetLocalizedText(WorkOrderCategoryConstants.WOCategoryTechniciansDefaultTechnicalCodeText)" />
+            <span asp-validation-for="DefaultTechnicalCode" class="text-danger"></span>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="col-12">
+    <div id="container">
+        <div id="TechniciansContainer"></div>
+    </div>
+</div>

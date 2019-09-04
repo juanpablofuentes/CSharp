@@ -1,0 +1,129 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Items
+@using Group.Salto.SOM.Web.Models.Items
+@using Group.Salto.SOM.Web.Extensions
+@model ItemGeneralViewModel
+
+<div class="row">
+    <input asp-for="@Model.Id" type="hidden" />
+    <div class="col-12 col-sm-4">
+        <div class="card border-primary">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@ItemsConstants.ItemsDetailsName"></span><span class="required">*</span>
+                    </label>
+                    <input asp-for="Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@ItemsConstants.ItemsDetailsERPReference"></span>
+                    </label>
+                    <input asp-for="ERPReference" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@ItemsConstants.ItemsDetailsInternalReference"></span>
+                    </label>
+                    <input asp-for="InternalReference" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@ItemsConstants.ItemsDetailsType"></span>
+                    </label>
+                    <select asp-for="ItemsTypeId" asp-items="@Model.ItemTypes" row class="form-control"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-8">
+        <div class="row">
+            <div class="col-12 col-sm-4 p-0">
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@ItemsConstants.ItemsDetailsFamily"></span>
+                    </label>
+                    <div id="familiesContainer"></div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@ItemsConstants.ItemsDetailsSyncErp"></span>
+                    </label><br />
+                    <label class="col-form-label switch switch-label switch-pill switch-primary">
+                        <input asp-for="SyncErp" type="checkbox" class="switch-input">
+                        <span class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.Yes)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.No)"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@ItemsConstants.ItemsDetailsInDepot"></span>
+                    </label><br />
+                    <label class="col-form-label switch switch-label switch-pill switch-primary">
+                        <input asp-for="InDepot" type="checkbox" class="switch-input">
+                        <span class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.Yes)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.No)"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@ItemsConstants.ItemsDetailsSubFamily"></span>
+                    </label>
+                    <div id="subfamiliesContainer"></div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@ItemsConstants.ItemsDetailsTrackSerialNumber"></span>
+                    </label><br />
+                    <label class="col-form-label switch switch-label switch-pill switch-primary">
+                        <input asp-for="TrackSerialNumber" type="checkbox" class="switch-input">
+                        <span class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.Yes)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.No)"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@ItemsConstants.ItemsDetailsBlocked"></span>
+                    </label><br />
+                    <label class="col-form-label switch switch-label switch-pill switch-primary">
+                        <input asp-for="IsBlocked" type="checkbox" class="switch-input">
+                        <span class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.Yes)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.No)"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="form-group">
+                    <label asp-localized-key="@ItemsConstants.ItemsDetailsPicture"></label><br />
+                    <div class="text-center">
+                        @if (Model?.Id == 0)
+                        {
+                            <img id="imagePreview" data-toggle="tooltip" data-placement="top" title="@Html.GetLocalizedText(ItemsConstants.ItemsDetailsPictureAlt)" alt="@Html.GetLocalizedText(ItemsConstants.ItemsDetailsPictureDescription)" src="/images/nopic.png" width="200" class="img-thumbnail" />
+                            <input id="GeneralViewModel_Picture" type="file" asp-for="Picture" class="d-none" accept=".png, .jpg, .jpeg" />
+                        }
+                        else
+                        {
+                            <img id="thumbnailPreview" data-toggle="tooltip" data-placement="top" title="@Html.GetLocalizedText(ItemsConstants.ItemsDetailsPictureAlt)" alt="@Html.GetLocalizedText(ItemsConstants.ItemsDetailsPictureDescription)" onerror="this.onerror=null;this.src='/images/nopic.png';" src="@Model?.Thumbnail" width="200" class="img-thumbnail" />
+                            <input id="GeneralViewModel_Picture" type="file" asp-for="Picture" class="d-none" accept=".png, .jpg, .jpeg" />
+                        }
+
+                        <div class="upload--icons d-none">
+                            <a id="viewImg" href="#"><i class="fa fa-eye"></i></a>
+                            <a id="removeImg" href="#"><i class="fa fa-trash-o"></i></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm">
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@ItemsConstants.ItemsDetailsDescription"></span>
+                    </label>
+                    <textarea rows="3" asp-for="Description" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

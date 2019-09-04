@@ -1,0 +1,92 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.ClosureCode
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.ClosureCode
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Common.Enums
+@model ResultViewModel<ClosureCodeDetailViewModel>
+@{
+    var title = @Html.GetLocalizedText(ClosureCodeConstants.ClosureCodeCreatePageTitle);
+    ViewData["Title"] = title;
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-9">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2><span asp-localized-key="@ClosureCodeConstants.ClosureCodeCreatePageTitle"></span></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="ClosureCode" asp-action="Create" method="post" class="form-horizontal">
+                    <partial name="_ClosureCodeForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<popup Text="@Html.GetLocalizedText(ClosureCodeConstants.ClosureCodeCannotDeleteClosingCodeMessage)"
+       Id="confirmationModal"
+       show-cancel-button="false"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"></popup>
+@section scripts {
+
+    <script src="~/js/treeView.js"></script>
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/ClosureCode/closureCodeDetail.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                var childs = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.Childs));
+
+                function canDelete(item, confirmMethod) {
+                    if (item.Id === 0) {
+                        confirmMethod(item.TemporalIndex);
+                    } else {
+                        showSpinner();
+                        $.ajax({
+                            url: app.config.Urls.closingCodeCanDelete,
+                            type: 'GET',
+                            dataType: 'json',
+                            cache: false,
+                            data: { id: item.Id },
+                            success: function(data) {
+                                hideSpinner();
+                                if (data) {
+                                    confirmMethod(item.TemporalIndex);
+                                } else {
+                                    $("#confirmationModal").modal("toggle");
+                                    $("#confirmationModalConfirmSave").on("click",
+                                        function() {
+                                            $("#confirmationModal").modal("toggle");
+                                            $("#confirmationModalConfirmSave").off("click");
+                                        });
+                                }
+                            }
+                        });
+                    }
+                }
+
+                var options = {
+                    tree: {
+                        values: childs,
+                        searchPlaceHolder: '@Html.GetLocalizedText(LocalizationsConstants.Search)',
+                        placeHolderText:
+                            '@Html.GetLocalizedText(ClosureCodeConstants.ClosureCodeClosingCodeNamePlaceHolder)',
+                        placeHolderDescription:
+                            '@Html.GetLocalizedText(ClosureCodeConstants.ClosureCodeClosingCodeDescriptionPlaceHolder)',
+                        validationTextMessage: '@Html.GetLocalizedText(LocalizationsConstants.RequiredMessage)',
+                        canDeleteMethod: canDelete,
+                        stringAddNew: '@Html.GetLocalizedText(LocalizationsConstants.Add)',
+                        validationDescriptionMessage:'@Html.GetLocalizedText(LocalizationsConstants.RequiredMessage)',
+                    }
+                }
+                app.closureCode.detail.Init(options);
+
+                var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ClosingCodes, ActionEnum.Create).ToString().ToLower();
+                app.common.authorization.disable("btnSaveClosureCode", saveCreate);
+            });
+        })(jQuery);
+    </script>
+}

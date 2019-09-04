@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20181030094344_AddedModulesAndCustomerAssociation.cs" />
+    <Compile Remove="Migrations\20181030131539_SetUniqueOnModules.cs" />
+    <Compile Remove="Migrations\20190121081236_ToolsEntityDeleteLogic.cs" />
+    <Compile Remove="Migrations\20190123100543_PurchaseRateEntityDelete.cs" />
+    <Compile Remove="Migrations\20190225151510_RepetitionTables2.cs" />
+    <Compile Remove="Migrations\20190228115352_WorkOrderColumns.cs" />
+    <Compile Remove="Migrations\20190228141532_WorkOrderColumnsNameString.cs" />
+    <Compile Remove="Migrations\20190307082620_WorkOrderColumnsAndDefaults.cs" />
+    <Compile Remove="Migrations\20190315082004_Add_Relationship_Roles_ActionGroups_Actions.cs" />
+    <Compile Remove="Migrations\20190416071214_PrePostConditionAndTriggerTypes.cs" />
+    <Compile Remove="Repositories\EventCategories.cs" />
+    <Compile Remove="Repositories\IOriginsRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess.Common\DataAccess.Common.csproj" />
+    <ProjectReference Include="..\Group.Salto.Entities\Group.Salto.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

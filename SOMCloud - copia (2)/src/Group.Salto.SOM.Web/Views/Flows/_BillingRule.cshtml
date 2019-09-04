@@ -1,0 +1,25 @@
+﻿@using Group.Salto.ServiceLibrary.Common.Dtos.Base
+@using Group.Salto.Common.Constants.Flows
+@using Group.Salto.SOM.Web.Extensions
+
+@model BaseNameIdDto<int>
+
+<div class="row conditions-content mb-3" id="t-@Model.Id-BillingRule">
+    <div class="col p-0" id="t-@Model.Id-Rule-Edit">
+        <div class="col-12 conditions">
+            <div class="form-group row pt-2 pb-2 m-0">
+                <div class="col p-0" id="container-rule">
+                    <div><b asp-localized-key="@FlowsConstants.FlowsBillingRuleCondition"></b></div>
+                    <div class="col-10 pl-0" id="t-@Model.Id-BR-Condition"></div>
+                    <div class="collaps-icons float-right d-flex align-items-center text-right mr-3">
+                        <a id="br-rule-edit-@Model.Id" href="#" class="mr-2"><i class="fa fa-pencil"></i></a>
+                        <a id="br-rule-delete-@Model.Id" href="#"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                    <div><b asp-localized-key="@FlowsConstants.FlowsBillingRuleERPSystem"></b></div>
+                    <div id="t-@Model.Id-BR-ErpSystem"></div>
+                    <partial model="Model" name="_BillingRuleItemsContainer" />
+                </div>
+            </div>  
+        </div>
+    </div>
+</div>

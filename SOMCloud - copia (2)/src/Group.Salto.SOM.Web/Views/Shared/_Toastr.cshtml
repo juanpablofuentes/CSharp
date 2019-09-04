@@ -1,0 +1,28 @@
+﻿@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result
+@model IResultFeedbackViewModel
+
+@if (Model?.Feedbacks?.Feedbacks != null && Model.Feedbacks.Feedbacks.Any())
+{
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                    toastr.options.closeButton = '@Model.Feedbacks.ShowCloseButton';
+                    toastr.options.newestOnTop = '@Model.Feedbacks.ShowNewestOnTop';
+                    @foreach (FeedbackViewModel message in @Model.Feedbacks.Feedbacks.Where(f=>f!= null))
+                    {
+                        string toastTypeValue = message.FeedbackType.ToString("F").ToLower();
+                        @: var optionsOverride = { /* Add message specific options here */ };
+                        if (message.IsFixed)
+                        {
+                            @:optionsOverride.timeOut = 0;
+                            @:optionsOverride.extendedTimeout = 0;
+                        }
+                        @:toastr['@toastTypeValue']('@Html.GetLocalizedText(message.MessageKey)', '@Html.GetLocalizedText(message.TitleKey)', optionsOverride);
+                    }
+                });
+        })(jQuery);
+    </script>
+}
+
+

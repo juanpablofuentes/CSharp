@@ -1,0 +1,23 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Calendar
+@using Group.Salto.SOM.Web.Extensions
+<div class="tab-content">
+    <div class="row">
+        <div class="col mt-3">
+            <h5><span asp-localized-key="@CalendarsConstants.CalendarAddNewAvailableCalendar"></span></h5>
+            <select id="availableCalendars" name="availableCalendars" class="form-control"></select>
+            <div class="text-right mt-2">
+                <button id="addAvailableCalendars" class="btn btn-success">@Html.GetLocalizedText(LocalizationsConstants.Add)</button>
+            </div>
+            <hr />
+        </div>
+    </div>
+    <div id="calendarAccordionContainer" class="calendarAccordionContainer">
+        <div class="row">
+            <div class="col">
+                <h5> <span asp-localized-key="@CalendarsConstants.CalendarAssignedCalendars"></span></h5>
+            </div>
+        </div>
+        <div id="calendarAccordion"></div>
+    </div>
+</div>

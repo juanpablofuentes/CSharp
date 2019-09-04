@@ -1,0 +1,49 @@
+﻿@using Group.Salto.Common.Constants.People
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.People
+@using Group.Salto.Common.Constants
+
+@model PeopleCostEditViewModel
+
+<div class="modal fade" id="modalCostPeople" tabindex="-1" style="display:none;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@PeopleConstants.PeopleCostEditTitle</h4>
+            </div>
+            <div class="modal-body">
+                <form id="CostForm" name="CostForm" asp-controller="People" asp-action="CostCreate">
+                    <input id="IsValid" name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <div class="row">
+                        <input type="hidden" asp-for="CostId" class="form-control" readonly="readonly" />
+                        <input type="hidden" asp-for="PeopleId" class="form-control" readonly="readonly" />
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label><span asp-localized-key="@PeopleConstants.PeopleCostFormCostKM"></span></label><span class="required">*</span>
+                                <input asp-for="HourCost" type="number" class="form-control" placeholder="@Html.GetLocalizedText(PeopleConstants.PeopleCostFormCostKM)" />
+                                <span asp-validation-for="HourCost" class="text-danger"></span>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6 ml-0">
+                                    <label><span asp-localized-key="@PeopleConstants.PeopleCostFormStartDate"></span></label><span class="required">*</span>
+                                    <input asp-for="StartDate" type="text" class="form-control" readonly />
+                                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-6 mr-0">
+                                    <label><span asp-localized-key="@PeopleConstants.PeopleCostFormEndDate"></span></label>
+                                    <input asp-for="EndDate" type="text" class="form-control" readonly />
+                                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="PeopleCostConfirmCancel" class="btn btn-outline-danger" type="button" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.CancelText)</button>
+                <button id="PeopleCostConfirmSave" class="btn btn-primary" type="button">@Html.GetLocalizedText(LocalizationsConstants.SaveText)</button>
+            </div>
+        </div>
+    </div>
+</div>

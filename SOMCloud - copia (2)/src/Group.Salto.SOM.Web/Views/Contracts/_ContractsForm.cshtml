@@ -1,0 +1,112 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Contracts
+@using Group.Salto.Common.Constants.Contacts
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Contracts
+
+@model ContractEditViewModel
+
+<div class="row">
+    <div class="col-12 col-sm-6">
+        <div class="card border-primary">
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-sm-4"><span asp-localized-key="@ContractsConstants.ContractsEditObjectForm"></span><span class="required">*</span></label>
+                    <div class="col-sm-8">
+                        <input asp-for="Object" class="form-control" placeholder="@Html.GetLocalizedText(ContractsConstants.ContractsEditObjectForm)" />
+                        <span asp-validation-for="Object" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4"><span asp-localized-key="@ContractsConstants.ContractsEditStateForm"></span></label>
+                    <div class="col-sm-8">
+                        <label class="switch switch-som switch-label switch-pill switch-primary">
+                            <input asp-for="Active" type="checkbox" class="switch-input" id="WorkCheckState">
+                            <span class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.IsActive)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.Disabled)"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4"><span asp-localized-key="@ContractsConstants.ContractsEditReferenceForm"></span></label>
+                    <div class="col-sm-8">
+                        <input asp-for="Reference" class="form-control" placeholder="@Html.GetLocalizedText(ContractsConstants.ContractsEditReferenceForm)" />
+                        <span asp-validation-for="Reference" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label><span asp-localized-key="@ContractsConstants.ContractsEditTypeForm"></span><span class="required">*</span></label>
+                        <select asp-for="ContractTypeId" asp-items="@Model.ContractTypes" class="form-control"></select>
+                        <span asp-validation-for="ContractTypeId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label><span asp-localized-key="@ContractsConstants.ContractsEditInitDateForm"></span></label>
+                        <input asp-for="StartDate" type="text" class="form-control" placeholder="@Html.GetLocalizedText(ContractsConstants.ContractsEditInitDateForm)">
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label><span asp-localized-key="@ContractsConstants.ContractsEditEndDateForm"></span></label>
+                        <input asp-for="EndDate" type="text" class="form-control" placeholder="@Html.GetLocalizedText(ContractsConstants.ContractsEditEndDateForm)" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <label><span asp-localized-key="@ContractsConstants.ContractsEditObservationsForm"></span></label>
+                <textarea asp-for="Observations" class="form-control" placeholder="@Html.GetLocalizedText(ContractsConstants.ContractsEditObservationsForm)"></textarea>
+                <span asp-validation-for="Observations" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-12 col-sm-6">
+
+        <div class="form-group row">
+            <label class="col-sm-4"><span asp-localized-key="@ContractsConstants.ContractsEditClientIdForm"></span></label>
+            <div class="col-sm-8">
+                <select asp-for="ClientId" asp-items="@Model.Clients" class="form-control"></select>
+                <span asp-validation-for="ClientId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-4"><span asp-localized-key="@ContractsConstants.ContractsEditPhysicalAddressForm"></span></label>
+            <div class="col-sm-8">
+                <input asp-for="PhysicalAddress" class="form-control" placeholder="@Html.GetLocalizedText(ContractsConstants.ContractsEditPhysicalAddressForm)" />
+                <span asp-validation-for="PhysicalAddress" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-4"><span asp-localized-key="@ContractsConstants.ContractsEditSignerForm"></span></label>
+            <div class="col-sm-8">
+                <input asp-for="Signer" class="form-control" placeholder="@Html.GetLocalizedText(ContractsConstants.ContractsEditSignerForm)" />
+                <span asp-validation-for="Signer" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-4"><span asp-localized-key="@ContractsConstants.ContractsEditPeopleIdForm"></span></label>
+            <div class="col-sm-8">
+                <select asp-for="PeopleId" asp-items="@Model.People" class="form-control"></select>
+                <span asp-validation-for="PeopleId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <h4 class="card-title" asp-localized-key="@ContactsConstants.ContactsEditTitle"></h4>
+            <div id="container">
+                <div id="ContactContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>

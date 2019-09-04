@@ -1,0 +1,74 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.ExternalWorkOrderStatus
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.ExternalWorkOrderStatus
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Common.Enums
+@model ResultViewModel<ExternalWorkOrderStatusViewModel>
+@{
+    var title = @Html.GetLocalizedText(ExternalWorkOrderStatusConstants.ExternalWorkOrderStatusEditPageTitle);
+    ViewData["Title"] = title;
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-9">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2><span asp-localized-key="@ExternalWorkOrderStatusConstants.ExternalWorkOrderStatusEditPageTitle"></span>&nbsp;<span class="text-muted">#@Model.Data.Id</span></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="ExternalWorkOrderStatus" asp-action="Edit" method="post" class="form-horizontal">
+                    <partial name="_ExternalWorkOrderStatusForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/comboInputListSelector.js"></script>
+    <script src="~/lib/dhtmlx/suite/codebase/dhtmlx.js"></script>
+    <script src="~/js/ColorPicker/colorPickerInitializer.js"></script>
+    <script src="~/js/ExternalWorkOrderStatus/externalWorkOrderStatusDetail.js"></script>
+    <script src="~/js/ExternalWorkOrderStatus/externalWorkOrderStatusConstants.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                var selectedTranslations =
+                    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.TextTranslations));
+                var selectedDescriptionTranslations =
+                    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.DescriptionTranslations));
+
+                var initialColor = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.Color));
+
+                var options = {
+                    colorPickerOptions: {
+                        btnSelect : '@Html.GetLocalizedText(LocalizationsConstants.Select)',
+                        btnCancel: '@Html.GetLocalizedText(LocalizationsConstants.CancelText)',
+                        color: initialColor,
+                    },
+                    textTranslationsOptions: {
+                        selectedItems: selectedTranslations,
+                        column1Text: '@Html.GetLocalizedText(LocalizationsConstants.Languages)',
+                        column2Text: '@Html.GetLocalizedText(LocalizationsConstants.Description)',
+                        column3Text: '',
+                        inputPlaceHolder: '@Html.GetLocalizedText(LocalizationsConstants.Name)',
+                    },
+                    descriptionsTranslationsOptions: {
+                        selectedItems: selectedDescriptionTranslations,
+                        column1Text: '@Html.GetLocalizedText(LocalizationsConstants.Languages)',
+                        column2Text: '@Html.GetLocalizedText(LocalizationsConstants.Description)',
+                        column3Text: '',
+                        inputPlaceHolder: '@Html.GetLocalizedText(LocalizationsConstants.Description)',
+                    }
+                }
+                app.externalWorkOrderStatus.detail.Init(options);
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ExternalWOStatus, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSaveExternalWorkorderStatus", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

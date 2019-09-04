@@ -1,0 +1,196 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.SOM.Web", "Group.Salto.SOM.Web\Group.Salto.SOM.Web.csproj", "{14FC496B-0F73-4F01-BFBF-B3515CAF7B28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. UI", "01. UI", "{DA6D81B7-80B5-4AB1-8501-B210353B4638}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Business", "02. Business", "{5E351A35-0754-418C-9E5E-872641D59D36}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Infrastructure", "03. Infrastructure", "{7888C98B-CC7B-4EE6-9F69-93C008D4EDEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04. Crosscutting", "04. Crosscutting", "{C2E2FE97-4DCE-4C98-B454-2FD0F826CD0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05. Testing", "05. Testing", "{A3B2A240-9D6D-4955-B3C5-59CAA9C35D1C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.Log", "Group.Salto.Log\Group.Salto.Log.csproj", "{2B63760C-FEAD-4C3E-99AD-E09B5EB33742}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.Common", "Group.Salto.Common\Group.Salto.Common.csproj", "{9F119E6C-8D0D-417B-A1FD-43488C501E27}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.Agents", "Group.Salto.Agents\Group.Salto.Agents.csproj", "{69E68F6F-6C09-41B7-AE02-A957B29A41FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.DataAccess", "Group.Salto.DataAccess\Group.Salto.DataAccess.csproj", "{F12E84FA-236B-44D1-AB06-3190C61FB6E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.DataAccess.Tenant", "Group.Salto.Tenant.DataAccess\Group.Salto.DataAccess.Tenant.csproj", "{808B9F89-5A9E-421B-8691-102D464C5AB3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess.Common", "DataAccess.Common\DataAccess.Common.csproj", "{D7FC7B33-EEF5-44A3-981A-095FC77C3521}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.Entities.Tenant", "Group.Salto.Entities.Tenant\Group.Salto.Entities.Tenant.csproj", "{B62FF068-4E76-4267-9DAE-07A88F87AD08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.Entities", "Group.Salto.Entities\Group.Salto.Entities.csproj", "{D0F3FDAC-3F35-46B2-BD7A-B0E33962533F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.ServiceLibrary", "Group.Salto.ServiceLibrary\Group.Salto.ServiceLibrary.csproj", "{7DB37583-8CF0-4A29-92CC-DE5F477D1762}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.ServiceLibrary.Common", "Group.Salto.ServiceLibrary.Common\Group.Salto.ServiceLibrary.Common.csproj", "{0A6AD20D-EDA6-4A4A-A663-B415C563768B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.Infrastructure.Common", "Group.Salto.Infrascture.Common\Group.Salto.Infrastructure.Common.csproj", "{85EC459C-ABE7-4E0B-AC92-CB941FC77AEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.Ioc", "Group.Salto.Ioc\Group.Salto.Ioc.csproj", "{938D8587-5CAF-43E1-BB9E-A697906D2257}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06. Migration", "06. Migration", "{97DB4BF1-E210-498E-8A1A-50733434CFBA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.MigrationData", "Group.Salto.MigrationData\Group.Salto.MigrationData.csproj", "{7A483310-7D1D-425B-86EC-8F3061D17428}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.Testing.HelpersTesting", "..\test\Group.Salto.Testing.HelpersTesting\Group.Salto.Testing.HelpersTesting.csproj", "{DCD58E36-F96F-473A-B7BD-BC59FF48B375}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "07. Resources", "07. Resources", "{50AEC35B-5F6F-41D4-969D-81319B5FD305}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{B4754D5F-7256-485B-A080-D97CBA40F492}"
+	ProjectSection(SolutionItems) = preProject
+		Group.Salto.Resources\Scripts\Insert_ActionGroups.sql = Group.Salto.Resources\Scripts\Insert_ActionGroups.sql
+		Group.Salto.Resources\Scripts\Insert_BillStatus.sql = Group.Salto.Resources\Scripts\Insert_BillStatus.sql
+		Group.Salto.Resources\Scripts\Insert_ExtraFieldTypes.sql = Group.Salto.Resources\Scripts\Insert_ExtraFieldTypes.sql
+		Group.Salto.Resources\Scripts\Insert_ItemsSerialNumbersStatuses.sql = Group.Salto.Resources\Scripts\Insert_ItemsSerialNumbersStatuses.sql
+		Group.Salto.Resources\Scripts\Insert_PostconditionTypes.sql = Group.Salto.Resources\Scripts\Insert_PostconditionTypes.sql
+		Group.Salto.Resources\Scripts\Insert_PreconditionTypes.sql = Group.Salto.Resources\Scripts\Insert_PreconditionTypes.sql
+		Group.Salto.Resources\Scripts\Insert_RepetitionConfigurationDefault.sql = Group.Salto.Resources\Scripts\Insert_RepetitionConfigurationDefault.sql
+		Group.Salto.Resources\Scripts\Insert_TasksTypes.sql = Group.Salto.Resources\Scripts\Insert_TasksTypes.sql
+		Group.Salto.Resources\Scripts\Insert_Translations_CA.sql = Group.Salto.Resources\Scripts\Insert_Translations_CA.sql
+		Group.Salto.Resources\Scripts\Insert_Translations_EN.sql = Group.Salto.Resources\Scripts\Insert_Translations_EN.sql
+		Group.Salto.Resources\Scripts\Insert_Translations_ES.sql = Group.Salto.Resources\Scripts\Insert_Translations_ES.sql
+		Group.Salto.Resources\Scripts\Insert_TriggerTypes.sql = Group.Salto.Resources\Scripts\Insert_TriggerTypes.sql
+		Group.Salto.Resources\Scripts\Insert_WarehouseMovementTypes.sql = Group.Salto.Resources\Scripts\Insert_WarehouseMovementTypes.sql
+		Group.Salto.Resources\Scripts\Insert_WorkForm.sql = Group.Salto.Resources\Scripts\Insert_WorkForm.sql
+		Group.Salto.Resources\Scripts\InsertDefaultItemTypes_Master.sql = Group.Salto.Resources\Scripts\InsertDefaultItemTypes_Master.sql
+		Group.Salto.Resources\Scripts\InsertExpenseTicketStatuses.sql = Group.Salto.Resources\Scripts\InsertExpenseTicketStatuses.sql
+		Group.Salto.Resources\Scripts\InsertLanguages.sql = Group.Salto.Resources\Scripts\InsertLanguages.sql
+		Group.Salto.Resources\Scripts\InsertReferenceTimeSla.sql = Group.Salto.Resources\Scripts\InsertReferenceTimeSla.sql
+		Group.Salto.Resources\Scripts\Inserts_AspNetRoles.sql = Group.Salto.Resources\Scripts\Inserts_AspNetRoles.sql
+		Group.Salto.Resources\Scripts\Inserts_Modules.sql = Group.Salto.Resources\Scripts\Inserts_Modules.sql
+		Group.Salto.Resources\Scripts\Inserts_RolesActionGroupsActionsTenant.sql = Group.Salto.Resources\Scripts\Inserts_RolesActionGroupsActionsTenant.sql
+		Group.Salto.Resources\Scripts\Inserts_RolesTenants.sql = Group.Salto.Resources\Scripts\Inserts_RolesTenants.sql
+		Group.Salto.Resources\Scripts\InsertWorkOrderColumns.sql = Group.Salto.Resources\Scripts\InsertWorkOrderColumns.sql
+		Group.Salto.Resources\Scripts\InsertWorkOrderDefaultColumns.sql = Group.Salto.Resources\Scripts\InsertWorkOrderDefaultColumns.sql
+		Group.Salto.Resources\Scripts\Update_Projects_IsActive.sql = Group.Salto.Resources\Scripts\Update_Projects_IsActive.sql
+		Group.Salto.Resources\Scripts\UpdateClosingCodes.sql = Group.Salto.Resources\Scripts\UpdateClosingCodes.sql
+		Group.Salto.Resources\Scripts\UpdateColumnsSla.sql = Group.Salto.Resources\Scripts\UpdateColumnsSla.sql
+		Group.Salto.Resources\Scripts\UpdateSla.sql = Group.Salto.Resources\Scripts\UpdateSla.sql
+		Group.Salto.Resources\Scripts\UpdateWorkOrderTypes.sql = Group.Salto.Resources\Scripts\UpdateWorkOrderTypes.sql
+		Group.Salto.Resources\Scripts\WorkOrderListIndex.sql = Group.Salto.Resources\Scripts\WorkOrderListIndex.sql
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.Controls", "Group.Salto.Controls\Group.Salto.Controls.csproj", "{6DFA9C75-6171-4E91-A864-EF0902F0367E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.Extensions", "Group.Salto.Extensions\Group.Salto.Extensions.csproj", "{3D0E029F-BB7D-4321-8843-8BA58362C769}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group.Salto.SOM.Mobility", "Group.Salto.SOM.Mobility\Group.Salto.SOM.Mobility.csproj", "{CE6FDDF5-7152-457D-8B99-8E6329BCD3E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14FC496B-0F73-4F01-BFBF-B3515CAF7B28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14FC496B-0F73-4F01-BFBF-B3515CAF7B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14FC496B-0F73-4F01-BFBF-B3515CAF7B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14FC496B-0F73-4F01-BFBF-B3515CAF7B28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B63760C-FEAD-4C3E-99AD-E09B5EB33742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B63760C-FEAD-4C3E-99AD-E09B5EB33742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B63760C-FEAD-4C3E-99AD-E09B5EB33742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B63760C-FEAD-4C3E-99AD-E09B5EB33742}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F119E6C-8D0D-417B-A1FD-43488C501E27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F119E6C-8D0D-417B-A1FD-43488C501E27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F119E6C-8D0D-417B-A1FD-43488C501E27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F119E6C-8D0D-417B-A1FD-43488C501E27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69E68F6F-6C09-41B7-AE02-A957B29A41FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69E68F6F-6C09-41B7-AE02-A957B29A41FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69E68F6F-6C09-41B7-AE02-A957B29A41FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69E68F6F-6C09-41B7-AE02-A957B29A41FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F12E84FA-236B-44D1-AB06-3190C61FB6E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F12E84FA-236B-44D1-AB06-3190C61FB6E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F12E84FA-236B-44D1-AB06-3190C61FB6E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F12E84FA-236B-44D1-AB06-3190C61FB6E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{808B9F89-5A9E-421B-8691-102D464C5AB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{808B9F89-5A9E-421B-8691-102D464C5AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{808B9F89-5A9E-421B-8691-102D464C5AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{808B9F89-5A9E-421B-8691-102D464C5AB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7FC7B33-EEF5-44A3-981A-095FC77C3521}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7FC7B33-EEF5-44A3-981A-095FC77C3521}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7FC7B33-EEF5-44A3-981A-095FC77C3521}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7FC7B33-EEF5-44A3-981A-095FC77C3521}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B62FF068-4E76-4267-9DAE-07A88F87AD08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B62FF068-4E76-4267-9DAE-07A88F87AD08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B62FF068-4E76-4267-9DAE-07A88F87AD08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B62FF068-4E76-4267-9DAE-07A88F87AD08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0F3FDAC-3F35-46B2-BD7A-B0E33962533F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0F3FDAC-3F35-46B2-BD7A-B0E33962533F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0F3FDAC-3F35-46B2-BD7A-B0E33962533F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0F3FDAC-3F35-46B2-BD7A-B0E33962533F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DB37583-8CF0-4A29-92CC-DE5F477D1762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DB37583-8CF0-4A29-92CC-DE5F477D1762}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DB37583-8CF0-4A29-92CC-DE5F477D1762}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DB37583-8CF0-4A29-92CC-DE5F477D1762}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A6AD20D-EDA6-4A4A-A663-B415C563768B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A6AD20D-EDA6-4A4A-A663-B415C563768B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A6AD20D-EDA6-4A4A-A663-B415C563768B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A6AD20D-EDA6-4A4A-A663-B415C563768B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85EC459C-ABE7-4E0B-AC92-CB941FC77AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85EC459C-ABE7-4E0B-AC92-CB941FC77AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85EC459C-ABE7-4E0B-AC92-CB941FC77AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85EC459C-ABE7-4E0B-AC92-CB941FC77AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{938D8587-5CAF-43E1-BB9E-A697906D2257}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{938D8587-5CAF-43E1-BB9E-A697906D2257}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{938D8587-5CAF-43E1-BB9E-A697906D2257}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{938D8587-5CAF-43E1-BB9E-A697906D2257}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A483310-7D1D-425B-86EC-8F3061D17428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A483310-7D1D-425B-86EC-8F3061D17428}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A483310-7D1D-425B-86EC-8F3061D17428}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A483310-7D1D-425B-86EC-8F3061D17428}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCD58E36-F96F-473A-B7BD-BC59FF48B375}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCD58E36-F96F-473A-B7BD-BC59FF48B375}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCD58E36-F96F-473A-B7BD-BC59FF48B375}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCD58E36-F96F-473A-B7BD-BC59FF48B375}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DFA9C75-6171-4E91-A864-EF0902F0367E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DFA9C75-6171-4E91-A864-EF0902F0367E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DFA9C75-6171-4E91-A864-EF0902F0367E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DFA9C75-6171-4E91-A864-EF0902F0367E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D0E029F-BB7D-4321-8843-8BA58362C769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D0E029F-BB7D-4321-8843-8BA58362C769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D0E029F-BB7D-4321-8843-8BA58362C769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D0E029F-BB7D-4321-8843-8BA58362C769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE6FDDF5-7152-457D-8B99-8E6329BCD3E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE6FDDF5-7152-457D-8B99-8E6329BCD3E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE6FDDF5-7152-457D-8B99-8E6329BCD3E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE6FDDF5-7152-457D-8B99-8E6329BCD3E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{14FC496B-0F73-4F01-BFBF-B3515CAF7B28} = {DA6D81B7-80B5-4AB1-8501-B210353B4638}
+		{2B63760C-FEAD-4C3E-99AD-E09B5EB33742} = {C2E2FE97-4DCE-4C98-B454-2FD0F826CD0D}
+		{9F119E6C-8D0D-417B-A1FD-43488C501E27} = {C2E2FE97-4DCE-4C98-B454-2FD0F826CD0D}
+		{69E68F6F-6C09-41B7-AE02-A957B29A41FB} = {7888C98B-CC7B-4EE6-9F69-93C008D4EDEF}
+		{F12E84FA-236B-44D1-AB06-3190C61FB6E4} = {7888C98B-CC7B-4EE6-9F69-93C008D4EDEF}
+		{808B9F89-5A9E-421B-8691-102D464C5AB3} = {7888C98B-CC7B-4EE6-9F69-93C008D4EDEF}
+		{D7FC7B33-EEF5-44A3-981A-095FC77C3521} = {7888C98B-CC7B-4EE6-9F69-93C008D4EDEF}
+		{B62FF068-4E76-4267-9DAE-07A88F87AD08} = {5E351A35-0754-418C-9E5E-872641D59D36}
+		{D0F3FDAC-3F35-46B2-BD7A-B0E33962533F} = {5E351A35-0754-418C-9E5E-872641D59D36}
+		{7DB37583-8CF0-4A29-92CC-DE5F477D1762} = {5E351A35-0754-418C-9E5E-872641D59D36}
+		{0A6AD20D-EDA6-4A4A-A663-B415C563768B} = {5E351A35-0754-418C-9E5E-872641D59D36}
+		{85EC459C-ABE7-4E0B-AC92-CB941FC77AEB} = {7888C98B-CC7B-4EE6-9F69-93C008D4EDEF}
+		{938D8587-5CAF-43E1-BB9E-A697906D2257} = {5E351A35-0754-418C-9E5E-872641D59D36}
+		{7A483310-7D1D-425B-86EC-8F3061D17428} = {97DB4BF1-E210-498E-8A1A-50733434CFBA}
+		{DCD58E36-F96F-473A-B7BD-BC59FF48B375} = {A3B2A240-9D6D-4955-B3C5-59CAA9C35D1C}
+		{B4754D5F-7256-485B-A080-D97CBA40F492} = {50AEC35B-5F6F-41D4-969D-81319B5FD305}
+		{6DFA9C75-6171-4E91-A864-EF0902F0367E} = {C2E2FE97-4DCE-4C98-B454-2FD0F826CD0D}
+		{3D0E029F-BB7D-4321-8843-8BA58362C769} = {C2E2FE97-4DCE-4C98-B454-2FD0F826CD0D}
+		{CE6FDDF5-7152-457D-8B99-8E6329BCD3E4} = {DA6D81B7-80B5-4AB1-8501-B210353B4638}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05F803C4-5082-4C1C-902B-4AA177A2090F}
+	EndGlobalSection
+EndGlobal

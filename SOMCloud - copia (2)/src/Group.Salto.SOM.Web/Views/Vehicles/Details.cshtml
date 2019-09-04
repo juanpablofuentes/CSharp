@@ -1,0 +1,42 @@
+﻿@using Group.Salto.SOM.Web.Models.Vehicles;
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Extensions;
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Constants.Vehicles;
+@using Group.Salto.Common.Enums;
+
+@model ResultViewModel<VehicleDetailsViewModel>
+
+@{
+    ViewData["Title"] = @Html.GetLocalizedText(VehiclesConstants.VehiclesDetailsTitle);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-6">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="VehiclesDetailsTitle">Vehicle Details</h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Vehicles" asp-action="Update" method="post" class="form-horizontal">
+                    <partial name="_VehiclesForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/Common/authorization.js"></script>
+
+    <script>
+        (function($) {
+            $(document).ready(function() {
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Vehicles, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSaveVehicles", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

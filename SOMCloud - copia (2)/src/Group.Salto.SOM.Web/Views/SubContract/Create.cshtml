@@ -1,0 +1,82 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.SubContracts
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.SOM.Web.Models.SubContract
+@using Group.Salto.Common.Enums
+@model ResultViewModel<SubContractDetailViewModel>
+@{
+    var title = @Html.GetLocalizedText(SubContractsConstants.SubContractEditPageTitle);
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-9">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="@SubContractsConstants.SubContractEditPageTitle"></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="SubContract" asp-action="Create" method="post" class="form-horizontal">
+                    <partial name="_SubContractForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/MultiComboListSelector.js"></script>
+    <script src="~/js/AutocompleteControl.js"></script>
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/AutoCompleteListSelector.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/SubContracts/SubContractDetail.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+               var selectedKnowledge =
+                    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.KnowledgeSelected));
+                var peopleSelected =
+                    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.PeopleSelected));
+                var responsibles =
+                    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.ResponsiblesSelected));
+                function getPeopleFilter(text) {
+                    var data = {
+                        QueryType: app.constants.QueryTypePeopleWithoutCompanyAndSubContractor,
+                        QueryTypeParameters: {
+                            Value : text
+                        }
+                    }
+                    return data;
+                }
+                var options = {
+                    knowledgeCombo: {
+                        selectedItems: selectedKnowledge,
+                        urlPrincipalCombo: '@Url.Action("GetKnowledges", "Knowledge")',
+                        urlSecondaryCombo: '@Url.Action("GetMaturities", "Maturity")',
+                        column1Text: '#',
+                        column2Text: '@Html.GetLocalizedText(LocalizationsConstants.Name)',
+                        column3Text: '@Html.GetLocalizedText(LocalizationsConstants.Maturity)'
+                    },
+                    responsiblesCombo: {
+                        selectedItems: responsibles,
+                        column1Text: '#',
+                        column2Text: '@Html.GetLocalizedText(LocalizationsConstants.FullName)',
+                        getDataMethod: getPeopleFilter
+                    },
+                    peopleCombo: {
+                        selectedItems: peopleSelected,
+                        minimumCharacters: 3,
+                        column1Text: '#',
+                        column2Text: '@Html.GetLocalizedText(LocalizationsConstants.FullName)',
+                        getDataMethod: getPeopleFilter
+                    }
+                };
+                app.subContract.detail.Init(options);
+                var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ThirdParty, ActionEnum.Create).ToString().ToLower();
+                app.common.authorization.disable("btsSaveSubcontract", saveCreate);
+            });
+        })(jQuery);
+    </script>
+}

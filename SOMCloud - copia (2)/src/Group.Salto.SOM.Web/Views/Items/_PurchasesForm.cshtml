@@ -1,0 +1,43 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Items
+@using Group.Salto.SOM.Web.Models.Items
+@using Group.Salto.SOM.Web.Extensions
+@model ItemPurchasesViewModel
+
+<div class="row">
+    <div class="col-sm-12">
+        <b asp-localized-key="@ItemsConstants.ItemsDetailsCurrentPurchaseRates"></b>
+    </div>
+    @for (int i = 0; i < Model?.PurchaseRates?.Count; i++)
+    {
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="form-group">
+                <label>@Model?.PurchaseRates[i].Name</label>
+                <input type="hidden" asp-for="@Model.PurchaseRates[i].Name" value="@Model?.PurchaseRates[i]?.Name" />
+                <input type="hidden" asp-for="@Model.PurchaseRates[i].Id" value="@Model?.PurchaseRates[i]?.Id" />
+                <div class="input-group">
+                    <input asp-for="@Model.PurchaseRates[i].Value" class="form-control" placeholder="@Html.GetLocalizedText(ItemsConstants.ItemsDetailsPlaceHolderPurchases)" />
+                    <div class="input-group-append">
+                        <label class="input-group-text">€</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @for (int i = 0; i < Model?.OtherPurchasesRates?.Count; i++)
+    {
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="form-group">
+                <label>@Model.OtherPurchasesRates[i].Name</label>
+                <input type="hidden" asp-for="@Model.OtherPurchasesRates[i].Name" value="@Model?.OtherPurchasesRates[i]?.Name" />
+                <input type="hidden" asp-for="@Model.OtherPurchasesRates[i].Id" value="@Model?.OtherPurchasesRates[i]?.Id" />
+                <div class="input-group">
+                    <input asp-for="@Model.OtherPurchasesRates[i].Value" class="form-control" placeholder="@Html.GetLocalizedText(ItemsConstants.ItemsDetailsPlaceHolderPurchases)" />
+                    <div class="input-group-append">
+                        <label class="input-group-text">€</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

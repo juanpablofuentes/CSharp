@@ -1,0 +1,42 @@
+﻿@using Group.Salto.SOM.Web.Models.Symptom;
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Extensions;
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Constants.Symptom;
+@using Group.Salto.Common.Enums
+
+@model ResultViewModel<SymptomDetailViewModel>
+
+@{
+    ViewData["Title"] = @Html.GetLocalizedText(SymptomConstants.SymptomDetailsTitle);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-9">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2><span asp-localized-key="@SymptomConstants.SymptomDetailsTitle"></span>&nbsp;<small class="text-muted">#@Model?.Data?.Symptom.Id</small></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Symptom" asp-action="Edit" method="post" class="form-horizontal">
+                    <partial name="_SymptomForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/Common/authorization.js"></script>
+
+    <script>
+        (function($) {
+            $(document).ready(function() {
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Symptom, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSaveSymptom", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

@@ -1,0 +1,38 @@
+﻿@using Group.Salto.Common.Constants.SubFamilies
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Models.Families
+
+@model SubFamiliesViewModel
+<div class="modal fade" id="SubFamiliesModal" tabindex="-1" style="display:none;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="FamiliesForm" name="FamiliesForm" asp-controller="Families" asp-action="SubFamilies">
+                    <input id="IsValid" name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <input type="hidden" asp-for="SubFamiliesId" class="form-control" readonly="readonly" />
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label><span asp-localized-key="@SubFamiliesConstants.SubFamiliesGridTheadName"></span><span class="required">*</span></label>
+                                <input asp-for="SubFamiliesName" class="form-control" placeholder="@Html.GetLocalizedText(SubFamiliesConstants.SubFamiliesGridTheadName)" />
+                                <span asp-validation-for="SubFamiliesName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label><span  asp-localized-key="@SubFamiliesConstants.SubFamiliesGridTheadDescription"></span></label>
+                                <input asp-for="SubFamiliesDescription" class="form-control" placeholder="@Html.GetLocalizedText(SubFamiliesConstants.SubFamiliesGridTheadDescription)" />
+                                <span asp-validation-for="SubFamiliesDescription" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="SubFamiliesConfirmCancel" class="btn btn-outline-danger" type="button" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.CancelText)</button>
+                <button id="SubFamiliesConfirmSave" class="btn btn-primary" type="button">@Html.GetLocalizedText(LocalizationsConstants.SaveText)</button>
+            </div>
+        </div>
+    </div>
+</div>

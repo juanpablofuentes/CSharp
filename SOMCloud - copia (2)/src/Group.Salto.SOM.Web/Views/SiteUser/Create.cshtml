@@ -1,0 +1,28 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.SiteUser
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.SiteUser
+@using Group.Salto.SOM.Web.Models.Result
+@model ResultViewModel<SiteUserDetailViewModel>
+@{
+    var title = @Html.GetLocalizedText(SiteUserConstants.SiteUserCreatePageTitle);
+    ViewData["Title"] = title;
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-6">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2><span asp-localized-key="@SiteUserConstants.SiteUserCreatePageTitle"></span></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="SiteUser" asp-action="Create" method="post" class="form-horizontal">
+                    <partial name="_SiteUserForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    }

@@ -1,0 +1,813 @@
+﻿@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Enums;
+
+@{
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<nav class="sidebar-nav">
+    <ul class="nav">
+        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.WorkOrders, ActionEnum.View))
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="WorkOrder" asp-action="Index">
+                    <i class="nav-icon som-icon icon-som-peticiones"></i> @Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuWorkOrders)
+                </a>
+            </li>
+        }
+
+        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Customers, ActionEnum.View))
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Customer" asp-action="Index" asp-route-view="base-breadcrumb">
+                    <i class="nav-icon fa fa-user-circle-o"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuCustomers)
+                </a>
+            </li>
+        }
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon som-icon icon-som-flujo_roles"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuClients)
+            </a>
+            <ul class="nav-dropdown-items">
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Clients, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Clients" asp-action="Index" asp-route-view="base-breadcrumb">
+                            <i class="nav-icon icon-list"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuClientList)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Contracts, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Contracts" asp-action="Index" asp-route-view="base-breadcrumb">
+                            <i class="nav-icon icon-docs"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuContracts)
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+        <li class="nav-title">@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuTitleSettings)</li>
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon som-icon icon-som-gear2"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuTitleConfiguration)
+            </a>
+            <ul class="nav-dropdown-items">
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Project, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Index" asp-route-view="base-breadcrumb">
+                            <i class="nav-icon som-icon icon-som-proyectos"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuProjects)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.WorkFlow, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Flows" asp-action="Index" asp-route-view="Index">
+                            <i class="nav-icon fa fa-cogs fa-lg"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuWorkflow)
+                        </a>
+                    </li>
+                }
+
+                @*TODO:No existe acción*@
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="RepetitionParameter" asp-action="Index" asp-route-view="Index">
+                        <i class="material-icons">
+                            repeat
+                        </i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuRepetitionParameter)
+                    </a>
+                </li>
+
+                <li class="nav-title">@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuWorkOrders)</li>
+
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link nav-dropdown-toggle" href="#">
+                        <i class="nav-icon fa fa-archive fa-lg"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuTitleCollections)
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.WOCategoryCollection, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="WorkOrderCategoriesCollection" asp-action="Index" asp-route-view="base-breadcrumb">
+                                    <i class="nav-icon fa fa-list-ul fa-lg"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuWorkOrderCategoriesCollections)
+                                </a>
+                            </li>
+                        }
+
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.WOCategory, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="WorkOrderCategory" asp-action="Index" asp-route-view="base-breadcrumb">
+                                    <i class="nav-icon fa fa-th-large fa-lg"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuWorkOrderCategories)
+                                </a>
+                            </li>
+                        }
+
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.WOTypesCollection, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="CollectionTypeWorkOrders" asp-action="Index" asp-route-view="base-collapse">
+                                    <i class="nav-icon fa fa-bookmark fa-lg"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuTypes)
+                                </a>
+                            </li>
+                        }
+
+
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.WOSla, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Sla" asp-action="Index" asp-route-view="base-breadcrumb">
+                                    <i class="nav-icon fa fa-clock-o fa-lg"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuSlas)
+                                </a>
+                            </li>
+                        }
+
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.StopSlaReason, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="base-breadcrumb">
+                                    <i class="nav-icon fa fa-warning fa-lg"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenusStopReasonsSla)
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </li>
+
+                <li class="nav-title">@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuTitleForms)</li>
+
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link nav-dropdown-toggle" href="#">
+                        <i class="nav-icon nav-icon icon-note"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuForms)
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ExtraFields, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="ExtraFields" asp-action="Index" asp-route-view="base-forms">
+                                    <i class="nav-icon fa fa-columns fa-lg"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuExtraFields)
+                                </a>
+                            </li>
+                        }
+
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ExtraFieldsCollection, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="CollectionsExtraField" asp-action="Index" asp-route-view="base-jumbotron">
+                                    <i class="nav-icon icon-list icons"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuExtraFieldsList)
+                                </a>
+                            </li>
+                        }
+
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.FormStatus, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="base-list-group">
+                                    <i class="nav-icon icon-puzzle"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuFormsStates)
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ClosingCodes, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="ClosureCode" asp-action="Index" asp-route-view="base-navs">
+                            <i class="nav-icon fa fa-lock"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuClosingCodes)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Origin, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Origins" asp-action="Index" asp-route-view="base-pagination">
+                            <i class="nav-icon fa fa-inbox"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuOrigins)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Symptom, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Symptom" asp-action="Index" asp-route-view="base-pagination">
+                            <i class="nav-icon fa fa-window-maximize"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuSymptoms)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.SymptomCollection, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="SymptomCollection" asp-action="Index" asp-route-view="base-pagination">
+                            <i class="nav-icon fa fa-window-restore"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuSymptomCollection)
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon som-icon icon-som-recurso"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuTitleResources)
+            </a>
+
+            <ul class="nav-dropdown-items">
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.People, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="People" asp-action="Index">
+                            <i class="nav-icon icon-user"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuPeople)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.PeopleSearch, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="PeopleVisible" asp-action="Index">
+                            <i class="nav-icon icon-user"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuPeopleQuery)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.PeopleGroup, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="PeopleCollection" asp-action="Index" asp-route-view="Index">
+                            <i class="nav-icon icon-people"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuGroups)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ThirdParty, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="SubContract" asp-action="Index" asp-route-view="base-carousel">
+                            <i class="nav-icon fa fa-industry"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuSubcontractors)
+                        </a>
+                    </li>
+                }
+
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Skills, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Knowledge" asp-action="Index" asp-route-view="base-collapse">
+                            <i class="nav-icon icon-graduation"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuKnowledge)
+                        </a>
+                    </li>
+                }
+
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.WorkCenters, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="WorkCenter" asp-action="Index" asp-route-view="base-forms">
+                            <i class="nav-icon fa fa-television"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuWorkCenters)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Companies, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Company" asp-action="Index" asp-route-view="base-forms">
+                            <i class="nav-icon fa fa-building-o"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuCompanies)
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon som-icon icon-som-sistemas"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuTitleSystem)
+            </a>
+            <ul class="nav-dropdown-items">
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Modules, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Module" asp-action="Index" asp-route-view="base-breadcrumb">
+                            <i class="nav-icon icon-wrench"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuModule)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Actions, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Actions" asp-action="Index" asp-route-view="base-breadcrumb">
+                            <i class="nav-icon icon-wrench"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuActions)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Profiles, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="Index">
+                            <i class="nav-icon icon-people"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuProfiles)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Permisions, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Permissions" asp-action="Index" asp-route-view="Index">
+                            <i class="nav-icon fa fa-shield"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuPermissions)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Roles, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Rol" asp-action="Index" asp-route-view="base-carousel">
+                            <i class="nav-icon fa fa-user-circle-o"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuRoles)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.RoleTenant, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="RolTenant" asp-action="Index" asp-route-view="base-carousel">
+                            <i class="nav-icon fa fa-user-circle-o"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuRolesTenant)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Queue, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Queue" asp-action="Index" asp-route-view="base-collapse">
+                            <i class="nav-icon icon-options"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuQueues)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.WOStatus, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="WorkOrderStatus" asp-action="Index" asp-route-view="base-forms">
+                            <i class="nav-icon fa fa-tachometer"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuStatusWorkOrders)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ExternalWOStatus, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="ExternalWorkOrderStatus" asp-action="Index" asp-route-view="base-forms">
+                            <i class="nav-icon fa fa-tachometer"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuStatusExternalWorkOrders)
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon som-icon icon-som-geolocalizacion"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuTitleLocalization)
+            </a>
+            <ul class="nav-dropdown-items">
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Countries, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="notifications-alerts">
+                            <i class="nav-icon fa fa-globe"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuCountries)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Zones, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Zones" asp-action="Index" asp-route-view="notifications-badge">
+                            <i class="nav-icon fa fa-map"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuZones)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ClientSites, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="FinalClients" asp-action="Index" asp-route-view="notifications-modals">
+                            <i class="nav-icon fa fa-map-marker"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuClientSite)
+                        </a>
+                    </li>
+                }
+
+                @*TODO:No existe acción*@
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="notifications-modals">
+                        <i class="nav-icon icon-user"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuUserProfileSite)
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon icon-calendar"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuTitleCalendar)
+            </a>
+            <ul class="nav-dropdown-items">
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.EventCategories, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="EventCategories" asp-action="Index" asp-route-view="icons-coreui-icons">
+                            <i class="nav-icon icon-clock"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuEventCategory)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.GlobalCalendar, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Calendar" asp-action="Index" asp-route-view="icons-flags">
+                            <i class="nav-icon fa fa-location-arrow"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuGlobalCalendars)
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon som-icon icon-som-logistica"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuTitleLogistics)
+            </a>
+            <ul class="nav-dropdown-items">
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Items, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Items" asp-action="Index" asp-route-view="icons-coreui-icons">
+                            <i class="nav-icon fa fa-cubes"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuArticles)
+                        </a>
+                    </li>
+                }
+
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link nav-dropdown-toggle" href="#">
+                        <i class="nav-icon fa fa-share-alt"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuAssets)
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Assets, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Assets" asp-action="Index" asp-route-view="base-forms">
+                                    <i class="nav-icon fa fa-list-alt"></i>@Html.GetLocalizedText(MenuLocalizationConstants.AssetsListPageTitle)
+                                </a>
+                            </li>
+                        }
+
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.IoTDevices, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-font-awesome">
+                                    <i class="nav-icon icon-screen-smartphone icons"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuIoTDevices)
+                                </a>
+                            </li>
+                        }
+
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Brands, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Brands" asp-action="Index" asp-route-view="icons-font-awesome">
+                                    <i class="nav-icon fa fa-industry"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuBrands)
+                                </a>
+                            </li>
+                        }
+
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Uses, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-font-awesome">
+                                    <i class="nav-icon fa fa-spoon"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuUse)
+                                </a>
+                            </li>
+                        }
+
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.AssetStatus, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="AssetStatuses" asp-action="Index" asp-route-view="icons-font-awesome">
+                                    <i class="nav-icon fa fa-level-up"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuActivesStates)
+                                </a>
+                            </li>
+                        }
+
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.AssetFamilies, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Families" asp-action="Index" asp-route-view="icons-font-awesome">
+                                    <i class="nav-icon fa fa-object-group"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuFamilies)
+                                </a>
+                            </li>
+                        }
+
+                        @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.AssetImport, ActionEnum.View))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-font-awesome">
+                                    <i class="nav-icon fa fa-sign-in"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuImport)
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Vehicles, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Vehicles" asp-action="Index" asp-route-view="icons-font-awesome">
+                            <i class="nav-icon fa fa-car"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuVehicles)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Tools, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Tools" asp-action="Index" asp-route-view="icons-simple-line-icons">
+                            <i class="nav-icon fa fa-wrench"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuTools)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ToolType, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="ToolsType" asp-action="Index" asp-route-view="icons-simple-line-icons">
+                            <i class="nav-icon fa fa-cog"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuTypeTools)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Wharehouses, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Warehouses" asp-action="Index" asp-route-view="icons-simple-line-icons">
+                            <i class="nav-icon fa fa-building"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuWarehouses)
+                        </a>
+                    </li>
+                }
+
+            </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon som-icon icon-som-facturacion"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuTitleManagement)
+            </a>
+            <ul class="nav-dropdown-items">
+                <li class="nav-item">
+                    @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.PointRates, ActionEnum.View))
+                    {
+                        <a class="nav-link" asp-area="" asp-controller="PointRate" asp-action="Index" asp-route-view="icons-coreui-icons">
+                            <i class="nav-icon fa fa-thumbs-up"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuPointsRates)
+                        </a>
+                    }
+
+                    @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.CostRate, ActionEnum.View))
+                    {
+                        <a class="nav-link" asp-area="" asp-controller="PurchaseRate" asp-action="Index" asp-route-view="icons-flags">
+                            <i class="nav-icon fa fa-bar-chart-o"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuCostRate)
+                        </a>
+                    }
+
+                </li>
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.SalesRate, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="SalesRate" asp-action="Index" asp-route-view="icons-font-awesome">
+                            <i class="nav-icon fa fa-line-chart"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuSalesRate)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.DeliveryNotes, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Bill" asp-action="Index" asp-route-view="icons-simple-line-icons">
+                            <i class="nav-icon fa fa-clipboard"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuManagementDeliveryNotes)
+                        </a>
+                    </li>
+                }
+
+            </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon som-icon icon-som-gastos"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuTitleExpenseReport)
+            </a>
+            <ul class="nav-dropdown-items">
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.PaymentMethods, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="PaymentMethod" asp-action="Index" asp-route-view="icons-flags">
+                            <i class="nav-icon fa fa-eur"></i> @Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuPayMode)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ExpenseTypes, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="ExpenseType" asp-action="Index" asp-route-view="icons-font-awesome">
+                            <i class="nav-icon fa fa-line-chart"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuPayType)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ExpensesReport, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="ExpenseTicket" asp-action="Index" asp-route-view="icons-simple-line-icons">
+                            <i class="nav-icon fa fa-clipboard"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuExpenseReportDeliveryNotes)
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon som-icon icon-som-herramientas"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuTitleTools)
+            </a>
+            <ul class="nav-dropdown-items">
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.MailTemplates, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="MailTemplate" asp-action="Index" asp-route-view="icons-coreui-icons">
+                            <i class="nav-icon cui-layers icons"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuMailTemplate)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.OTImport, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-flags">
+                            <i class="nav-icon fa fa-sign-in"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuImportWorkOrders)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ExportOT, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-font-awesome">
+                            <i class="nav-icon fa fa-sign-out"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuExportWorkOrders)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.WorkDay, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-simple-line-icons">
+                            <i class="nav-icon fa fa-sign-out"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuExportDays)
+                        </a>
+                    </li>
+                }
+
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.PlanningProcess, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-simple-line-icons">
+                            <i class="nav-icon fa fa-cogs"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuProcessPlanning)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.EjecuteTasksFromExcel, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-simple-line-icons">
+                            <i class="nav-icon icon-control-play icons"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuExecutingTasksExcel)
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon som-icon icon-som-sistemaext"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuTitleRefExternalSystem)
+            </a>
+            <ul class="nav-dropdown-items">
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.FujitsuSGS, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-coreui-icons">
+                            <i class="nav-icon cui-puzzle icons"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuFujitsuSgs)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.TSystems, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-flags">
+                            <i class="nav-icon cui-puzzle icons"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuTSystems)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.CA, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-font-awesome">
+                            <i class="nav-icon cui-puzzle icons"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuCa)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Correo, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-simple-line-icons">
+                            <i class="nav-icon cui-puzzle icons"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuMail)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Wattabit, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-simple-line-icons">
+                            <i class="nav-icon cui-puzzle icons"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuWattabit)
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon som-icon icon-som-comunicacion"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuTitleCommunication)
+            </a>
+            <ul class="nav-dropdown-items">
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.SystemNotifications, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-coreui-icons">
+                            <i class="nav-icon som-icon icon-mensaje"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuSystemNotifications)
+                        </a>
+                    </li>
+                }
+
+                @if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.PushNotifications, ActionEnum.View))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-flags">
+                            <i class="nav-icon som-icon icon-notificacion"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuPushNotifications)
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon som-icon icon-som-resumen"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralMenuTitleExternalReports)
+            </a>
+            <ul class="nav-dropdown-items">
+                @*TODO:No existe acción*@
+                <li class="d-none">
+                    <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-coreui-icons">
+                        <i class="nav-icon fa fa-laptop"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuSmartPcReport)
+                    </a>
+                </li>
+
+                @*TODO:No existe acción*@
+                <li class="d-none">
+                    <a class="nav-link" asp-area="" asp-controller="CoreUI" asp-action="Index" asp-route-view="icons-flags">
+                        <i class="nav-icon fa fa-map-o"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuPendingOrdersMap)
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="ServiceGauges" asp-action="Index" asp-route-view="icons-font-awesome">
+                        <i class="nav-icon fa fa-tachometer"></i>@Html.GetLocalizedText(MenuLocalizationConstants.GeneralSubmenuGauges)
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="divider"></li>
+    </ul>
+</nav>
+
+<button class="sidebar-minimizer brand-minimizer" type="button"></button>

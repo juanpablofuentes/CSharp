@@ -1,0 +1,41 @@
+﻿@using Group.Salto.SOM.Web.Models.WorkOrderStatus
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.WorkOrderStatus
+
+@model WorkOrderStatusFilterViewModel
+
+<div>
+    <partial model="@Model.FilterHeader" name="_FilterHeader" />
+    <div class="collapse in" id="filterWorkOrderStatus">
+        <form asp-action="Filter" asp-controller="WorkOrderStatus" method="post" id="filter-form" class="form-control">
+            <partial model="Model" name="_PagerHiddens" />
+            <partial model="Model" name="_MultiTableHiddens" />
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class="col-sm-4 col-form-label">
+                        <span asp-localized-key="@LocalizationsConstants.Name"></span>
+                    </label>
+                    <input asp-for="Name" id="workOrderStatusFilterName"
+                           class="form-control input-theme-sm"
+                           placeholder="@Html.GetLocalizedText(LocalizationsConstants.Name)" />
+                </div>
+                <div class="col-lg-4">
+                    <label class="col-sm-4 col-form-label">
+                        <span asp-localized-key="@LocalizationsConstants.Description"></span>
+                    </label>
+                    <input asp-for="Description" id="workOrderStatusFilterDescription"
+                           class="form-control input-theme-sm"
+                           placeholder="@Html.GetLocalizedText(LocalizationsConstants.Description)" />
+                </div>
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <br>
+                        <button type="button" id="btnClear" class="btn btn-outline-danger" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                        <button id="btnApplyFilter" class="btn btn-primary" name="btnApplyFilter" asp-localized-key="@LocalizationsConstants.ApplyFilter" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

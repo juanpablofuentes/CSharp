@@ -1,0 +1,136 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Company
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Models.Company;
+@using Group.Salto.Common.Enums;
+@model ResultViewModel<CompanyDetailViewModel>
+@{
+    var title = @Html.GetLocalizedText(CompanyConstants.CompanyDetailPageTitle);
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-9">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="@CompanyConstants.CompanyDetailPageTitle"></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Company" asp-action="Create" method="post" class="form-horizontal">
+                    <partial name="_CompanyForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<popup Text="@Html.GetLocalizedText(CompanyConstants.CompanyDeleteMessage)"
+       Id="confirmationModal"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"
+       cancel-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)"></popup>
+
+<popup Text="@Html.GetLocalizedText(CompanyConstants.CompanyExitWihoutSave)"
+       Id="confirmationExitWithoutSave"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"
+       cancel-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)"></popup>
+
+@section scripts{
+    <script src="~/js/addElementsList.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/AutocompleteControl.js"></script>
+    <script src="~/js/AutoCompleteListSelector.js"></script>
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/Company/CompanyDetail.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                var selected = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.Departments?.Select(x => new {value = x.Id, text =x.Description, needConfirmDelete=x.HasPeopleAssigned})));
+                var available = [];
+                $("#departmentList").selecTable({
+                    selectedItems: selected,
+                    availableItems: available,
+                    columns: {
+                        show: false
+                    },
+                    classes: {
+                        buttons: {
+                            add: "btn btn-primary selecTableRight",
+                            remove: "btn btn-primary"
+                        }
+                    },
+                    collectionProperty: "DepartmentsSelected",
+                    itemIdProperty: "Id",
+                    itemTextProperty: "Description",
+                    allowNulls: false,
+                    textPlaceHolder: '@Html.GetLocalizedText(LocalizationsConstants.Name)',
+                    confirmaMethod: function (methodConfirm, item) {
+                        $("#confirmationModal").modal("toggle");
+                        $("#confirmSave").on("click",
+                            function() {
+                                methodConfirm(item);
+                                $("#myModal").removeClass("in show");
+                                $("#confirmationModal").css("display", "none");
+                            });
+                    },
+                });
+                $("#confirmCancel").on("click", function() {
+                    $("#confirmationModal").modal("toggle");
+                    $("#confirmSave").off("click");
+                });
+
+                 function showConfirmSaveMessage(confirmMethod) {
+                    if (app.common.validations.GethasDirtyData()) {
+                        $("#confirmationExitWithoutSave").modal("toggle");
+                        $("#confirmationExitWithoutSaveConfirmSave").on("click",
+                            function() {
+                                confirmMethod();
+                                $("#confirmationExitWithoutSave").modal("toggle");
+                                $("#confirmationExitWithoutSaveConfirmSave").off("click");
+                            });
+                    } else {
+                        confirmMethod();
+                    }
+                }
+
+                $("#confirmationExitWithoutSaveConfirmCancel").on("click",
+                    function() {
+                        $("#confirmationExitWithoutSave").modal("toggle");
+                        $("#confirmationExitWithoutSaveConfirmSave").off("click");
+                    });
+
+                var workCentersSelected =
+                    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.WorkCentersSelected));
+
+                function editWorkCenter(value) {
+                    showConfirmSaveMessage(function() {
+                        window.location.href = "/WorkCenter/Edit/"+value;
+                    });
+                };
+
+                function createWorkCenter(evt) {
+                    evt.preventDefault();
+                    showConfirmSaveMessage(function () {
+                        window.location.href = "/WorkCenter/Create";
+                    });
+                }
+
+                var options = {
+                    workCenters: {
+                        selectedItems: workCentersSelected,
+                        column2Text: '@Html.GetLocalizedText(LocalizationsConstants.Name)',
+                        editMethod: editWorkCenter,
+                    },
+
+                };
+
+                app.company.detail.Init(options);
+
+                $("#btnCreateWorkCenter").on("click", createWorkCenter);
+
+                var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Companies, ActionEnum.Create).ToString().ToLower();
+                app.common.authorization.disable("confirmSave", saveCreate);
+            });
+        })(jQuery);
+    </script>
+}

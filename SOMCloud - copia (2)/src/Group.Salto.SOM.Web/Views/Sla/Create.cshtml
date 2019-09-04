@@ -1,0 +1,55 @@
+﻿@using Group.Salto.SOM.Web.Models.Sla;
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Extensions;
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Constants.Sla;
+@using Group.Salto.Common.Enums
+
+@model ResultViewModel<SlaDetailsViewModel>
+
+@{
+    ViewData["Title"] = @Html.GetLocalizedText(SlaConstants.SlaCreateTitle);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-10">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="SlaCreateTitle">Sla Details</h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Sla" asp-action="Create" method="post" class="form-horizontal">
+                    <partial name="_SlaForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/js/Bundle/bundle--colorPicker.js"></script>
+    <script src="~/js/Sla/SlaTableLogic.js"></script>
+    <script src="~/js/Sla/SlaStates.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                var initialColor ="#f1f1f1";
+                var options = {
+                    btnSelect : '@Html.GetLocalizedText(LocalizationsConstants.Select)',
+                    btnCancel: '@Html.GetLocalizedText(LocalizationsConstants.CancelText)',
+                    color: initialColor,
+                    parent: app.calendar.constants.ColorPickerParent,
+                    skin: app.calendar.constants.ColorPickerSkin,
+                    input: app.calendar.constants.ColorPickerInput,
+                }
+                app.colorPicker.Init(options);
+                app.slatablelogic.Init();
+
+                var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.WOSla, ActionEnum.Create).ToString().ToLower();
+                app.common.authorization.disable("btnSaveSla", saveCreate);
+            });
+        })(jQuery);
+    </script>
+}

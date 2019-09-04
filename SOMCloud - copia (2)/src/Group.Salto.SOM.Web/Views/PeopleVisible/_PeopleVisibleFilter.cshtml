@@ -1,0 +1,57 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.People
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.PeopleVisible
+
+@model PeopleVisibleFilterViewModel
+
+<partial model="@Model.FilterHeader" name="_FilterHeader" />
+
+<div class="collapse in" id="filterVisiblePeople">
+    <form asp-action="Filter" asp-controller="PeopleVisible" method="post" id="filter-form" class="form-control">
+        <partial model="Model" name="_PagerHiddens" />
+        <partial model="Model" name="_MultiTableHiddens" />
+        <div class="row">
+            <div class="col-12 col-sm-4">
+                <label class="col-form-label">
+                    <span asp-localized-key="@PeopleConstants.PeopleFilterName"></span>
+                </label>
+                <input asp-for="Name" id="PeopleVisibleFilterName" class="form-control input-theme-sm" placeholder="@Html.GetLocalizedText(PeopleConstants.PeopleFilterName)" />
+            </div>
+            <div class="col-12 col-sm-4">
+                <label class="col-form-label">
+                    <span asp-localized-key="@PeopleConstants.PeopleFilterKnowledge"></span>
+                </label>
+                <div id="kwnoledgeComboFilter"></div>
+
+            </div>
+            <div class="col-12 col-sm-4">
+                <label class="col-form-label">
+                    <span asp-localized-key="@PeopleConstants.PeopleFilterWorkCenter"></span>
+                </label>
+                <div id="WorkCenterComboFilter"></div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-4">
+                <label class="col-form-label">
+                    <span asp-localized-key="@PeopleConstants.PeopleFilterCompany"></span>
+                </label>
+                <div id="companyComboFilter"></div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <label class="col-form-label">
+                    <span asp-localized-key="@PeopleConstants.PeopleFilterDepartment"></span>
+                </label>
+                <div id="depatmentComboFilter"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-right">
+                <button type="button" class="btn btn-outline-danger" id="btnClear" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                <button id="btnApplyFilter" name="btnApplyFilter" class="btn btn-primary" asp-localized-key="@LocalizationsConstants.ApplyFilter" />
+            </div>
+        </div>
+    </form>
+</div>

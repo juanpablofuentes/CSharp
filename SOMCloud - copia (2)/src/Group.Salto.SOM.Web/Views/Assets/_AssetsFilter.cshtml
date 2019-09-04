@@ -1,0 +1,94 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Assets
+@using Group.Salto.Common.Constants.Assets
+
+@model AssetsFilterViewModel
+
+<div>
+    <partial model="@Model.FilterHeader" name="_FilterHeader" />
+    <div class="collapse in" id="filterAssets">
+        <form asp-action="Filter" asp-controller="Assets" method="post" id="filter-form" class="form-control">
+            <input asp-for="SitesId" type="hidden" />
+            <input asp-for="FromSiteId" type="hidden" />
+            <partial model="Model" name="_PagerHiddens" />
+            <partial model="Model" name="_MultiTableHiddens" />
+
+            <div class="row">
+                <div class="col-12 col-sm-3">
+                    <label class="font-weight-bold"><span asp-localized-key="@AssetsConstants.AssetsSerialNumber"></span></label>
+                    <input asp-for="SerialNumber" id="assetsFilterSerialNumber" class="form-control"
+                           placeholder="@Html.GetLocalizedText(AssetsConstants.AssetsSerialNumber)" />
+                </div>
+                <div class="col-12 col-sm-3">
+                    <div id="containerStatus">
+                        <label class="font-weight-bold"><span asp-localized-key="@AssetsConstants.AssetsStatus"></span></label>
+                        <div id="AssetStatusesContainer"></div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-3">
+                    <div id="containerBrands">
+                        <label class="font-weight-bold">
+                            <span asp-localized-key="@AssetsConstants.AssetsBrand"></span>
+                        </label>
+                        <div id="BrandsContainer"></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <div id="containerModels" disabled>
+                        <label class="font-weight-bold">
+                            <span asp-localized-key="@AssetsConstants.AssetsModel"></span>
+                        </label>
+                        <div id="ModelsContainer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-sm-3">
+                    <div id="containerFamilies">
+                        <label class="font-weight-bold">
+                            <span asp-localized-key="@AssetsConstants.AssetsFamilies"></span>
+                        </label>
+                        <div id="FamiliesContainer"></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <div id="containerSubFamilies">
+                        <label class="font-weight-bold">
+                            <span asp-localized-key="@AssetsConstants.AssetsSubFamilies"></span>
+                        </label>
+                        <div id="SubFamiliesContainer"></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <div id="containerFinalClients">
+                        <label class="font-weight-bold">
+                            <span asp-localized-key="@AssetsConstants.AssetsFinalClients"></span>
+                        </label>
+                        <div id="FinalClientsContainer"></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <div id="containerSites">
+                        <label class="font-weight-bold">
+                            <span asp-localized-key="@AssetsConstants.AssetsSites"></span>
+                        </label>
+                        <div id="SitesContainer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <br>
+                        <button type="button" id="btnClear" class="btn btn-outline-danger" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                        <button id="btnApplyFilter" class="btn btn-primary" name="btnApplyFilter" asp-localized-key="@LocalizationsConstants.ApplyFilter" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,120 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Assets
+@using Group.Salto.SOM.Web.Models.Assets
+@using Group.Salto.SOM.Web.Extensions
+@model GenericDetailViewModel
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="card border-primary">
+            <div class="card-body">
+                <div class="form-group">
+                    <input asp-for="Id" type="hidden" />
+                    <input asp-for="FromSiteId" type="hidden" />
+                    <label>
+                        <span asp-localized-key="@AssetsConstants.AssetsDetailsSerialNumber"></span><span class="required">**</span>
+                        <span class="text-info" data-toggle="tooltip" data-placement="top" title="@Html.GetLocalizedText(AssetsConstants.AssetsDetailsRequiredNumberTooltip)">
+                            <i class="fa fa-exclamation-circle"></i>
+                        </span>
+                    </label>
+                    <input asp-for="SerialNumber" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@AssetsConstants.AssetsDetailsAssetNumber"></span><span class="required">**</span>
+                        <span class="text-info" data-toggle="tooltip" data-placement="top" title="@Html.GetLocalizedText(AssetsConstants.AssetsDetailsRequiredNumberTooltip)">
+                            <i class="fa fa-exclamation-circle"></i>
+                        </span>
+                    </label>
+                    <input asp-for="AssetNumber" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@AssetsConstants.AssetsDetailsStockNumber"></span><span class="required">**</span>
+                        <span class="text-info" data-toggle="tooltip" data-placement="top" title="@Html.GetLocalizedText(AssetsConstants.AssetsDetailsRequiredNumberTooltip)">
+                            <i class="fa fa-exclamation-circle"></i>
+                        </span>
+                    </label>
+                    <input asp-for="StockNumber" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label><span asp-localized-key="@AssetsConstants.AssetsDetailsStatus"></span><span class="required">*</span></label>
+                    <select asp-for="StatusId" asp-items="@Model.Statuses" rows="3" class="form-control"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card border-primary">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-localized-key="@AssetsConstants.AssetsDetailsBrand"></label>
+                            <div id="brandsContainer"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-localized-key="@AssetsConstants.AssetsDetailsModel"></label>
+                            <div id="modelsContainer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <hr />
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-localized-key="@AssetsConstants.AssetsDetailsFamily"></label>
+                            <div id="familiesContainer"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-localized-key="@AssetsConstants.AssetsDetailsSubFamily"></label>
+                            <div id="subfamiliesContainer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-localized-key="@AssetsConstants.AssetsDetailsContract"></label>
+                            <select asp-for="ContractId" asp-items="@Model.Contracts" rows="3" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label asp-localized-key="@AssetsConstants.AssetsDetailsObservations"></label>
+            <textarea asp-for="Observations" class="form-control" rows="3"></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-lg-3">
+        <div class="form-group">
+            <label class="card-title" asp-localized-key="@AssetsConstants.AssetsLocationClient"></label>
+            <div id="finalclientsContainer"></div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-3">
+        <div class="form-group">
+            <label><span asp-localized-key="@AssetsConstants.AssetsLocationLocation"></span><span class="required">*</span></label>
+            <div id="locationsContainer"></div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-3">
+        <div class="form-group">
+            <label class="card-title" asp-localized-key="@AssetsConstants.AssetsLocationUser"></label>
+            <div id="usersContainer"></div>
+        </div>
+    </div>
+</div>

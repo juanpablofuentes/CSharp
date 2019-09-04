@@ -1,0 +1,62 @@
+﻿@using Group.Salto.Common.Constants.Contacts
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Contracts
+@using Group.Salto.Common.Constants
+
+@model ContactsEditViewModel
+<div class="modal fade" id="modalContacts" tabindex="-1" style="display:none;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><span asp-localized-key="@ContactsConstants.ContactsEditTitle"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form id="ContactForm" name="ContactForm" asp-controller="Contacts" asp-action="Contact">
+                    <input id="IsValid" name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <div class="row">
+                        <input type="hidden" asp-for="ContactsId" class="form-control" readonly="readonly" />
+                        <input type="hidden" asp-for="FullName" class="form-control" readonly="readonly" />
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label><span asp-localized-key="@ContactsConstants.ContactsEditNameForm"></span><span class="required">*</span></label>
+                                <input asp-for="Name" class="form-control" placeholder="@Html.GetLocalizedText(ContactsConstants.ContactsEditNameForm)" onchange="app.ContactsDetails.ChangeContactName()" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label><span asp-localized-key="@ContactsConstants.ContactsEditFirstSurnameForm"></span></label>
+                                <input asp-for="FirstSurname" class="form-control" placeholder="@Html.GetLocalizedText(ContactsConstants.ContactsEditFirstSurnameForm)" onchange="app.ContactsDetails.ChangeContactName()" />
+                                <span asp-validation-for="FirstSurname" class="text-danger"></span>
+                            </div>
+                            <div class="form-group ">
+                                <label><span asp-localized-key="@ContactsConstants.ContactsEditSecondSurnameForm"></span></label>
+                                <input asp-for="SecondSurname" class="form-control" placeholder="@Html.GetLocalizedText(ContactsConstants.ContactsEditSecondSurnameForm)" onchange="app.ContactsDetails.ChangeContactName()" />
+                                <span asp-validation-for="SecondSurname" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label><span asp-localized-key="@ContactsConstants.ContactsEditPositionForm"></span></label>
+                                <input asp-for="Position" class="form-control" placeholder="@Html.GetLocalizedText(ContactsConstants.ContactsEditPositionForm)" />
+                                <span asp-validation-for="Position" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label><span asp-localized-key="@ContactsConstants.ContactsEditEmailForm"></span></label>
+                                <input asp-for="Email" class="form-control" placeholder="@Html.GetLocalizedText(ContactsConstants.ContactsEditEmailForm)" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label><span asp-localized-key="@ContactsConstants.ContactsEditTelephoneForm"></span></label>
+                                <input asp-for="Telephone" class="form-control" placeholder="@Html.GetLocalizedText(ContactsConstants.ContactsEditTelephoneForm)" />
+                                <span asp-validation-for="Telephone" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="ContactConfirmCancel" class="btn btn-outline-danger" type="button" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.CancelText)</button>
+                <button id="ContactConfirmSave" class="btn btn-primary" type="button">@Html.GetLocalizedText(LocalizationsConstants.SaveText)</button>
+            </div>
+        </div>
+    </div>
+</div>

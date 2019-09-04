@@ -1,0 +1,105 @@
+﻿@using Group.Salto.Common.Constants.Rol
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.SOM.Web.Models.Rol
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Controls.Table
+@using Group.Salto.Common.Constants
+@model ResultViewModel<RolsViewModel>
+@{
+    var title = @Html.GetLocalizedText(RolConstants.RolPageTitle);
+    ViewData["Title"] = title;
+}
+
+<h1 class="page-title">@title</h1>
+@{
+    var table = Html.GetMultiSelectTableFor(Model.Data.Roles, au => au.Id, Model.Data.RolFilters, TranslationHelper.GetTranslationService());
+    table.SetColumns(m => m.Name, m => m.Description);
+    table.SetSortingColumns(m => m.Name, m => m.Description);
+    table.ShowSelectColumn = false;
+    table.TableCssClass = "table table-striped table-hover";
+    table.TableHeaderCssClass = "thead-som";
+
+    table.AddColumnTemplateFor(m => m.Id,
+    @<div class="col-update text-right">
+        <a asp-action="Edit" asp-route-id="@item.RawValue" id="@item.RawValue">
+            <i class="fa fa-pencil fa-lg"></i>
+        </a>
+        <a asp-action="Delete" asp-route-id="@item.RawValue" id="@item.RawValue" class="deleteButton" data-toggle="tooltip" data-placement="top">
+            <i class="fa fa-trash-o fa-lg"></i>
+        </a>
+    </div>, "");
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <partial name="_RolFilter" model="@Model.Data.RolFilters" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Data.Roles.Any())
+            {
+                <div class="table-responsive workstation-table" id="multigridContainerId">
+                    @table.Render("RolGrid")
+                </div>
+                <partial name="_Pager" for="@Model.Data.RolFilters" />
+            }
+            else
+            {
+                <partial name="_NoRecords" />
+            }
+        </div>
+    </div>
+</div>
+<popup Text="@Html.GetLocalizedText(RolConstants.RolDeleteMessage)" Id="confirmationModal"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"
+       cancel-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)"></popup>
+
+@section scripts {
+    <script src="~/js/Rol/Rol.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                app.rol.Init();
+                MultiTableScript("RolGrid");
+                var page = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.RolFilters));
+                pager.PagerSelector.Init({ PageData: page });
+
+                $(".deleteButton").on("click",
+                    function (evt) {
+                        evt.preventDefault();
+                        var id = $(this).attr('id');
+                        deleteElement(id, "#confirmationModal", "#confirmationModalConfirmSave");
+                    });
+
+                function deleteElement(id, modalId, saveButtonId)
+                {
+                    $(modalId).modal("toggle");
+                    $(saveButtonId).on("click",
+                        function () {
+                            $.ajax({
+                                url: '@Url.Action("Delete", "Rol")',
+                                type: 'POST',
+                                dataType: 'json',
+                                cache: false,
+                                data: { Id: id },
+                                success: function() {
+                                    $(modalId).modal("toggle");
+                                    $("#btnApplyFilter").trigger("click");
+                                },
+                            });
+                        });
+                }
+
+                $("#confirmationModalConfirmCancel").on("click", function ()
+                {
+                    $("#confirmationModal").modal("toggle");
+                    $("#confirmationModalConfirmSave").off("click");
+                });
+            });
+        })(jQuery);
+    </script>
+}

@@ -1,0 +1,66 @@
+﻿@using Group.Salto.SOM.Web.Models.Brands;
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Extensions;
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Constants.Brands;
+@using Group.Salto.Common.Enums;
+
+@model ResultViewModel<BrandsDetailsViewModel>
+
+@{
+    ViewData["Title"] = @Html.GetLocalizedText(BrandsConstants.BrandsCreateTitle);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-6">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="BrandsCreateTitle"></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Brands" asp-action="Create" method="post" class="form-horizontal">
+                    <partial name="_BrandsForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Modals {
+    <div id="modelmodal-placeholder"></div>
+}
+@section Scripts{
+    <script src="~/js/Brands/Brands.js"></script>
+    <script src="~/js/Controls/ModalFromList.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+
+                var selectedModels =  @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.ModelsSelected));
+                var onCreateOverride = function () {};
+                var modalList = new modalFromList(onCreateOverride);
+                modalList.Init("#ModelContainer",
+                {
+                    selectedItems: selectedModels,
+                    collectionPropertyId: "@nameof(BrandsDetailsViewModel.ModelsSelected)",
+                    collectionPropertyName: "@nameof(BrandsDetailsViewModel.ModelsSelected)",
+                    linkText: "@Html.GetLocalizedText(@LocalizationsConstants.CreateButtonText)",
+                    modalName: 'ModelModal',
+                    id: '@nameof(ModelViewModel.ModelId)',
+                    columnsText: '#,@Html.GetLocalizedText(LocalizationsConstants.Name),@Html.GetLocalizedText(LocalizationsConstants.Description),@Html.GetLocalizedText(LocalizationsConstants.Url)',
+                    columnsValues: '@nameof(ModelViewModel.ModelName),@nameof(ModelViewModel.ModelDescription),@nameof(ModelViewModel.ModelUrl)',
+                    columnsModal: '@nameof(ModelViewModel.ModelId),@nameof(ModelViewModel.ModelName),@nameof(ModelViewModel.ModelDescription),@nameof(ModelViewModel.ModelUrl)',
+                    dataUrl: '@Url.Action("Models", "Brands")',
+                    placeholderElement: 'modelmodal-placeholder',
+                    saveButton: 'ModelConfirmSave',
+                    initialIdValue: 1
+                });
+                app.brands.Init();
+                var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Brands, ActionEnum.Create).ToString().ToLower();
+                app.common.authorization.disable("btnSaveBrands", saveCreate);
+            });
+        })(jQuery);
+    </script>
+}

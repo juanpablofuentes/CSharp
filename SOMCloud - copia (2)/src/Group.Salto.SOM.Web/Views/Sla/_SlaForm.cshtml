@@ -1,0 +1,235 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Sla
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Sla
+
+@model SlaDetailsViewModel
+
+<input type="hidden" asp-for="Id" />
+
+<div class="row">
+    <div class="col-12">
+        <h4 asp-for="Name"><span asp-localized-key="@SlaConstants.SlaGridTheadName"></span>&nbsp;<span class="required">*</span></h4>
+        <div class="col-md-6">
+            <input type="text" class="form-control" asp-for="Name">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h4 asp-localized-key="@SlaConstants.SlaGridTheadStates"></h4>
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <div class="table-responsive">
+                    <table id="SubMenuContent_EstatsDataList" class="table table-stripped">
+                        <thead class="thead-som">
+                            <tr>
+                                <th asp-localized-key="@SlaConstants.SlaGridTheadColorOtList"></th>
+                                <th asp-localized-key="@SlaConstants.SlaGridTheadFinalMinutes"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <div class="table-responsive">
+                    <table class="table table-stripped">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="input-group">
+                                        <input min="0" type="number" id="SubMenuContent_NewEstatTemps" class="form-control" placeholder="@Html.GetLocalizedText(SlaConstants.SlaGridTheadInputMinutes)"/>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" asp-localized-key="@SlaConstants.SlaGridTheadMinutes" ></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="colorPickerContainer">
+                                        <input type="text" id="colorPickerInput" class="form-control" readonly placeholder="@Html.GetLocalizedText(SlaConstants.SlaGridTheadSelectColor)"/>
+                                        <div id="colorPicker"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a onclick="app.slastates.AddState(@Model?.Id)" id="SubMenuContent_LinkButton2" class="btn btn-ghost-success" asp-localized-key="@SlaConstants.SlaGridTheadAddButton"></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h4 asp-localized-key="@SlaConstants.SlaGridTheadTime"></h4>
+        <div class="table-responsive">
+            <table id="timeTable" class="table table-stripped">
+                <thead class="thead-som">
+                    <tr>
+                        <th></th>
+                        <th asp-localized-key="@SlaConstants.SlaGridTheadActive"></th>
+                        <th asp-localized-key="@SlaConstants.SlaGridTheadOtDefined"></th>
+                        <th asp-localized-key="@SlaConstants.SlaGridTheadMinutes"></th>
+                        <th asp-localized-key="@SlaConstants.SlaGridTheadNaturals"></th>
+                        <th asp-localized-key="@SlaConstants.SlaGridTheadReferenceTime"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td asp-localized-key="@SlaConstants.SlaGridTheadResponse"></td>
+                        <td>
+                            <div class="col">
+                                <label class="switch switch-label switch-pill switch-primary">
+                                    @Html.CheckBox("TimeResponseActive", (Model.TimeResponseActive.HasValue && Model.TimeResponseActive.Value == true), new { @class = "switch-input", @id = "checkboxTimeResponseActive" })
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col">
+                                <label class="switch switch-label switch-pill switch-primary">
+                                    @Html.CheckBox("MinutesResponseOtDefined", (Model.MinutesResponseOtDefined.HasValue && Model.MinutesResponseOtDefined.Value == true), new { @class = "switch-input", @id = "checkboxMinutesResponseOtDefined" })
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <input required id="inputMinutesResponse" asp-for="MinutesResponse" min="0" rows="9" class="form-control">
+                        </td>
+                        <td>
+                            <div class="col">
+                                <label class="switch switch-label switch-pill switch-primary">
+                                    @Html.CheckBox("MinutesNaturalResponse", (Model.MinutesNaturalResponse.HasValue && Model.MinutesNaturalResponse.Value == true), new { @class = "switch-input", @id = "checkboxMinutesNaturalResponse" })
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <select asp-for="ReferenceMinutesResponse" asp-items="@Model.ReferenceTime" rows="9" class="form-control"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td asp-localized-key="@SlaConstants.SlaGridTheadResolution"></td>
+                        <td>
+                            <div class="col">
+                                <label class="switch switch-label switch-pill switch-primary">
+                                    @Html.CheckBox("TimeResolutionActive", (Model.TimeResolutionActive.HasValue && Model.TimeResolutionActive.Value == true), new { @class = "switch-input", @id = "checkboxTimeResolutionActive" })
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col">
+                                <label class="switch switch-label switch-pill switch-primary">
+                                    @Html.CheckBox("MinutesResolutionOtDefined", (Model.MinutesResolutionOtDefined.HasValue && Model.MinutesResolutionOtDefined.Value == true), new { @class = "switch-input", @id = "checkboxMinutesResolutionOtDefined" })
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <input required id="inputMinutesResolutions" asp-for="MinutesResolutions" min="0" rows="9" class="form-control">
+                        </td>
+                        <td>
+                            <div class="col">
+                                <label class="switch switch-label switch-pill switch-primary">
+                                    @Html.CheckBox("MinutesResolutionNaturals", (Model.MinutesResolutionNaturals.HasValue && Model.MinutesResolutionNaturals.Value == true), new { @class = "switch-input", @id = "checkboxMinutesResolutionNaturals" })
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <select id="selectListReferenceMinutesResolution" asp-for="ReferenceMinutesResolution" asp-items="@Model.ReferenceTime" rows="9" class="form-control"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td asp-localized-key="@SlaConstants.SlaGridTheadPenaltyWithoutResponse"></td>
+                        <td>
+                            <div class="col">
+                                <label class="switch switch-label switch-pill switch-primary">
+                                    @Html.CheckBox("TimePenaltyWithoutResponseActive", (Model.TimePenaltyWithoutResponseActive.HasValue && Model.TimePenaltyWithoutResponseActive.Value == true), new { @class = "switch-input", @id = "checkboxTimePenaltyWithoutResponseActive" })
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col">
+                                <label class="switch switch-label switch-pill switch-primary">
+                                    @Html.CheckBox("MinutesPenaltyWithoutResponseOtDefined", (Model.MinutesPenaltyWithoutResponseOtDefined.HasValue && Model.MinutesPenaltyWithoutResponseOtDefined.Value == true), new { @class = "switch-input", @id = "checkboxMinutesPenaltyWithoutResponseOtDefined" })
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <input required id="inputMinutesUnansweredPenalty" asp-for="MinutesUnansweredPenalty" min="0" rows="9" class="form-control">
+                        </td>
+                        <td>
+                            <div class="col">
+                                <label class="switch switch-label switch-pill switch-primary">
+                                    @Html.CheckBox("MinutesPenaltyWithoutResponseNaturals", (Model.MinutesPenaltyWithoutResponseNaturals.HasValue && Model.MinutesPenaltyWithoutResponseNaturals.Value == true), new { @class = "switch-input", @id = "checkboxMinutesPenaltyWithoutResponseNaturals" })
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <select id="selectListReferenceMinutesPenaltyUnanswered" asp-for="ReferenceMinutesPenaltyUnanswered" asp-items="@Model.ReferenceTime" rows="9" class="form-control"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td asp-localized-key="@SlaConstants.SlaGridTheadPenaltyWithoutResolution"></td>
+                        <td>
+                            <div class="col">
+                                <label class="switch switch-label switch-pill switch-primary">
+                                    @Html.CheckBox("TimePenaltyWhithoutResolutionActive", (Model.TimePenaltyWhithoutResolutionActive.HasValue && Model.TimePenaltyWhithoutResolutionActive.Value == true), new { @class = "switch-input", @id = "checkboxTimePenaltyWhithoutResolutionActive" })
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col">
+                                <label class="switch switch-label switch-pill switch-primary">
+                                    @Html.CheckBox("MinutesPenaltyWithoutResolutionOtDefined", (Model.MinutesPenaltyWithoutResolutionOtDefined.HasValue && Model.MinutesPenaltyWithoutResolutionOtDefined.Value == true), new { @class = "switch-input", @id = "checkboxMinutesPenaltyWithoutResolutionOtDefined" })
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <input required id="inputMinutesPenaltyWithoutResolution" asp-for="MinutesPenaltyWithoutResolution" min="0" rows="9" class="form-control">
+                        </td>
+                        <td>
+                            <div class="col">
+                                <label class="switch switch-label switch-pill switch-primary">
+                                    @Html.CheckBox("MinutesPenaltyWithoutNaturalResolution", (Model.MinutesPenaltyWithoutNaturalResolution.HasValue && Model.MinutesPenaltyWithoutNaturalResolution.Value == true), new { @class = "switch-input", @id = "checkboxMinutesPenaltyWithoutNaturalResolution" })
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <select id="selectListReferenceMinutesPenaltyWithoutResolution" asp-for="ReferenceMinutesPenaltyWithoutResolution" asp-items="@Model.ReferenceTime" rows="9" class="form-control"></select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 text-right">
+        <hr />
+        <button type="button" class="btn btn-outline-danger" onclick="location.href = '@Url.Action("Index", "Sla")'">
+            <span asp-localized-key="ActionsDetailsBtnCancel"></span>
+        </button>
+        <input id="btnSaveSla" type="submit" class="btn btn-success" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+    </div>
+</div>

@@ -1,0 +1,209 @@
+﻿@using Group.Salto.SOM.Web.Models.WorkOrder
+@using Group.Salto.Common.Constants.WorkOrder
+@using Group.Salto.SOM.Web.Extensions
+@model GenericDetailViewModel
+
+<div id="summary-container">
+    <div id="idot" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailPetitionNumber"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>@Model.Id</p>
+        </div>
+    </div>
+
+    <div id="refClient" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailClientReference"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.InternalIdentifier
+            </p>
+        </div>
+    </div>
+
+    <div id="project" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailProject"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.ProjectName
+            </p>
+        </div>
+    </div>
+
+    <div id="category" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailPetitionCategory"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.WorkOrderCategory
+            </p>
+        </div>
+    </div>
+
+    <div id="typeot" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailWOType"></span>
+        </div>
+        <div class="som-panel-text">
+            <ul class="list-group">
+                @if (Model.WorkOrderTypes != null)
+                {
+                    foreach (var type in Model.WorkOrderTypes)
+                    {
+                        <li class="list-group-item"> @type </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div id="clientsite" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailCustomerSite"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.FinalClientName
+            </p>
+        </div>
+    </div>
+
+    <div id="sitecode" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailSiteCode"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.LocationCode
+            </p>
+        </div>
+    </div>
+
+    <div id="sitename" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailSiteName"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.LocationName
+            </p>
+        </div>
+    </div>
+
+    <div id="sitephone1" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailSitePhones"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.LocationPhone
+            </p>
+        </div>
+    </div>
+
+    <div id="address" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailAddress"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.LocationAddress
+            </p>
+        </div>
+    </div>
+
+    <div id="asset" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailAllocatedAsset"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.PeopleResponsibleName
+            </p>
+        </div>
+    </div>
+
+    <div id="assetphone" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailAssetPhone"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.PeopleResponsiblePhone
+            </p>
+        </div>
+    </div>
+
+    <div id="actdate" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailDateOfPerformance"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.ActionDate
+            </p>
+        </div>
+    </div>
+
+    <div id="sladate" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailSLAEndDate"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.ResolutionDateSla
+            </p>
+        </div>
+    </div>
+
+    <div id="brandurl" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailBrandURL"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.BrandURL
+            </p>
+        </div>
+    </div>
+
+    <div id="categoryurl" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailCategoryURL"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.WorkOrderCategoryURL
+            </p>
+        </div>
+    </div>
+
+    <div id="infoOt" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailPetitionSummary"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.TextRepair
+            </p>
+        </div>
+    </div>
+
+    <div id="details" class="som-panel">
+        <div class="som-panel-title">
+            <span asp-localized-key="@WorkOrderConstants.WorkOrderDetailObservations"></span>
+        </div>
+        <div class="som-panel-text">
+            <p>
+                @Model.Observations
+            </p>
+        </div>
+    </div>
+
+</div>

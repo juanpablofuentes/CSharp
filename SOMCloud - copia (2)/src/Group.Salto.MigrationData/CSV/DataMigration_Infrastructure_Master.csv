@@ -1,0 +1,22 @@
+Language;xxx
+Module:xxx
+Actions;SELECT IdAccio AS Id,[Nom] AS [Name],Descripcio AS [Description] FROM Accions
+Origins;SELECT [IdProcedencia] AS [Id],[Nom] AS [Name],[Descripcio] AS [Description],[Observacions] AS Observations,[CanBeDeleted] FROM Procedencies
+ContractType;SELECT ContractTypeId AS Id,[Value] FROM ContractType
+RepetitionTypes;SELECT [RepetitionTypeId] AS [Id],[Name] FROM RepetitionTypes
+ServiceStates;SELECT IdEstatServei AS [Id],Nom AS [Name],Color,Descripcio AS [Description] FROM EstatsServei
+PredefinedDayStates;SELECT IdEstatJornadaPredefinit AS [Id],Nom AS [Name],Descripcio AS [Description] FROM EstatsJornadaPredefinits
+PredefinedReasons;SELECT IdMotiuPredefinit AS [Id],IdEstatJornadaPredefinit AS PredefinedDayStatesId,Nom AS [Name] FROM MotiusPredefinits
+AvailabilityCategories;SELECT [Id] ,[Name],IsDisponible AS IsAvailable FROM DisponibilityCategories
+CalendarEventCategories;SELECT CalendarEventCategoryId AS Id,[Name],[Description],Colour AS Color,DisponibilityCategoryId AS AvailabilityCategoriesId FROM CalendarEventCategories
+Countries;SELECT Id, Name FROM Countries
+Regions;SELECT Id, Name, CountryId FROM Regions
+States;SELECT [Id],[Name],RegionId FROM States
+StatesOtherNames;SELECT StateId AS [Id],[Name] FROM StatesOtherNames
+Municipalities;SELECT [Id],[Name],[MunicipalityCode],[StateId] FROM Municipalities
+Cities;SELECT [Id],[Name],MunicipalityId FROM Cities
+CitiesOtherNames;SELECT CityId AS Id,[Name] FROM CitiesOtherNames
+PostalCodes;SELECT [Id],PostalCode,CityId FROM PostalCodes
+Users;SELECT u.IdUsuari AS OldUserId, p.CorreuElectronic AS UserName, upper(p.CorreuElectronic) as NormalizedUserName, u.Contrasenya AS PasswordHash, u.Nom AS [Name], u.Cognom1 AS FirstSurname, u.Cognom2 AS SecondSurname, u.Observacions AS Observations, u.ConfiguracioCampsOT AS ConfigurationWoFields, Case u.Idioma when 'es-ES' then 1 when 'ca-ES' then 2 when 'en-EN' then 3 Else 1 End AS LanguageId, u.NumEntradesPerPagina AS NumberEntriesPerPage FROM Usuaris as u left join dbo.Persones as p on p.IdUsuari = u.IdUsuari
+Roles;SELECT IdPerfil AS Id, Nom AS [Name], upper(Nom) As NormalizedName, Descripcio AS [Description] FROM Perfils
+ActionsRoles;SELECT IdPerfil AS RoleId, IdAccio AS ActionId FROM AccionsPerfils

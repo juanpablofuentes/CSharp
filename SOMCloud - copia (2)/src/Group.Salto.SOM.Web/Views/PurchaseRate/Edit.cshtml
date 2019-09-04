@@ -1,0 +1,42 @@
+﻿@using Group.Salto.SOM.Web.Models.PurchaseRate;
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Extensions;
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Constants.PurchaseRate;
+@using Group.Salto.Common.Enums;
+
+@model ResultViewModel<PurchaseRateDetailsViewModel>
+
+@{
+    ViewData["Title"] = @Html.GetLocalizedText(PurchaseRateConstants.PurchaseRateDetailsTitle);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-6">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="PurchaseRateDetailsTitle"></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="PurchaseRate" asp-action="Edit" method="post" class="form-horizontal">
+                    <partial name="_PurchaseRateForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/Common/authorization.js"></script>
+
+    <script>
+        (function($) {
+            $(document).ready(function() {
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.CostRate, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSavePurchaseRate", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

@@ -1,0 +1,33 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.WorkOrder
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants.WorkOrderFilter
+
+<div id="sideBar-Menu" class="tab-content bg-som h-100">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-som">
+                    <a class="nav-link text-white" asp-area="" asp-controller="WorkOrder" asp-action="Create">
+                        <i class="fa fa-plus-square mr-2"></i> @Html.GetLocalizedText(WorkOrderConstants.WorkOrderCreateSideMenu)
+                    </a>
+                </li>
+                <li class="list-group-item bg-som">
+                    <a class="nav-link text-white" asp-area="" asp-controller="WorkOrderFilter" asp-action="Index">
+                        <i class="fa fa-pencil mr-2"></i> @Html.GetLocalizedText(WorkOrderFilterConstants.WorkOrderFilterEditTitle)
+                    </a>
+                </li>
+                <li class="list-group-item bg-som">
+                    <a id="exporttoexcel" class="nav-link text-white" href="#">
+                        <i class="fa fa-file-excel-o mr-2"></i> @Html.GetLocalizedText(LocalizationsConstants.ExportToExcel)
+                    </a>
+                </li>
+                <li class="list-group-item bg-som">
+                    <a id="exportalltoexcel" class="nav-link text-white" href="#">
+                        <i class="fa fa-file-excel-o mr-2"></i> @Html.GetLocalizedText(LocalizationsConstants.ExportAllToExcel)
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.EventCategories
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.EventCategoriesViewModel
+@using Group.Salto.SOM.Web.Models.AvailabilityCategories
+
+
+@model EventCategoriesDetailViewModel
+
+@Html.HiddenFor(m => m.Id, new { Id = "id" })
+<div class="form-group row">
+    <label class="col-md-3 col-form-label" asp-for="Name"><span asp-localized-key="@LocalizationsConstants.Name"></span><span class="required">*</span></label>
+    <div class="col-md-9">
+        <input type="text" class="form-control" asp-for="Name" placeholder="@Html.GetLocalizedText(@LocalizationsConstants.Name)">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-3 col-form-label">
+        <span asp-localized-key="@LocalizationsConstants.Description"></span>
+    </label>
+    <div class="col-md-9">
+        <textarea asp-for="Description" class="form-control input-theme-sm" rows="3"></textarea>
+    </div>
+</div>
+
+
+
+<div class="form-group row">
+    <label class="col-sm-3 col-form-label">
+        <span asp-localized-key="@EventCategoriesConstants.EventCategoriesAvailabilityCategories"></span>
+    </label>
+
+    <div class="col-sm-7">
+        <select asp-for="CategoriId" asp-items="@Model.AvailabilitiesCategories" class="form-control"></select>
+    </div>
+</div>
+
+<div class="form-group row text-right">
+    <div class="col-12">
+        <hr />
+        <button asp-localized-key="@LocalizationsConstants.CancelText"
+                type="button" class="btn btn-outline-danger" onclick="location.href = '@Url.Action("Index", "EventCategories")'"></button>
+        <input type="submit" class="btn btn-success" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+    </div>
+</div>

@@ -1,0 +1,70 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Customer
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Controls.Table
+@using Group.Salto.ServiceLibrary.Helpers
+@model ResultViewModel<CustomersViewModel>
+@{
+    var title = @Html.GetLocalizedText("CustomerPageTitle");
+    var tableId = Guid.NewGuid();
+}
+
+<h1 class="page-title">@title</h1>
+
+@{
+    var table = Html.GetMultiSelectTableFor(Model.Data.Customers, au => au.Id.Value, Model.Data.CustomerFilters, TranslationHelper.GetTranslationService());
+    table.SetColumns(m => m.Name, m => m.InvoicingContactEmail, m => m.DateCreated, m => m.IsActive, m => m.UpdateStatusDate);
+    table.SetSortingColumns(m => m.Name, m => m.InvoicingContactEmail, m => m.DateCreated);
+    table.ShowSelectColumn = false;
+    table.TableCssClass = "table table-striped table-hover";
+    table.TableHeaderCssClass = "thead-som";
+
+    var svcfieldUpdate = table.AddStaticColumn("Update");
+    svcfieldUpdate.IsSortable = false;
+    svcfieldUpdate.Link.HasLink = true;
+    svcfieldUpdate.Text = "";
+    svcfieldUpdate.Link.Controller = "Customer";
+    svcfieldUpdate.Link.Action = "Detail";
+    svcfieldUpdate.Link.SetLinkTemplate<string>(@<div class="text-center"><span class="fa fa-pencil fa-lg"></span></div>, string.Empty);
+svcfieldUpdate.Link.ParameterFunc = item => new { id = item.Id };
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <partial name="_CustomerFilter" model="@Model.Data.CustomerFilters" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Data.Customers.Any())
+            {
+                <div class="table-responsive workstation-table" data-id="@tableId" id="multigridContainerId">
+                    @table.Render("CustomerGrid")
+                </div>
+
+                <partial name="_Pager" model="@Model.Data.CustomerFilters" />
+            }
+            else
+            {
+                <partial name="_NoRecords" />
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/Customer/Customer.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                app.customer.Init();
+                MultiTableScript("CustomerGrid");
+                var page = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.CustomerFilters));
+                pager.PagerSelector.Init({ PageData: page });
+            });
+        })(jQuery);
+    </script>
+}

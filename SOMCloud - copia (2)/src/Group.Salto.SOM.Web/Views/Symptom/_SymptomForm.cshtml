@@ -1,0 +1,46 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Symptom
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Symptom
+
+@model SymptomDetailViewModel
+
+@Html.HiddenFor(m => m.Symptom.Id, new { Id = "Id" })
+<div class="row">
+    <div class="col-12 col-sm-6">
+        <div class="card border-info">
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label" asp-for="Symptom.Name"><span asp-localized-key="@SymptomConstants.SymptomName"></span><span class="required">*</span></label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" asp-for="Symptom.Name" placeholder="@Html.GetLocalizedText(SymptomConstants.SymptomFilterPlaceHolderName)">
+                        <span asp-validation-for="Symptom.Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-localized-key="@SymptomConstants.SymptomDescription" class="col-md-3 col-form-label" asp-for="Symptom.Description"></label>
+                    <div class="col-md-9">
+                        <textarea asp-for="Symptom.Description" class="form-control input-theme-sm" rows="3" maxlength="200" placeholder="@Html.GetLocalizedText(SymptomConstants.SymptomFilterPlaceHolderDescription)"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h4>@Html.GetLocalizedText(SymptomConstants.SymptomIndexPageTitle)</h4>
+        <div id="container">
+            <div id="symptomstree"></div>
+        </div>
+    </div>
+</div> 
+<div class="form-group row text-right">
+    <div class="col-12">
+        <hr />
+        <button type="reset" class="btn btn-outline-danger" onclick="location.href = '@Url.Action("Index", "Symptom")'">
+            <span asp-localized-key="ActionsDetailsBtnCancel"></span>
+        </button>
+        <input id="btnSaveSymptom" type="submit" class="btn btn-success" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+    </div>
+</div>

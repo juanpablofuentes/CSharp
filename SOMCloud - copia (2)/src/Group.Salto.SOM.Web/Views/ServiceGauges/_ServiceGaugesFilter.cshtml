@@ -1,0 +1,75 @@
+﻿@using Group.Salto.Common.Constants.ServiceGauges
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.ServiceGauges
+
+@model ServiceGaugesResultFilterViewModel
+<div class="animated fadeIn ">
+    <div class="row">
+        <div class="align-content-cente col-xl-4 col-md-10 col-lg-6 align-content-center" id="NumVisits" style="max-width: 300px; height: 300px; margin: auto"></div>
+        <div class="col-xl-4 col-md-10 col-lg-6 card align-content-center" style="max-width: 300px; height: 300px; margin: auto">
+                <font size="4" color="#333333" face="Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif">
+                    <p class="text-center">
+                        <br /><br /><br />
+                        @Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesAlerts1)
+                    </p>
+                </font>
+                <font size="15" color="#333333" face="Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif">
+                    <div class="text-center" id="total"> </div>
+                </font>
+        </div>
+        <div class="align-content-center col-xl-4 col-md-10 col-lg-6" id="WaitTime" style="max-width: 300px; height: 300px; margin: auto">
+        </div>
+
+        <div class="align-content-center col-xl-4 col-md-10 col-lg-6" id="OnSite" style="max-width: 300px; height: 300px; margin: auto"></div>
+        <div class="align-content-center col-xl-4 col-md-10 col-lg-6" id="TravelTime" style="max-width: 300px; height: 300px; margin: auto"></div>
+        <div class="align-content-center col-xl-4 col-md-10 col-lg-6" id="Km" style="max-width: 300px; height: 300px; margin: auto"></div>
+        <div class="card align-content-center col-xl-4 col-md-10 col-lg-6" style="max-width: 300px; height: 300px; margin: auto">
+                <font size="4" color="#333333" face="Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif">
+                    <p class="text-center">
+                        <br /><br /><br />
+                        @Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesTotalClosedToday)
+                    </p>
+                </font>
+                <font size="15" color="#333333" face="Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif">
+                    <div class="text-center" id="total3"> </div>
+                </font>
+        </div>
+        <div class="card align-content-center col-xl-4 col-md-10 col-lg-6" style="max-width: 300px; height: 300px; margin: auto">
+                <font size="4" color="#333333" face="Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif">
+                    <p class="text-center">
+                        <br /><br /><br />
+                        @Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesTotalOpenedToday)
+                    </p>
+                </font>
+                <font size="15" color="#333333" face="Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif">
+                    <div class="text-center" id="total4"> </div>
+                </font>
+        </div>
+        <div class="card align-content-center col-xl-4 col-md-10 col-lg-6" style="max-width: 300px">
+                <font size="4" color="#333333" face="Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif">
+                    <p class="text-center">
+                        <br />
+                        @Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesTop10)
+                    </p>
+                </font>
+                <div class="row text-center">
+                    <div class="col-lg-6">
+                        <p> @Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesEquipment) </p>
+                        <p id="str1">  </p>
+                        <p id="str2">  </p>
+                        <p id="str3">  </p>
+                        <p> <br /> </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p> @Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesAlerts)</p>
+                        <p id="av1">  </p>
+                        <p id="av2">  </p>
+                        <p id="av3">  </p>
+                        <p> <br /> </p>
+                    </div>
+                </div>
+        </div>
+        <div class="align-content-center col-xl-4 col-md-10 col-lg-6" id="SLAResponse" style="max-width: 300px; height: 300px; margin: auto"></div>
+        <div class="align-content-center col-xl-4 col-md-10 col-lg-6" id="SLAResolution" style="max-width: 300px; height: 300px; margin: auto"></div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+﻿div.gridbox_material.gridbox {
+    border: 1px solid transparent;
+}
+
+    div.gridbox_material.gridbox table.hdr td {
+        border: 1px solid #0277bd;
+        overflow: hidden;
+        empty-cells: show;
+        white-space: normal;
+        padding: 9px 0 8px 0;
+        background-color: transparent;
+        color: #ffffff;
+    }
+
+    div.gridbox_material.gridbox table.hdr tr {
+        background-color: #0277bd;
+        color: #ffffff;
+    }
+
+    div.gridbox_material.gridbox table.hdr td.dhxgrid_sort_asc_col, div.gridbox_material.gridbox table.hdr td.dhxgrid_sort_asc_col {
+        background-image: url(/lib/dhtmlx/suite/codebase/imgs/dhxgrid_material/sort_asc.png);
+        background-position: 3px 10px;
+        background-repeat: no-repeat;
+    }
+
+    div.gridbox_material.gridbox table.hdr td.dhxgrid_sort_desc_col, div.gridbox_material.gridbox table.hdr td.dhxgrid_sort_desc_col {
+        background-image: url(/lib/dhtmlx/suite/codebase/imgs/dhxgrid_material/sort_desc.png);
+        background-position: 3px 10px;
+        background-repeat: no-repeat;
+    }
+
+div.gridbox .objbox:first-child {
+    overflow: scroll auto !important;
+}
+/*No data*/
+.dhx_pager_info {
+}
+
+/*Menus contextual*/
+div.dhtmlxMenu_material_SubLevelArea_Polygon {
+    background-color: var(--blue-som);
+}
+
+    div.dhtmlxMenu_material_SubLevelArea_Polygon td.sub_item_icon {
+        width: 28px;
+    }
+
+    div.dhtmlxMenu_material_SubLevelArea_Polygon td {
+        color: white;
+    }
+
+        div.dhtmlxMenu_material_SubLevelArea_Polygon td.sub_item_icon img.sub_icon {
+            margin: 0;
+        }
+
+    div.dhtmlxMenu_material_SubLevelArea_Polygon tr.sub_item_selected td {
+        background-color: rgb(0, 83, 132);
+    }
+
+/*pagination*/
+.dhx_page {
+    line-height: 1.3em;
+    background-color: transparent;
+}
+
+    .dhx_page:hover {
+        background-color: #0277bd;
+    }
+
+.dhx_pbox {
+    border-color: #ffffff;
+}
+
+div.dhx_page_active {
+    background-color: #0277bd;
+}
+
+.dhx_pager_info {
+    margin: -10px 10px 10px 10px;
+}
+
+#containerAppliedFilters.alert-dismissible .close {
+    font-size: 1.5rem;
+    line-height: 1.3rem;
+    padding: .75rem .5rem .75rem 1.25rem;
+}

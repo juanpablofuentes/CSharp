@@ -1,0 +1,110 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.People
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.SOM.Web.Models.People;
+@using Group.Salto.Common.Enums
+@model ResultViewModel<PeopleEditViewModel>
+
+@{
+    string title = @Html.GetLocalizedText(PeopleConstants.PeopleTitle);
+    ViewData["Title"] = title;
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<div class="content">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <form asp-controller="People" asp-action="Create" method="post" class="form-horizontal">
+                <partial name="_PeopleGenericTab" model="Model?.Data" />
+                <div class="form-group row">
+                    <div class="col-12 text-right">
+                        <input type="button" onclick="location.href='@Url.Action("Index", "People")'" value="@Html.GetLocalizedText(LocalizationsConstants.CancelText)" class="btn btn-outline-danger" />
+                        <input type="submit" class="btn btn-success spinner-loader" id="btnSendMessage" name="sendMessage" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@Model.Data.GeoLocalitzationEditViewModel.Apikey&amp;language=@Model.Data.GeoLocalitzationEditViewModel.Language&amp;region=@Model.Data.GeoLocalitzationEditViewModel.Language.ToUpper()"></script>
+    <script src="~/js/MultiSelect.js"></script>
+    <script src="~/js/MultiComboListSelector.js"></script>
+    <script src="~/js/People/PeopleWork.js"></script>
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Common/ui.js"></script>
+    <script src="~/js/People/PeopleApi.js"></script>
+    <script src="~/js/WorkCenter/WorkCenterApi.js"></script>
+    <script src="~/js/People/peopleWorkConstants.js"></script>
+    <script src="~/js/Common/mapGeo.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script language="javascript">
+        (function ($) {
+            $(document).ready(function () {
+                app.multiselect.Init('@Model?.Data.AccessEditViewModel.Permissions.Name');
+                $("form").submit(function (ev) {
+                    localStorage.removeItem('@Model?.Data.AccessEditViewModel.Permissions.Name');
+                });
+                app.peopleWork.Init(
+                {
+                    idPeople: '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(0))',
+                    urlPeopleResponsible: '@Url.Action("GetPeopleByCompanyId", "People")',
+                    urlDepartments: '@Url.Action("GetDepartmentsByCompany", "People")',
+                    selectedCompany: '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.WorkEditViewModel.CompanyId ?? 0))',
+                    selectedDepartments: '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.WorkEditViewModel.DepartmentId ?? 0))',
+                    selectedPeopleResponsible: '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.WorkEditViewModel.ResponsibleId ?? 0))',
+                    defaultOptionText: '@Html.GetLocalizedText(LocalizationsConstants.VoidOption)',
+                });
+
+                var selectedKnowledge = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.WorkEditViewModel?.KnowledgeSelected));
+                new multiComboListSelector().Init("#knowledgesContainer",
+                {
+                    selectedItems: selectedKnowledge,
+                    urlPrincipalCombo: '@Url.Action("GetKnowledges", "Knowledge")',
+                    urlSecondaryCombo: '@Url.Action("GetMaturities", "Maturity")',
+                    collectionProperty: "WorkEditViewModel.KnowledgeSelected",
+                    itemIdProperty: "Value",
+                    itemTextProperty: "Text",
+                    itemIdSecondaryProperty: "ValueSecondary",
+                    itemTextSecondaryProperty: "TextSecondary",
+                    column1Text : '#',
+                    column2Text : '@Html.GetLocalizedText(LocalizationsConstants.Name)',
+                    column3Text : '@Html.GetLocalizedText(LocalizationsConstants.Maturity)',
+                });
+
+                app.peopleapi.Init(
+                {
+                    elementSelected: 'WorkEditViewModel_CompanyId',
+                    elementFiltered: 'WorkEditViewModel_ResponsibleId',
+                    valueSelected: @(Model.Data.WorkEditViewModel.ResponsibleId ?? 0)
+                });
+
+                app.workcenterapi.Init(
+                {
+                    elementSelected: 'WorkEditViewModel_CompanyId',
+                    elementFiltered: 'WorkEditViewModel_WorkCenterId',
+                    valueSelected: @(Model.Data.WorkEditViewModel.WorkCenterId ?? 0)
+                });
+
+                app.mapGeo.Init(
+                {
+                    inputLatitude : '@nameof(GeoLocalitzationEditViewModel)_@nameof(GeoLocalitzationEditViewModel.Latitude)',
+                    inputLongitude: '@nameof(GeoLocalitzationEditViewModel)_@nameof(GeoLocalitzationEditViewModel.Longitude)',
+                    inputRatio: '@nameof(GeoLocalitzationEditViewModel)_@nameof(GeoLocalitzationEditViewModel.WorkRadiusKm)',
+                    searchcodeaddress : 'searchcodeaddress',
+                    mGeoCodeAddressError : '@PeopleConstants.PeopleGeoCodeAddressError',
+                    mGeoPosicionBase : '@PeopleConstants.PeopleGeoPosicionBase',
+                    mGeoLatitudeIncorrectFormat : '@PeopleConstants.PeopleGeoLatitudeIncorrectFormat',
+                    mGeoLongitudeIncorrectFormat : '@PeopleConstants.PeopleGeoLongitudeIncorrectFormat',
+                    mGeoRadioIncorrectFormat : '@PeopleConstants.PeopleGeoRadioIncorrectFormat',
+                    });
+
+                var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.People, ActionEnum.Create).ToString().ToLower();
+		        app.common.authorization.disable("btnSendMessage", saveCreate);
+            });
+        })(jQuery);
+    </script>
+}

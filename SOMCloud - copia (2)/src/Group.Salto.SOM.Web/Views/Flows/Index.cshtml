@@ -1,0 +1,74 @@
+﻿@using Group.Salto.Common.Constants.Flows
+@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Flows
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.Controls.Table
+@model ResultViewModel<FlowsListViewModel>
+
+@{
+    var title = Html.GetLocalizedText(FlowsConstants.FlowsPageTitle);
+    ViewData["Title"] = title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="page-title">@title</h1>
+@{
+    var table = Html.GetMultiSelectTableFor(Model.Data.FlowsList, au => au.Id, Model.Data.Filters, TranslationHelper.GetTranslationService());
+    table.SetColumns(m => m.Name, m => m.Description);
+    table.SetSortingColumns(m => m.Name);
+    table.ShowSelectColumn = false;
+    table.TableCssClass = "table table-striped table-hover";
+    table.TableHeaderCssClass = "thead-som";
+
+    table.AddColumnTemplateFor(m => m.Id,
+    @<div class="col-update text-right">
+        <a asp-action="Edit" asp-route-id="@item.RawValue" id="@item.RawValue">
+            <i class="fa fa-pencil fa-lg"></i>
+        </a>
+        <a asp-action="Delete" asp-route-id="@item.RawValue" id="@item.RawValue" class="deleteButton"
+           data-toggle="tooltip" data-placement="top">
+            <i class="fa fa-trash-o fa-lg"></i>
+        </a>
+    </div>, "");
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <partial name="_FlowsFilter" model="@Model.Data.Filters" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Data.FlowsList.Any())
+            {
+                <div class="table-responsive workstation-table">
+                    @table.Render("FlowsGrid")
+                </div>
+
+                <partial name="_Pager" for="@Model.Data.Filters" />
+            }
+            else
+            {
+                <partial name="_NoRecords" />
+            }
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Flows/FlowsList.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                MultiTableScript("FlowsGrid");
+                var page = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.Filters));
+                pager.PagerSelector.Init({ PageData: page });
+                app.flows.Init();
+            });
+        })(jQuery);
+    </script>
+}

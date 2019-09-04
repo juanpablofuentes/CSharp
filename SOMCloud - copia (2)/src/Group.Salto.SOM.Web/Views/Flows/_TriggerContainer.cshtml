@@ -1,0 +1,28 @@
+﻿@using Group.Salto.ServiceLibrary.Common.Dtos.Base
+@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Task
+@using Group.Salto.SOM.Web.Extensions
+
+@model BaseNameIdDto<int>
+
+<div class="row p-4">
+    <div class="col-12">
+        <div class="row">
+            <div class="conditions col-12 p-3" id="container-triggers-@Model.Id">
+                <input id="h-typeId-@Model.Id-trigger" type="hidden" />
+                <input id="h-value-@Model.Id-trigger" type="hidden" />
+
+                <label id="typeName-@Model.Id-trigger" class="h4"></label>
+                <label id="value-@Model.Id-trigger" class="h4"></label>
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <div class="col-12 text-right">
+                <hr />
+                <button id="@Model.Id-edit-trigger" class="btn btn-outline-warning trigger-Edit" data-toggle="modal" data-target="#modalTrigger" data-taskid="@Model.Id"><i class="fa fa-pen"></i> Editar</button>
+            </div>
+        </div>
+    </div>
+
+</div>

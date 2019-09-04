@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PushSharp.Core" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Group.Salto.Infrascture.Common\Group.Salto.Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\Group.Salto.Log\Group.Salto.Log.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Files\IosCertificates\SomAppCertApnsDev.p12">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\IosCertificates\SomAppCertApnsPro.p12">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\IosCertificates\SomAppIosPush.p12">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\IosCertificates\SomAppIosPushDev.p12">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

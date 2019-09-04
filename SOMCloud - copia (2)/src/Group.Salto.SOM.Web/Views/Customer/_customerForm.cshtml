@@ -1,0 +1,259 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Customer
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Customer
+@model CustomerDetailViewModel
+
+<div class="row">
+    <div class="col-12 col-sm-4">
+        <div class="card border-primary">
+            <div class="card-body">
+                <h3 class="card-title" asp-localized-key="@CustomerConstants.CustomerDetailTitleCompany"></h3>
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@CustomerConstants.CustomerNameFormText"></span><span class="required">*</span>
+                    </label>
+                    @Html.HiddenFor(m => m.Customer.Id, new { Id = "Id" })
+
+                    <input asp-for="Customer.Name"
+                           class="form-control"
+                           placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerNamePlaceholder)" />
+                    <span asp-validation-for="Customer.Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@CustomerConstants.CustomerNIFFormText"></span><span class="required">*</span>
+                    </label>
+                    <input asp-for="Customer.NIF"
+                           class="form-control input-theme-sm"
+                           placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerNIFPlaceholder)" />
+                    <span asp-validation-for="Customer.NIF" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@CustomerConstants.CustomerCodeFormText"></span>
+                    </label>
+                    <input asp-for="Customer.CustomerCode"
+                           class="form-control input-theme-sm"
+                           placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerCodeFormPlaceHolder)" />
+                    <span asp-validation-for="Customer.CustomerCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <span asp-localized-key="@CustomerConstants.CustomerNumberOfEmployeesFormText"></span>
+                    </label>
+                    <input asp-for="Customer.NumberEmployees"
+                           class="form-control input-theme-sm"
+                           type="number" ,
+                           placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerNumberEmployeesFormPlaceHolder)" />
+                    <span asp-validation-for="Customer.NumberEmployees" class="text-danger"></span>
+                </div>
+
+                @if (Model?.Customer?.Id != null && Model?.Customer?.Id != default(Guid))
+                {
+                    <div class="form-group row">
+                        <div class="col ">
+                            <div class="custom-control custom-checkbox">
+                                <input asp-for="Customer.IsActive" type="checkbox" class="custom-control-input" id="customCheck1" />
+                                <label class="custom-control-label" for="customCheck1"><span asp-localized-key="@CustomerConstants.CustomerIsActiveFormText"></span></label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span asp-localized-key="@CustomerConstants.CustomerUpdateStatusDate"></span>
+                        </label>
+                        <label class="form-control">@Model.Customer.UpdateStatusDate</label>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+        <h4 class="card-title" asp-localized-key="@CustomerConstants.CustomerDetailNumberOfUsers"></h4>
+        <div class="form-group">
+            <label>
+                <span asp-localized-key="@CustomerConstants.CustomerNumberAppUsersFormText"></span><span class="required">*</span>
+            </label>
+            <input asp-for="Customer.NumberAppUsers"
+                   class="form-control input-theme-sm"
+                   type="number" ,
+                   placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerNumberAppUsersFormPlaceHolder)" />
+            <span asp-validation-for="Customer.NumberAppUsers" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <span asp-localized-key="@CustomerConstants.CustomerNumberWebUsersFormText"></span><span class="required">*</span>
+            </label>
+            <input asp-for="Customer.NumberWebUsers"
+                   class="form-control input-theme-sm"
+                   type="number" ,
+                   placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerNumberWebUsersFormPlaceHolder)" />
+            <span asp-validation-for="Customer.NumberWebUsers" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <span asp-localized-key="@CustomerConstants.CustomerNumberTeamMembersFormText"></span><span class="required">*</span>
+            </label>
+            <input asp-for="Customer.NumberTeamMembers"
+                   class="form-control input-theme-sm"
+                   type="number" ,
+                   placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerNumberTeamMembersFormPlaceHolder)" />
+            <span asp-validation-for="Customer.NumberTeamMembers" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-4">
+        <h4 asp-localized-key="@CustomerConstants.CustomerAddressSelector">Dirección</h4>
+        <div class="form-group">
+            <div id="container" class="col-12 p-0">
+                <div id="countrySelector"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <span asp-localized-key="@CustomerConstants.CustomerAddress"></span><span class="required">*</span>
+            </label>
+            <input type="text" asp-for="Customer.Address" class="form-control"
+                   placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerAddressPlaceHolder)" />
+            <span asp-validation-for="Customer.Address" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-4">
+                <span asp-localized-key="@CustomerConstants.CustomerTelephoneFormText"></span><span class="required">*</span>
+            </label>
+            <div class="col-sm-8 ">
+                <input asp-for="Customer.Telephone"
+                       class="form-control input-theme-sm"
+                       placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerTelephoneFormPlaceHolder)" />
+                <span asp-validation-for="Customer.Telephone" class="text-danger"></span>
+            </div>
+        </div>
+
+        <h4 asp-localized-key="@CustomerConstants.CustomerDetailHeaderInvoicing"></h4>
+
+        <div class="form-group">
+            <label>
+                <span asp-localized-key="@CustomerConstants.CustomerInvoicingNameFormText"></span><span class="required">*</span>
+            </label>
+            <input asp-for="Customer.InvoicingContactName"
+                   class="form-control input-theme-sm"
+                   placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerInvoicingNameFormPlaceHolder)" />
+            <span asp-validation-for="Customer.InvoicingContactName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <span asp-localized-key="@CustomerConstants.CustomerInvoicingSurnameFormText"></span><span class="required">*</span>
+            </label>
+            <input asp-for="Customer.InvoicingContactFirstSurname"
+                   class="form-control input-theme-sm"
+                   placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerInvoicingSurnameFormPlaceHolder)" />
+            <span asp-validation-for="Customer.InvoicingContactFirstSurname" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <span asp-localized-key="@CustomerConstants.CustomerInvoicingSecondSurnameFormText"></span>
+            </label>
+
+            <input asp-for="Customer.InvoicingContactSecondSurname"
+                   class="form-control input-theme-sm"
+                   placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerInvoicingSurnameFormPlaceHolder)" />
+            <span asp-validation-for="Customer.InvoicingContactSecondSurname" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <span asp-localized-key="@CustomerConstants.CustomerAdministrativeEmailFormText"></span><span class="required">*</span>
+            </label>
+            <input asp-for="Customer.InvoicingContactEmail"
+                   class="form-control input-theme-sm"
+                   type="email" ,
+                   placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerAdministrativeEmailFormPlaceHolder)" />
+            <span asp-validation-for="Customer.InvoicingContactEmail" class="text-danger"></span>
+        </div>
+
+
+
+    </div>
+
+    <div class="col-12 col-sm-4">
+        <h4 asp-localized-key="@CustomerConstants.CustomerDetailHeaderTechnic"></h4>
+
+        <div class="form-group">
+            <label>
+                <span asp-localized-key="@CustomerConstants.CustomerTechnicalNameFormText"></span><span class="required">*</span>
+            </label>
+            <input asp-for="Customer.TechnicalAdministratorName"
+                   class="form-control input-theme-sm"
+                   placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerTechnicalNameFormPlaceHolder)" />
+            <span asp-validation-for="Customer.TechnicalAdministratorName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <span asp-localized-key="@CustomerConstants.CustomerTechnicalSurnameFormText"></span><span class="required">*</span>
+            </label>
+            <input asp-for="Customer.TechnicalAdministratorFirstSurname"
+                   class="form-control input-theme-sm"
+                   placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerTechnicalSurnameFormPlaceHolder)" />
+            <span asp-validation-for="Customer.TechnicalAdministratorFirstSurname" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <span asp-localized-key="@CustomerConstants.CustomerTechnicalSecondSurnameFormText"></span>
+            </label>
+
+            <input asp-for="Customer.TechnicalAdministratorSecondSurname"
+                   class="form-control input-theme-sm"
+                   placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerTechnicalSecondSurnameFormPlaceHolder)" />
+            <span asp-validation-for="Customer.TechnicalAdministratorSecondSurname" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <span asp-localized-key="@CustomerConstants.CustomerTechnicalEmailFormText"></span><span class="required">*</span>
+            </label>
+            <input asp-for="Customer.TechnicalAdministratorEmail"
+                   class="form-control input-theme-sm"
+                   type="email" ,
+                   placeholder="@Html.GetLocalizedText(CustomerConstants.CustomerTechnicalEmailFormPlaceHolder)" />
+            <span asp-validation-for="Customer.TechnicalAdministratorEmail" class="text-danger"></span>
+        </div>
+
+        <h4 asp-localized-key="@CustomerConstants.CustomerDetailHeaderModules"></h4>
+        @Html.HiddenFor(x => x.ModuleIdsSelected)
+
+        @if (Model?.Modules != null && Model.Modules.Any())
+        {
+            <partial name="_MultiselectModulesList" for="Modules" />
+        }
+    </div>
+
+</div>
+
+<div class="form-group row">
+    <div class="col-12 text-right">
+        <hr />
+        <input type="button"
+               onclick="location.href = '@Url.Action("Index", "Customer")'"
+               value="@Html.GetLocalizedText(LocalizationsConstants.CancelText)"
+               class="btn btn-outline-danger" />
+
+        <input type="button"
+               class="btn btn-success spinner-loader"
+               id="btnSaveCustomer" name="sendMessage"
+               value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+    </div>
+</div>

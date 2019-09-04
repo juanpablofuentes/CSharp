@@ -1,0 +1,9 @@
+﻿@using Group.Salto.SOM.Web.Models.Task
+@using Group.Salto.ServiceLibrary.Common.Dtos.Base
+
+@model BaseNameIdDto<int>
+<div class="row conditions-row">
+    <div class="col-12" id="container-preconditions-@Model.Id">
+        <partial model="Model" name="_ConditionItem" />
+    </div>
+</div>

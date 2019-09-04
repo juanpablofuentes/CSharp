@@ -1,0 +1,37 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.SymptomCollection
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.SymptomCollection;
+@model SymptomCollectionFilterViewModel
+
+<partial model="@Model.FilterHeader" name="_FilterHeader" />
+<div class="collapse in" id="filterSymptomCollection">
+    <form asp-action="Filter" asp-controller="SymptomCollection" method="post" id="filter-form" class="form-control">
+        <partial model="Model" name="_PagerHiddens" />
+        <partial model="Model" name="_MultiTableHiddens" />
+        <div class="row">
+            <div class="col-12 col-sm-4">
+                <label class="col-form-label">
+                    <span asp-localized-key="@SymptomCollectionConstants.SymptomCollectionFilterName"></span>
+                </label>
+                <input asp-for="Name" id="SymptomCollectionFilterName"
+                       class="form-control input-theme-sm"
+                       placeholder="@Html.GetLocalizedText(SymptomCollectionConstants.SymptomCollectionFilterPlaceHolderName)" />
+            </div>
+            <div class="col-12 col-sm-4">
+                <label class="col-form-label">
+                    <span asp-localized-key="@SymptomCollectionConstants.SymptomCollectionFilterElement"></span>
+                </label>
+                <input asp-for="Element" id="SymptomCollectionFilterElement"
+                       class="form-control input-theme-sm"
+                       placeholder="@Html.GetLocalizedText(SymptomCollectionConstants.SymptomCollectionFilterPlaceHolderElement)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-right">
+                <button type="button" class="btn btn-outline-danger" id="btnClear" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                <button id="btnApplyFilter" class="btn btn-primary" asp-localized-key="@LocalizationsConstants.ApplyFilter" />
+            </div>
+        </div>
+    </form>
+</div>

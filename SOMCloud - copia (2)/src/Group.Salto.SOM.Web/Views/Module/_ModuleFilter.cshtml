@@ -1,0 +1,32 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Module
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Modules
+
+@model ModuleFilterViewModel
+
+<div>
+    <partial model="@Model.FilterHeader" name="_FilterHeader" />
+    <div class="collapse in" id="filterSection">
+        <form asp-action="Filter" asp-controller="Module" method="post" id="filter-form" class="form-control">
+            <partial model="Model" name="_MultiTableHiddens" />
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class="col-sm-4 col-form-label">
+                        <span asp-localized-key="@ModuleConstants.ModuleFilterNameTitle"></span>
+                    </label>
+                    <input asp-for="Name" id="ModuleFilterName"
+                           class="form-control input-theme-sm"
+                           placeholder="@Html.GetLocalizedText(ModuleConstants.ModuleNamePlaceholder)" />
+                </div>
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <br>
+                        <button type="button" class="btn btn-outline-danger" id="btnClear" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                        <button name="btnApplyFilter" id="btnApplyFilter" class="btn btn-primary" asp-localized-key="@LocalizationsConstants.ApplyFilter" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

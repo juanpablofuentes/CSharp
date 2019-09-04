@@ -1,0 +1,48 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Assets
+@using Group.Salto.SOM.Web.Models.Assets
+@using Group.Salto.SOM.Web.Extensions
+@model AssetsTransferViewModel
+
+<div class="col-12">
+    <div class="row collapse" id="collapseTransfer">
+        <form asp-action="Transfer" asp-controller="Assets" method="post" id="transfer-form" class="form-control">
+            <div class="form-row">
+                <div class="form-group col-12 col-sm-3">
+                    <div id="assetsIds"></div>
+                    <input type="hidden" name="PageSiteId" value="@Model.PageSiteId" />
+                    <input type="hidden" name="PageClientId" value="@Model.PageClientId" />
+                    <label asp-localized-key="@AssetsConstants.AssetsLocationClient"></label>
+                    <div id="finalclientsContainer"></div>
+                </div>
+                <div class="form-group col-12 col-sm-3">
+                    <label>
+                        <span asp-localized-key="@AssetsConstants.AssetsLocationLocation"></span>
+                        <span class="text-info" data-toggle="tooltip" data-placement="top" title="@Html.GetLocalizedText(AssetsConstants.AssetsTransferSiteUserTooltip)"><i class="fa fa-exclamation-circle"></i></span>
+                    </label>
+                    <div id="locationsContainer"></div>
+                </div>
+                <div class="form-group col-12 col-sm-3">
+                    <label>
+                        <span asp-localized-key="@AssetsConstants.AssetsLocationUser"></span>
+                        <span class="text-info" data-toggle="tooltip" data-placement="top" title="@Html.GetLocalizedText(AssetsConstants.AssetsTransferSiteUserTooltip)"><i class="fa fa-exclamation-circle"></i></span>
+                    </label>
+                    <div id="usersContainer"></div>
+                </div>
+                <div class="form-group col-12 col-sm-3">
+                    <label><span asp-localized-key="@AssetsConstants.AssetsDetailsStatus"></span></label>
+                    <select asp-for="AssetsStatusId" asp-items='@ViewBag.Statuses' rows="3" class="form-control"></select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <br>
+                        <button id="btnApplytransfer" class="btn btn-primary" name="btnApplyFilter" asp-localized-key="@AssetsConstants.AssetsTransferButton" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

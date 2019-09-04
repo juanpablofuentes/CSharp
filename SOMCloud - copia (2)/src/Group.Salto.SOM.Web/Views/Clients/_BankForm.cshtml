@@ -1,0 +1,81 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Client
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Client
+@model ClientBankDetailViewModel
+
+@if (Model != null && Model.Id != 0)
+{
+<div class="row">
+    <div class="col-12 col-sm-4">
+        <div class="form-group row">
+            <label class="col-sm-4"><span asp-localized-key="@ClientsConstants.ClientBankTab"></span></label>
+            <label class="switch switch-som switch-label switch-pill switch-primary">
+                <input asp-for="EditBankData" type="checkbox" class="switch-input">
+                <span class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.IsActive)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.Disabled)"></span>
+            </label>
+        </div>
+    </div>
+</div>
+}
+<div class="row">
+    <div class="col-12 col-sm-4">
+        <div class="form-group">
+            <label><span asp-localized-key="@ClientsConstants.ClientBankCodeFormText"></span></label>
+            <input asp-for="BankCode" class="form-control" readonly="@(Model.LoadAsReadOnly())" placeholder="@Html.GetLocalizedText(ClientsConstants.ClientBankCodeFormText)" />
+            <span asp-validation-for="BankCode" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label><span asp-localized-key="@ClientsConstants.ClientBranchNumberFormText"></span></label>
+            <input asp-for="BranchNumber" class="form-control input-theme-sm" readonly="@(Model.LoadAsReadOnly())" placeholder="@Html.GetLocalizedText(ClientsConstants.ClientBranchNumberFormText)" />
+            <span asp-validation-for="BranchNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label><span asp-localized-key="@ClientsConstants.ClientControlDigitFormText"></span></label>
+            <input asp-for="ControlDigit" class="form-control input-theme-sm" readonly="@(Model.LoadAsReadOnly())" placeholder="@Html.GetLocalizedText(ClientsConstants.ClientControlDigitFormText)" />
+            <span asp-validation-for="ControlDigit" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-4">
+        <div class="form-group">
+            <label><span asp-localized-key="@ClientsConstants.ClientAccountNumberFormText"></span></label>
+            <input asp-for="AccountNumber" class="form-control" readonly="@(Model.LoadAsReadOnly())" placeholder="@Html.GetLocalizedText(ClientsConstants.ClientAccountNumberFormText)" />
+            <span asp-validation-for="AccountNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label><span asp-localized-key="@ClientsConstants.ClientSwiftCodeFormText"></span></label>
+            <input asp-for="SwiftCode" class="form-control" readonly="@(Model.LoadAsReadOnly())" placeholder="@Html.GetLocalizedText(ClientsConstants.ClientSwiftCodeFormText)" />
+            <span asp-validation-for="SwiftCode" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label><span asp-localized-key="@ClientsConstants.ClientBankNameFormText"></span></label>
+            <input asp-for="BankName" class="form-control" readonly="@(Model.LoadAsReadOnly())" placeholder="@Html.GetLocalizedText(ClientsConstants.ClientBankNameFormText)" />
+            <span asp-validation-for="BankName" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <div class="col-12 col-sm-4">
+        <div class="form-group">
+            <label><span asp-localized-key="@ClientsConstants.ClientBankAddressFormText"></span></label>
+            <input asp-for="BankAddress" class="form-control input-theme-sm" readonly="@(Model.LoadAsReadOnly())" placeholder="@Html.GetLocalizedText(ClientsConstants.ClientBankAddressFormText)" />
+            <span asp-validation-for="BankAddress" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label><span asp-localized-key="@ClientsConstants.ClientBankPostalCodeFormText"></span></label>
+            <input asp-for="BankPostalCode" class="form-control input-theme-sm" readonly="@(Model.LoadAsReadOnly())" placeholder="@Html.GetLocalizedText(ClientsConstants.ClientBankPostalCodeFormText)" />
+            <span asp-validation-for="BankPostalCode" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label><span asp-localized-key="@ClientsConstants.ClientBankCityFormText"></span></label>
+            <input asp-for="BankCity" class="form-control input-theme-sm" readonly="@(Model.LoadAsReadOnly())" placeholder="@Html.GetLocalizedText(ClientsConstants.ClientBankCityFormText)" />
+            <span asp-validation-for="BankCity" class="text-danger"></span>
+        </div>
+    </div>
+</div>

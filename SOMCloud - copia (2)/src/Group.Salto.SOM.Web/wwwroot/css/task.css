@@ -1,0 +1,127 @@
+﻿.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.collapse-icons > a {
+    color: #7f7f7f;
+}
+
+.collapse-icons_sumary:hover {
+    color: var(--info);
+}
+
+.collapse-icons_remove:hover {
+    color: var(--danger);
+}
+
+.collapse-icons_chevron:hover {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    border-color: #dee2e6 #dee2e6 #f8f9fa;
+    background-color: #f8f9fa !important;
+}
+
+    .nav-tabs .nav-link.active:focus {
+        color: rgb(47, 53, 58);
+    }
+
+.rotate {
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+}
+
+    .rotate.down {
+        -moz-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+.task {
+    border-bottom: 1px solid #cdcdcd;
+}
+
+.task-active {
+    color: #fff;
+    padding-top: .2rem;
+    padding-right: .2rem;
+    background-color: #0277bd;
+}
+
+    .task-active button.btn.btn-link,
+    .task-active .collapse-icons a {
+        color: #fff;
+    }
+
+.tab-pane {
+    background-color: #f8f9fa !important;
+}
+
+.scrollspy-content {
+    position: relative;
+    height: 500px;
+    margin-top: .5rem;
+    overflow: auto;
+}
+
+#navbar-scrollspy .nav-pills .nav-link {
+    border-radius: 2.25rem;
+}
+
+.conditions-row {
+}
+
+
+.conditions-content {
+    padding: 0;
+    margin: 1.25rem 0 1.25rem 0;
+}
+
+.conditions-row .conditions-content:last-child {
+    margin-bottom: 0 !important;
+}
+
+.item-or {
+    text-align: center;
+    padding: 0;
+}
+
+.conditions-content:first-child .item-or:first-child span,
+.collection-row:first-child .item-or:first-child span {
+    display: none;
+}
+
+.collection-row,
+#navbar-scrollspy {
+    margin: 1.25rem 0;
+}
+
+.collection {
+    border: 1px solid #cdcdcd;
+    background-color: #ffffff;
+    padding: .8em;
+    border-radius: .3rem;
+}
+
+.conditions {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: .3rem;
+}
+
+.item-conditions p {
+    margin: .5rem 0 .5rem 0;
+}
+
+.postcondition-container {
+    margin: .65rem 0;
+    padding: .65rem;
+    background-color: #efefef;
+    border: 1px solid 1px solid #dfdfdf;
+    box-shadow: 2px 2px 5px #dadada;
+}

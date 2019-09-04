@@ -1,0 +1,76 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Models.WorkOrderFilter
+@using Group.Salto.Common.Constants.WorkOrderFilter
+@using Group.Salto.SOM.Web.Extensions
+@model WorkOrderFilterViewModel
+
+<div class="container-fluid">
+    <input type="hidden" id="modalcolumnid" name="modalcolumnid" />
+    <form asp-controller="WorkOrderFilter" asp-action="Edit" method="post" id="workOrderfilter" class="form-horizontal">
+        <input type="hidden" asp-for="Id" class="form-control" />
+        <div class="row">
+            <div class="col-12 col-sm-4">
+                <div class="form-group">
+                    <label><span asp-localized-key="@WorkOrderFilterConstants.WorkOrderFilterName"></span></label><span class="required">*</span>
+                    <input asp-for="Name" class="form-control" placeholder="@Html.GetLocalizedText(WorkOrderFilterConstants.WorkOrderFilterName)" onchange="app.WorkOrderFilter.OnChangeName(this)" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-4">
+                <div class="form-group row mb-0">
+                    <label><span asp-localized-key="@WorkOrderFilterConstants.WorkOrderFilterIsDefault"></span></label>
+                    <div class="col">
+                        <label class="switch switch-label switch-pill switch-primary">
+                            <input asp-for="IsDefault" type="checkbox" class="switch-input">
+                            <span class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.Yes)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.No)"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <input id="availableColumnsValue" type="hidden" value="@Newtonsoft.Json.JsonConvert.SerializeObject(Model?.AvailableColumns)" />
+            <input id="selectedColumnsValue" type="hidden" value="@Newtonsoft.Json.JsonConvert.SerializeObject(Model?.SelectedColumns)" />
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="form-group">
+                    <label class="font-weight-bold"><span asp-localized-key="@WorkOrderFilterConstants.WorkOrderFilterAvailableColumns"></span></label>
+                    <div id="availableColumnsContainer"></div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="form-group">
+                    <label class="font-weight-bold"><span asp-localized-key="@WorkOrderFilterConstants.WorkOrderFilterSelectedColumns"></span></label><span class="required">*</span>
+                    <div id="selectedColumnsContainer"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="hiddenrows"></div>
+        <div class="row">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="form-group">
+                    <label><span asp-localized-key="@WorkOrderFilterConstants.WorkOrderFilterTechnicians"></span></label>
+                    <partial name="_MultiSelectControl" for="Technicians" />
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="form-group">
+                    <label><span asp-localized-key="@WorkOrderFilterConstants.WorkOrderFilterGroups"></span></label>
+                    <partial name="_MultiSelectControl" for="Groups" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr />
+                <div class="pull-right">
+                    <input type="button" onclick="location.href='@Url.Action("Index", "Workorder")'" value="@Html.GetLocalizedText(LocalizationsConstants.CancelText)" class="btn btn-outline-danger" />
+                    <input type="button" class="btn btn-success spinner-loader" id="btnsaveview" name="btnsaveview" disabled="disabled" onclick="app.WorkOrderFilter.SaveView()" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

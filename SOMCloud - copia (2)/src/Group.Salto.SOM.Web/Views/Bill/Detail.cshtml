@@ -1,0 +1,91 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Bill
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Bill
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.Controls.Table
+@model ResultViewModel<BillsViewModel>
+
+@{
+    var title = @Html.GetLocalizedText(BillConstants.BillDetailTitle);
+    ViewData["Title"] = title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-xl-9 col-lg-8 col-sm-6">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2><span asp-localized-key="BillDetailsTitle" class="mr-2"></span><small class="text-muted">#@Model.Data.Bill.Id</small></h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <ul class="list-group, col-xl-3  col-lg-6 col-md-12">
+                        <li class="list-group-item active" style="text-align:center">@Html.GetLocalizedText(BillConstants.BillNumber)</li>
+                        <li class="list-group-item" style="text-align:center; min-height:47px">@Model.Data.Bill.Id</li>
+                    </ul>
+                    <ul class="list-group, col-xl-3  col-lg-6 col-md-12">
+                        <li class="list-group-item active">@Html.GetLocalizedText(BillConstants.BillInternalIdentifier)</li>
+                        <li class="list-group-item" style="text-align:center; min-height:47px">@Model.Data.Bill.InternalIdentifier</li>
+                    </ul>
+                    <ul class="list-group, col-xl-3  col-lg-6 col-md-12">
+                        <li class="list-group-item active" style="text-align:center">@Html.GetLocalizedText(BillConstants.BillWorkOrderId)</li>
+                        <li class="list-group-item" style="text-align:center; min-height:47px">@Model.Data.Bill.WorkOrderId</li>
+                    </ul>
+                    <ul class="list-group, col-xl-3  col-lg-6 col-md-12">
+                        <li class="list-group-item active" style="text-align:center">@Html.GetLocalizedText(BillConstants.BillStatus)</li>
+                        <li class="list-group-item" style="text-align:center; min-height:47px">@Model.Data.Bill.Status</li>
+                    </ul>
+                    <ul class="list-group, col-xl-3  col-lg-6 col-md-12">
+                        <li class="list-group-item active" style="text-align:center">@Html.GetLocalizedText(BillConstants.BillServiceId)</li>
+                        <li class="list-group-item" style="text-align:center; min-height:47px">@Model.Data.Bill.ServiceId</li>
+                    </ul>
+                    <ul class="list-group, col-xl-3  col-lg-6 col-md-12">
+                        <li class="list-group-item active" style="text-align:center">@Html.GetLocalizedText(BillConstants.BillProjectSerie)</li>
+                        <li class="list-group-item" style="text-align:center; min-height:47px">@Model.Data.Bill.ProjectSerie</li>
+                    </ul>
+                    <ul class="list-group, col-xl-3  col-lg-6 col-md-12">
+                        <li class="list-group-item active" style="text-align:center">@Html.GetLocalizedText(BillConstants.BillDate)</li>
+                        <li class="list-group-item" style="text-align:center; min-height:47px">@Model.Data.Bill.Date</li>
+                    </ul>
+                    <ul class="list-group, col-xl-3  col-lg-6 col-md-12">
+                        <li class="list-group-item active" style="text-align:center">@Html.GetLocalizedText(BillConstants.BillExternalSistemNumber)</li>
+                        <li class="list-group-item" style="text-align:center; min-height:47px">@Model.Data.Bill.ExternalSistemNumber </li>
+                    </ul>
+                    <ul class="list-group, col-xl-3  col-lg-6 col-md-12">
+                        <li class="list-group-item active" style="text-align:center">@Html.GetLocalizedText(BillConstants.BillTask)</li>
+                        <li class="list-group-item" style="text-align:center; min-height:47px">@Model.Data.Bill.Task</li>
+                    </ul>
+                    <ul class="list-group, col-xl-3  col-lg-6 col-md-12">
+                        <li class="list-group-item active" style="text-align:center">@Html.GetLocalizedText(BillConstants.BillWorkerName)</li>
+                        <li class="list-group-item" style="text-align:center; min-height:47px">@Model.Data.Bill.WorkerName</li>
+                    </ul>
+                </div>
+            </div>
+            @{
+                var table = Html.GetMultiSelectTableFor(Model.Data.BillItems, au => au.Id, Model.Data.BillFilter, TranslationHelper.GetTranslationService());
+                table.SetColumns(m => m.Id, m => m.Item, m => m.Units, m => m.SerialNumber);
+                table.SetSortingColumns(m => m.Item);
+                table.ShowSelectColumn = false;
+                table.TableCssClass = "table table-striped table-hover";
+                table.TableHeaderCssClass = "thead-som";
+            }
+            <div class="col-sm-12">
+                <div class="table-responsive workstation-table" id="multigridContainerId">
+                    @table.Render("BillDetailGrid")
+                </div>
+            </div>
+
+            <div class="col-sm-12 text-right">
+                <br />
+                <div class="nav-item ml-auto">
+                    <a asp-controller="Bill" asp-action="Index" asp-route-page="@ViewBag.Value" id="@ViewBag.Value" class="btn btn-outline-dark">
+                        <i class="fa fa-arrow-left mr-1"></i><span asp-localized-key="@LocalizationsConstants.BackText"></span>
+                    </a>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>

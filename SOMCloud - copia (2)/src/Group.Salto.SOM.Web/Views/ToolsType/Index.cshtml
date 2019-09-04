@@ -1,0 +1,114 @@
+﻿@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.ToolsType
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Controls.Table
+@using System;
+@using Group.Salto.Common.Constants.ToolsType
+@using Group.Salto.Common.Constants
+
+@model ResultViewModel<ToolsTypeViewModel>
+
+@{
+    ViewData["Title"] = @Html.GetLocalizedText("ToolsTypeIndexTitle");
+    var title = @Html.GetLocalizedText("ToolsTypeIndexTitle");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="page-title">@title</h1>
+
+@{
+    var table = Html.GetMultiSelectTableFor(Model.Data.ToolsType, au => au.Id, Model.Data.ToolsTypeFilters, TranslationHelper.GetTranslationService());
+    table.SetColumns(m => m.Name, m => m.Observation, m => m.Description);
+    table.SetSortingColumns(m => m.Name);
+    table.ShowSelectColumn = false;
+    table.TableCssClass = "table table-striped table-hover";
+    table.TableHeaderCssClass = "thead-som";
+
+    table.AddColumnTemplateFor(m => m.Id,
+    @<div class="col-update text-right">
+        <a asp-action="Edit" asp-route-id="@item.RawValue" id="@item.RawValue">
+            <i class="fa fa-pencil fa-lg"></i>
+        </a>
+        <a asp-action="Delete" asp-route-id="@item.RawValue" id="@item.RawValue" class="deleteButton"
+           data-toggle="tooltip" data-placement="top">
+            <i class="fa fa-trash-o fa-lg"></i>
+        </a>
+    </div>, "");
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <partial name="_ToolsTypeFilter" model="@Model.Data.ToolsTypeFilters" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Data.ToolsType.Any())
+            {
+                <div class="table-responsive workstation-table" id="multigridContainerId">
+                    @table.Render("ToolsTypeGrid")
+                </div>
+
+                <partial name="_Pager" for="@Model.Data.ToolsTypeFilters" />
+            }
+            else
+            {
+                <partial name="_NoRecords" />
+            }
+        </div>
+    </div>
+</div>
+
+<popup Text="@Html.GetLocalizedText(ToolsTypeConstants.ToolsTypeDeleteMessage)" Id="confirmationModal"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"
+       cancel-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)"></popup>
+
+@section scripts {
+    <script src="~/js/ToolsType/ToolsType.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                app.toolstype.Init();
+                MultiTableScript("ToolsGrid");
+                var page = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.ToolsTypeFilters));
+
+                pager.PagerSelector.Init({ PageData: page });
+
+                $(".deleteButton").on("click",
+                    function (evt) {
+                        evt.preventDefault();
+                        var id = $(this).attr('id');
+                            deleteElement(id, "#confirmationModal",
+                            "#confirmationModalConfirmSave");
+                    });
+
+                function deleteElement(id, modalId, saveButtonId) {
+                    $(modalId).modal();
+
+                    $(saveButtonId).on("click",
+                        function () {
+                            $.ajax({
+                                url: '@Url.Action("Delete", "ToolsType")',
+                                type: 'POST',
+                                dataType: 'json',
+                                cache: false,
+                                data: { id: id },
+                                success: function() {
+                                    $("#btnApplyFilter").click();
+                                },
+                            });
+                            $(modalId).modal();
+                        });
+                }
+
+                $("#confirmationModalConfirmCancel").on("click", function () {
+                    $("#confirmationModal").removeClass("in show");
+                    $("#confirmationModal").css("display", "none");
+                    $("#confirmationModalConfirmSave").off("click");
+                });
+            });
+        })(jQuery);
+    </script>
+}

@@ -1,0 +1,48 @@
+﻿@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.SOM.Web.Models.RolTenant
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.RolTenant
+@using Group.Salto.Common.Enums
+
+@model ResultViewModel<RolTenantViewModel>
+
+@{
+    string title = @Html.GetLocalizedText(RolTenantConstants.RolTenantTitleEditPage);
+    ViewData["Title"] = title;
+
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-8">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2>@title <span class="text-muted">@Model.Data.Name</span></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="RolTenant" asp-action="Edit" method="post" class="form-horizontal">
+                    <partial name="_RolTenantForm" model="Model?.Data" />
+                    <div class="form-group row">
+                        <div class="col-12 text-right">
+                            <input type="button" onclick="location.href='@Url.Action("Index", "RolTenant")'" value="@Html.GetLocalizedText(LocalizationsConstants.CancelText)" class="btn btn-outline-danger" />
+                            <input type="submit" class="btn btn-success spinner-loader" id="btnSendMessage" name="sendMessage" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/Common/authorization.js"></script>
+    <script language="javascript">
+        (function ($) {
+            $(document).ready(function () {
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.RoleTenant, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSendMessage", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

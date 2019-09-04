@@ -1,0 +1,118 @@
+﻿@using Group.Salto.Common.Constants.ExtraFields
+@using Group.Salto.SOM.Web.Models.ExtraFields
+@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Extensions
+
+@model ExtraFieldsDetailViewModel
+<div class="modal fade" id="@ExtraFieldsConstants.ExtraFieldsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><span asp-localized-key="@ExtraFieldsConstants.ExtraFieldsPageTitle"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form id="ExtraFieldsForm" name="ExtraFieldsForm" asp-controller="ExtraFields" asp-action="ExtraFieldsModal">
+                    <input id="IsValid" name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <input type="hidden" asp-for="ExtraFieldsId" readonly="readonly" />
+                    <input type="hidden" asp-for="ExtraFieldsName" readonly="readonly" />
+                    <input type="hidden" asp-for="TypeName" readonly="readonly" />
+                    <input type="hidden" asp-for="ErpSystemInstanceQueryName" readonly="readonly" />
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group" id="divextrafieldssystemid" name="divextrafieldssystemid">
+                                <label><span asp-localized-key="@ExtraFieldsConstants.ExtraFieldsName"></span></label>
+                                <select asp-for="ExtraFieldsSystemId" asp-items="@Model.ExtraFieldsSystemListItems" class="form-control" onchange="app.extrafields.detailModal.ChangeExtraFieldSystem()"><option value="0">-</option></select>
+                                <br /><span id="ExtraFieldsSystemEdit" name="ExtraFieldsSystemEdit"></span>
+                                <span asp-validation-for="ExtraFieldsSystemId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group" id="divextrafieldsregularid" name="divextrafieldsregularid">
+                                <label><span asp-localized-key="@ExtraFieldsConstants.ExtraFieldsName"></span></label>
+                                <select asp-for="ExtraFieldsRegularId" asp-items="@Model.ExtraFieldsRegularListItems" class="form-control" onchange="app.extrafields.detailModal.ChangeExtraFieldRegular()"><option value="0">-</option></select>
+                                <br /><span id="ExtraFieldsRegularEdit" name="ExtraFieldsRegularEdit"></span>
+                                <span asp-validation-for="ExtraFieldsRegularId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group" id="divnewextrafieldsid" name="divnewextrafieldsid">
+                                <label><span asp-localized-key="@ExtraFieldsConstants.ExtraFieldsName"></span><span class="required">*</span></label>
+                                <input asp-for="NewExtraFieldsRegularName" class="form-control" onchange="app.extrafields.detailModal.ChangeNewExtraField()" placeholder="@Html.GetLocalizedText(@ExtraFieldsConstants.ExtraFieldsName)" />
+                                <span asp-validation-for="NewExtraFieldsRegularName" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group" id="divdescription" name="divdescription">
+                                <label><span asp-localized-key="@ExtraFieldsConstants.ExtraFieldsDescription"></span></label>
+                                <textarea asp-for="ExtraFieldsDescription" class="form-control" placeholder="@Html.GetLocalizedText(@ExtraFieldsConstants.ExtraFieldsDescription)"></textarea>
+                                <span asp-validation-for="ExtraFieldsDescription" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group row" id="divtypeid" name="divtypeid">
+                                <label class="col-12 col-sm-4"><span asp-localized-key="@ExtraFieldsConstants.ExtraFieldsType"></span></label>
+                                <div class="col-12 col-sm-8">
+                                    <select asp-for="TypeId" asp-items="@Model.TypeListItems" class="form-control" onchange="app.extrafields.detailModal.ChangeType()"></select>
+                                    <br /><span id="TypeNameEdit" name="TypeNameEdit"></span>
+                                    <span asp-validation-for="TypeId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row" id="divdelsystem" name="divdelsystem">
+                                <label class="col-12 col-sm-4"><span asp-localized-key="@ExtraFieldsConstants.DelSystemText"></span></label>
+                                <div class="col-12 col-sm-8">
+                                    <label class="switch switch-label switch-pill switch-primary">
+                                        <input asp-for="DelSystem" value="@Model.DelSystem.ToString().ToLower()" type="checkbox" class="switch-input" onchange="app.common.ui.ChangeCheckbox(this)">
+                                        <span class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.Yes)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.No)"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" id="divposition" name="divposition">
+                                <label class="col-12 col-sm-4"><span asp-localized-key="@ExtraFieldsConstants.ExtraFieldsPosition"></span></label>
+                                <div class="col-12 col-sm-8">
+                                    <input asp-for="Position" min="0" max="2147483647" class="form-control" placeholder="@Html.GetLocalizedText(@ExtraFieldsConstants.ExtraFieldsPosition)" />
+                                    <span asp-validation-for="Position" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group row" id="divismandatory" name="divismandatory">
+                                <label class="col-12 col-sm-5"><span asp-localized-key="@ExtraFieldsConstants.IsMandatoryText"></span></label>
+                                <div class="col-12 col-sm-7">
+                                    <label class="switch switch-label switch-pill switch-primary">
+                                        <input asp-for="IsMandatory" value="@Model.IsMandatory.ToString().ToLower()" type="checkbox" class="switch-input" onchange="app.common.ui.ChangeCheckbox(this)">
+                                        <span class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.Yes)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.No)"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" id="divmultiplechoice" name="divmultiplechoice">
+                                <label class="col-12 col-sm-5"><span asp-localized-key="@ExtraFieldsConstants.MultipleChoiceText"></span></label>
+                                <div class="col-12 col-sm-7">
+                                    <label class="switch switch-label switch-pill switch-primary">
+                                        <input asp-for="MultipleChoice" value="@Model.MultipleChoice.ToString().ToLower()" type="checkbox" class="switch-input" onchange="app.common.ui.ChangeCheckbox(this)">
+                                        <span class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.Yes)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.No)"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="divallowedstringvalues" name="divallowedstringvalues">
+                                <label><span asp-localized-key="@ExtraFieldsConstants.ExtraFieldsAllowedStringValues"></span></label>
+                                <input asp-for="AllowedStringValues" class="form-control" placeholder="@Html.GetLocalizedText(@ExtraFieldsConstants.ExtraFieldsAllowedStringValues)" />
+                                <span asp-validation-for="AllowedStringValues" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group" id="diverpsysteminstancequeryid" name="diverpsysteminstancequeryid">
+                                <label><span asp-localized-key="@ExtraFieldsConstants.ExtraFieldsErpSystemInstanceQueryName"></span></label>
+                                <select asp-for="ErpSystemInstanceQueryId" asp-items="@Model.ErpSystemInstanceQueryListItems" class="form-control" onchange="app.extrafields.detailModal.ChangeErpSystemInstanceQuery()"><option value="0">-</option></select>
+                                <span asp-validation-for="ErpSystemInstanceQueryId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button id="ExtraFieldsConfirmCancel" class="btn btn-outline-danger" type="button" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.CancelText)</button>
+                <button id="ExtraFieldsConfirmSave" class="btn btn-primary" type="button">@Html.GetLocalizedText(LocalizationsConstants.SaveText)</button>
+            </div>
+        </div>
+    </div>
+</div>

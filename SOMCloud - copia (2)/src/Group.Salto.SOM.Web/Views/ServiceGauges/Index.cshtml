@@ -1,0 +1,189 @@
+﻿@using Group.Salto.SOM.Web.Models.ServiceGauges
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.Common.Constants.ServiceGauges
+@using Group.Salto.SOM.Web.Extensions
+@model ServiceGaugesListViewModel
+
+@{
+    string title = @Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesIndexTitle);
+    ViewData["Title"] = title;
+}
+<h1>@title</h1>
+
+<div class="content">
+    <div class="row">
+        <div class="col-lg-3 col-sm-6 col-md-4 col-lg-3">
+            <div class="card border-primary">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label span asp-localized-key="@ServiceGaugesConstants.ServiceGaugesIdWo"></label>
+                        <input asp-for="Filter.WoId" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-localized-key="@ServiceGaugesConstants.ServiceGaugesStartDate"></label>
+                        <input id="StartDate" asp-for="Filter.StartDate" type="text" class="form-control" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-localized-key="@ServiceGaugesConstants.ServiceGaugesEndDate"></label>
+                        <input id="EndDate" asp-for="Filter.EndDate" type="text" class="form-control" autocomplete="off">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="card-title" asp-localized-key="@ServiceGaugesConstants.ServiceGaugesClient"></label>
+                        <div id="ClientContainer"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="card-title" asp-localized-key="@ServiceGaugesConstants.ServiceGaugesProject"></label>
+                        <div id="ProjectContainer"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="card-title" asp-localized-key="@ServiceGaugesConstants.ServiceGaugesCategory"></label>
+                        <div id="CategoryContainer"></div>
+                    </div>
+
+                    <div class="pull-left">
+                        <button id="filterclear" class="btn btn-primary">@Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesClear)</button>
+                    </div>
+
+                    <div class="pull-right">
+                        <button id="filter" class="btn btn-primary">@Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesFilter)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-sm-6 col-md-8 col-lg-9">
+            <div class="row">
+                <div class="col-12">
+                    <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <li class="nav-item project-tab">
+                            <a class="nav-link active" id="nav-NivellServei-tab" data-toggle="tab" href="#nav-NivellServei" role="tab" aria-controls="nav-NivellServei" aria-selected="true">@Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesServiceLevel)</a>
+                        </li>
+                        <li class="nav-item project-tab">
+                            <a class="nav-link" id="nav-Economic-tab" data-toggle="tab" href="#nav-Economic" role="tab" aria-controls="nav-Economic" aria-selected="true">@Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesEconomic)</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-NivellServei" role="tabpanel" aria-labelledby="nav-NivellServei-tab">
+                            <partial name="_ServiceGaugesFilter" />
+                        </div>
+                        <div class="tab-pane fade" id="nav-Economic" role="tabpanel" aria-labelledby="nav-Economic-tab">
+                            <partial name="_EconomicFilter" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+<link href="~/lib/dhtmlx/suite/codebase/dhtmlx.css" rel="stylesheet" />
+}
+
+@section Scripts{
+<script src="~/js/AutocompleteControl.js"></script>
+<script src="~/js/Common/constants.js"></script>
+<script src="~/js/Common/validations.js"></script>
+<script src="~/js/Common/config.js"></script>
+<script src="~/lib/HighCharts/highcharts.js"></script>
+<script src="~/lib/HighCharts/highcharts-more.js"></script>
+<script src="~/js/ServiceGauges/ServiceGaugesDetails.js"></script>
+<script src="~/js/ServiceGauges/highcharts_gauges.js"></script>
+<script src="~/lib/HighCharts/modules/exporting.js"></script>
+<script src="~/js/ServiceGauges/jquery.table2excel.js"></script>
+<script src="~/lib/moment-js/moment.js"></script>
+
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            $('#total').text(0);
+            $('#total2').text("SOM");
+            $('#total3').text(0);
+            $('#total4').text(0);
+            $('#str1').text("-");
+            $('#str2').text("-");
+            $('#str3').text("-");
+            $('#av1').text(0);
+            $('#av2').text(0);
+            $('#av3').text(0);
+            var ClientSelected = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model ?.Filter.Client));
+            var ProjectSelected = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model ?.Filter.Project));
+            var WoCategorytSelected = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model ?.Filter.WoCategory));
+
+            function getStatusFilter(text) {
+                var data = {
+                    QueryType: app.constants.AutoComplete,
+                    QueryTypeParameters: {
+                        Text: text
+                    }
+                }
+                return data;
+            };
+
+            var Client = {
+                hasdefaultItem: ClientSelected == undefined,
+                value: (ClientSelected == undefined) ? null : ClientSelected.Text,
+                key: (ClientSelected == undefined) ? null : ClientSelected.Value,
+                itemIdProperty: 'ServiceGaugesFilterViewModel.Client.value',
+                itemTextProperty: 'ServiceGaugesFilterViewModel.Client.Text',
+                getDataMethod: getStatusFilter
+            };
+
+            var Project = {
+                hasdefaultItem: ProjectSelected == undefined,
+                value: (ProjectSelected == undefined) ? null : ProjectSelected.Text,
+                key: (ProjectSelected == undefined) ? null : ProjectSelected.Value,
+                itemIdProperty: 'ServiceGaugesFilterViewModel.Project.value',
+                itemTextProperty: 'ServiceGaugesFilterViewModel.Project.Text',
+                getDataMethod: getStatusFilter
+            };
+
+            var WoCategory = {
+                hasdefaultItem: WoCategorytSelected == undefined,
+                value: (WoCategorytSelected == undefined) ? null : WoCategorytSelected.Text,
+                key: (WoCategorytSelected == undefined) ? null : WoCategorytSelected.Value,
+                itemIdProperty: 'ServiceGaugesFilterViewModel.WoCategory.value',
+                itemTextProperty: 'ServiceGaugesFilterViewModel.WoCategory.Text',
+                getDataMethod: getStatusFilter
+            };
+
+            var options = {
+                Client,
+                Project,
+                WoCategory,
+                name: "NumVisits",
+                name2: "Km",
+                name3: "WaitTime",
+                name4: "OnSite",
+                name5: "TravelTime",
+                name6: "ProjectCost",
+                name7: "ProjectRevenue",
+                name8: "ProjectMargin",
+                name9: "SLAResponse",
+                name10: "SLAResolution",
+                Name: "@Html.Raw(Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesVisits))",
+                Name2: "@Html.Raw(Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesKilometers))",
+                Name3: "@Html.Raw(Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesWaitTime))",
+                Name4: "@Html.Raw(Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesOnSite))",
+                Name5: "@Html.Raw(Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesServiceGaugesTravelTime))",
+                Name6: "@Html.Raw(Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesProjectCost))",
+                Name7: "@Html.Raw(Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesProjectRevenue))",
+                Name8: "@Html.Raw(Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesProjectMargin))",
+                Name9: "@Html.Raw(Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesSLAResponse))",
+                Name10: "@Html.Raw(Html.GetLocalizedText(ServiceGaugesConstants.ServiceGaugesSLAResolution))",
+                units1: "km",
+                units2: "h",
+            };
+
+            app.ServiceGauges.detail.Init(options);
+        });
+    })(jQuery);
+
+</script>
+}

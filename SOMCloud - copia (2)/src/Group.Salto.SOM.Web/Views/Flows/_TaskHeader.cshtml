@@ -1,0 +1,64 @@
+﻿@using Group.Salto.ServiceLibrary.Common.Dtos.Base
+
+@model BaseNameIdDto<int>
+
+<div class="row">
+    <input type="hidden" id="hiddenTaskItemId" value="@Model.Id" />
+    <div class="col-12 col-sm-6">
+        <div class="table-responsive">
+            <strong>Nombre</strong>
+            <table class="table table-sm">
+                <thead>
+                    <tr class="bg-info text-white">
+                        <th scope="col">Español</th>
+                        <th scope="col">Català</th>
+                        <th scope="col">English</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span id="name-@Model.Id-spa"></span></td>
+                        <td><span id="name-@Model.Id-cat"></span></td>
+                        <td><span id="name-@Model.Id-eng"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive">
+            <strong>Descripción</strong>
+            <table class="table table-sm">
+                <thead>
+                    <tr class="bg-info text-white">
+                        <th scope="col">Español</th>
+                        <th scope="col">Català</th>
+                        <th scope="col">English</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span id="name-@Model.Id-spa-descr"></span></td>
+                        <td><span id="name-@Model.Id-cat-descr"></span></td>
+                        <td><span id="name-@Model.Id-eng-descr"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="col-12 col-sm-6">
+        <dl class="row">
+            <dt class="col-sm-3">Perfil</dt>
+            <dd class="col-sm-9">
+                <ul id="permissions-@Model.Id"></ul>
+            </dd>
+        </dl>
+    </div>
+    <input type="hidden" id="hidden_taskId" value="" />
+</div>
+<div class="form-group row">
+    <div class="col-12 text-right">
+        <button class="btn btn-outline-warning task-Edit" data-toggle="modal" data-target="#modalTask"><i class="fa fa-pen"></i> Editar</button>
+        <hr />
+    </div>
+</div>

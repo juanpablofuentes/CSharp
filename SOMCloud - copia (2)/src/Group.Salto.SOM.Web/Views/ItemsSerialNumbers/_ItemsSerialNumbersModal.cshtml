@@ -1,0 +1,47 @@
+﻿@using Group.Salto.Common.Constants.Items
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Models.Items
+@model SerialNumbersViewModel
+
+<div class="modal fade" id="ItemsSerialNumbersModal" tabindex="-1" style="display:none;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+                <form id="ItemsSerialNumbersForm" name="ItemsSerialNumbersForm" asp-controller="ItemsSerialNumbers" asp-action="ItemsSerialNumbers">
+                    <input id="IsValid" name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <div class="row">
+                        <input type="hidden" asp-for="SerialNumberId" class="form-control" readonly="readonly" />
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label><span asp-localized-key="@ItemsConstants.ItemsDetailsSerialNumber"></span><span class="required">*</span></label>
+                                <input asp-for="SerialNumberSerialNumber" class="form-control" />
+                                <span asp-validation-for="SerialNumberSerialNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label><span asp-localized-key="@ItemsConstants.ItemsDetailsSerialStatus"></span></label>
+                                <select asp-for="SerialNumberStatusId" asp-items="@Model.SerialNumberStatuses" class="form-control" ></select> @*"*@
+                                <span asp-validation-for="SerialNumberStatusId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label><span asp-localized-key="@ItemsConstants.ItemsDetailsSerialObservations"></span></label>
+                                <textarea asp-for="SerialNumberObservations" rows="2" class="form-control" >@Model.SerialNumberObservations</textarea>
+                                <span asp-validation-for="SerialNumberObservations" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="ItemsSerialNumbersConfirmCancel" class="btn btn-outline-danger" type="button" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.CancelText)</button>
+                <button id="ItemsSerialNumbersConfirmSave" class="btn btn-primary" type="button">@Html.GetLocalizedText(LocalizationsConstants.SaveText)</button>
+            </div>
+        </div>
+    </div>
+</div>

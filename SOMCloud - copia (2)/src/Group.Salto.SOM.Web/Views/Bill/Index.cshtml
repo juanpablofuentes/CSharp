@@ -1,0 +1,135 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Bill
+@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Bill
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Controls.Table
+@model ResultViewModel<BillsViewModel>
+@{
+    var title = @Html.GetLocalizedText(BillConstants.BillPageTitle);
+    ViewData["Title"] = title;
+}
+<h1 class="page-title">@title</h1>
+@{
+    var table = Html.GetMultiSelectTableFor(Model.Data.BillViewModels, au => au.Id, Model.Data.BillFilter, TranslationHelper.GetTranslationService());
+    table.SetColumns(m => m.WorkOrderId, m => m.ServiceId, m => m.Date, m => m.Task, m => m.InternalIdentifier, m => m.Status, m => m.ProjectSerie, m => m.ExternalSistemNumber, m => m.WorkerName);
+    table.SetSortingColumns(m => m.Id, m => m.WorkOrderId, m => m.WorkerName);
+    table.ShowSelectColumn = false;
+    table.TableCssClass = "table table-striped table-hover";
+    table.TableHeaderCssClass = "thead-som";
+
+    table.AddColumnTemplateFor(m => m.Id,
+    @<div class="col-update text-right">
+        <a asp-action="Detail" asp-route-id="@item.RawValue" id="@item.RawValue">
+            <i class="fa fa-eye fa-lg"></i>
+        </a>
+        <a asp-action="Delete" asp-route-id="@item.RawValue" id="@item.RawValue" class="deleteButton" data-toggle="tooltip" data-placement="top">
+            <i class="fa fa-trash-o fa-lg"></i>
+        </a>
+    </div>, "");
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <partial name="_BillFilter" model="@Model.Data.BillFilter" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Data.BillViewModels.Any())
+            {
+                <div class="table-responsive workstation-table" id="multigridContainerId">
+                    @table.Render("BillGrid")
+                </div>
+                <partial name="_Pager" for="@Model.Data.BillFilter" />
+            }
+            else
+            {
+                <partial name="_NoRecords" />
+            }
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <link href="~/lib/dhtmlx/suite/codebase/dhtmlx.css" rel="stylesheet" />
+}
+
+@section scripts {
+    <script src="~/js/Bill/BillList.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Bill/BillDetail.js"></script>
+    <script src="~/js/AutocompleteControl.js"></script>
+
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/Controls/ModalFromList.js"></script>
+
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                var urlDeleteMailTemplate = "@(Url.Action("Delete", "Bill"))";
+                var ProjectSelected = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.BillFilter?.Project));
+                var ItemSelected = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.BillFilter?.ItemId));
+                var StatusSelected = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.BillFilter?.Status));
+                var SDate = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.BillFilter?.StartDate));
+                var EDate = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.BillFilter?.EndDate));
+
+                function getStatusFilter(text) {
+                    var data = {
+                        QueryType: app.constants.AutoComplete,
+                        QueryTypeParameters: {
+                            Text: text
+                        }
+                    }
+                    return data;
+                };
+
+                var Project = {
+                    hasdefaultItem: ProjectSelected == undefined,
+                    value: (ProjectSelected == undefined) ? null : ProjectSelected.Text,
+                    key: (ProjectSelected == undefined) ? null : ProjectSelected.Value,
+                    itemIdProperty: 'Project.Value',
+                    itemTextProperty: 'Project.Text',
+                    getDataMethod: getStatusFilter
+                };
+
+                var Item = {
+                    hasdefaultItem: ItemSelected == undefined,
+                    value: (ItemSelected == undefined) ? null : ItemSelected.Text,
+                    key: (ItemSelected == undefined) ? null : ItemSelected.Value,
+                    itemIdProperty: 'ItemId.value',
+                    itemTextProperty: 'ItemId.Text',
+                    getDataMethod: getStatusFilter
+                };
+
+                var Status = {
+                    hasdefaultItem: StatusSelected == undefined,
+                    value: (StatusSelected == undefined) ? null : StatusSelected.Text,
+                    key: (StatusSelected == undefined) ? null : StatusSelected.Value,
+                    itemIdProperty: 'Status.value',
+                    itemTextProperty: 'Status.Text',
+                    getDataMethod: getStatusFilter
+                };
+
+                var options = {
+                    Project,
+                    Item,
+                    Status,
+                    SDate,
+                    EDate
+                }
+                app.bill.details.CalendarLoad();
+                app.Bill.Init(options);
+                MultiTableScript("BillGrid");
+                var page = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.BillFilter));
+                pager.PagerSelector.Init({ PageData: page });
+
+            });
+
+        })(jQuery);
+    </script>
+}

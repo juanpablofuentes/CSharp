@@ -1,0 +1,37 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.SubContracts
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.SubContract;
+@model SubContractFilterViewModel
+
+<partial model="@Model.FilterHeader" name="_FilterHeader" />
+<div class="collapse in" id="filterSubContracts">
+    <form asp-action="Filter" asp-controller="SubContract" method="post" id="filter-form" class="form-control">
+        <partial model="Model" name="_PagerHiddens" />
+        <partial model="Model" name="_MultiTableHiddens" />
+        <div class="row">
+            <div class="col-12 col-sm-4">
+                <label class="col-form-label">
+                    <span asp-localized-key="@SubContractsConstants.SubContractsFilterName"></span>
+                </label>
+                <input asp-for="Name" id="SubContractsFilterName"
+                       class="form-control input-theme-sm"
+                       placeholder="@Html.GetLocalizedText(SubContractsConstants.SubContractsFilterPlaceHolderName)" />
+            </div>
+            <div class="col-12 col-sm-4">
+                <label class="col-form-label">
+                    <span asp-localized-key="@SubContractsConstants.SubContractsFilterDescription"></span>
+                </label>
+                <input asp-for="Description" id="SubContractsFilterDescription"
+                       class="form-control input-theme-sm"
+                       placeholder="@Html.GetLocalizedText(SubContractsConstants.SubContractsFilterPlaceHolderDescription)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-right">
+                <button type="button" class="btn btn-outline-danger" id="btnClear" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                <button name="btnApplyFilter" class="btn btn-primary" asp-localized-key="@LocalizationsConstants.ApplyFilter" />
+            </div>
+        </div>
+    </form>
+</div>

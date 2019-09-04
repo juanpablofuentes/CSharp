@@ -1,0 +1,28 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.FinalClients
+@using Group.Salto.SOM.Web.Extensions
+@model Group.Salto.SOM.Web.Models.FinalClients.FinalClientsFilterViewModel
+
+<partial model="@Model.FilterHeader" name="_FilterHeader" />
+<div class="collapse in" id="filterFinalClients">
+    <form asp-action="Filter" asp-controller="FinalClients" method="post" id="filter-form" class="form-control">
+        <partial model="Model" name="_PagerHiddens" />
+        <partial model="Model" name="_MultiTableHiddens" />
+        <div class="row">
+            <div class="col-12 col-sm-4">
+                <label class="col-form-label">
+                    <span asp-localized-key="@FinalClientsConstants.FinalClientsFilterName"></span>
+                </label>
+                <input asp-for="Name" id="FinalClientFilterName"
+                       class="form-control"
+                       placeholder="@Html.GetLocalizedText(FinalClientsConstants.FinalClientsFilterName)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-right">
+                <button type="button" class="btn btn-outline-danger" id="btnClear" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                <button name="btnApplyFilter" id="btnApplyFilter" class="btn btn-primary" asp-localized-key="@LocalizationsConstants.ApplyFilter" />
+            </div>
+        </div>
+    </form>
+</div>

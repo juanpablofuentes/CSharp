@@ -1,0 +1,64 @@
+@using Group.Salto.Common.Constants.WorkOrder
+@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.WorkOrder
+@model IList<WorkOrderExtraFieldsValuesViewModel>
+
+@if (Model.Count > 0)
+{
+    <tbody class="som-signature">
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.ExtraFieldName</td>
+            @if (item.IsSignature())
+            {
+                string imageSource = item.GetSignature();
+                <td>
+                    <img src="@imageSource" />
+                </td>
+            }
+            else if (item.IsInstalation())
+            {
+                <td>
+                    <ul class="list-group list-group-flush border-0">
+                        @foreach (var material in item.MaterialForm)
+                        {
+                        <li class="list-group-item">
+                            <label class="mr-2">@material.Description</label><span class="badge badge-primary badge-pill">@material.Units</span><br />
+                            <label>@material.SerialNumber</label> - <label>@material.Reference</label>
+                        </li>
+                        }
+                    </ul>
+                </td>
+            }
+            else if (item.IsFile && item.Files != null)
+            {
+                <td>
+                    <ul class="list-group list-group-flush border-0">
+                        @foreach (var file in item.Files)
+                        {
+                            <li class="list-group-item">
+                                <a asp-controller="WorkOrder" asp-action="Download" asp-route-id="@item.Id" asp-route-filename="@file.FileName"><i class="fa fa-download mr-3"></i> @file.FileName</a>
+                            </li>
+                        }
+                    </ul>
+                </td>
+            }
+            else if (item.IsFile && item.Files == null || item.ExtraFieldValue == null)
+            {
+                <td>-</td>
+            }
+
+            else if (item.IsEmpty())
+            {
+                <td>-</td>
+            }
+            else
+            {
+                <td>@item.ExtraFieldValue</td>
+            }
+        </tr>
+        }
+    </tbody>
+}

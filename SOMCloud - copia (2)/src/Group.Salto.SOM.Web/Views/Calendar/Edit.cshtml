@@ -1,0 +1,49 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Calendar
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Calendar;
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Common.Enums
+@model ResultViewModel<CalendarBaseViewModel>
+@{
+    var title = @Html.GetLocalizedText(CalendarsConstants.CalendarEditPageTitle);
+    ViewData["Title"] = title;
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-9">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="@CalendarsConstants.CalendarEditPageTitle"></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Calendar" asp-action="Edit" method="post" class="form-horizontal">
+                    <partial name="_CalendarForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/Bundle/bundle--colorPicker.js"></script>
+    <script src="~/js/Calendar/calendarConstants.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                var initialColor = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.Color));
+                var options = {
+                    btnSelect : '@Html.GetLocalizedText(LocalizationsConstants.Select)',
+                    btnCancel: '@Html.GetLocalizedText(LocalizationsConstants.CancelText)',
+                    color: initialColor,
+                    parent: app.calendar.constants.ColorPickerParent,
+                    skin: app.calendar.constants.ColorPickerSkin,
+                    input: app.calendar.constants.ColorPickerInput,
+                }
+                app.colorPicker.Init(options);
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.GlobalCalendar, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSaveGlobalCalendar", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

@@ -1,0 +1,45 @@
+﻿@using Group.Salto.Common.Constants.Permissions
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Permissions
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Common.Enums
+@using Group.Salto.Common.Constants
+@model ResultViewModel<PermissionDetailViewModel>
+@{
+    var title = @Html.GetLocalizedText(PermissionsConstants.PermissionsCreatePageTitle);
+    ViewData["Title"] = title;
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-9">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="@PermissionsConstants.PermissionsCreatePageTitle"></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Permissions" asp-action="Create" method="post" class="form-horizontal">
+                    <partial name="_PermissionForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/js/MultiSelect.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script language="javascript">
+        (function ($) {
+            $(document).ready(function () {
+                app.multiselect.Init('@Model?.Data.WorkOrderCategories.Name');
+                app.multiselect.Init('@Model?.Data.Queues.Name');
+                app.multiselect.Init('@Model?.Data.Tasks.Name');
+                app.multiselect.Init('@Model?.Data.People.Name');
+                app.multiselect.Init('@Model?.Data.PredefinedServices.Name');
+                app.multiselect.Init('@Model?.Data.Projects.Name');
+
+                var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Permisions, ActionEnum.Create).ToString().ToLower();
+                app.common.authorization.disable("btnSavePermission", saveCreate);
+            });
+        })(jQuery);
+    </script>
+}

@@ -1,0 +1,17 @@
+﻿@using Group.Salto.SOM.Web.Models.Task
+@using Group.Salto.ServiceLibrary.Common.Dtos.Base
+
+@model BaseNameIdDto<int>
+<div class="row conditions-row">
+    <div class="col-12 conditions" id="container-postconditions-@Model.Id">
+        <div class="row item-conditions">
+            <div class="col-12 p-0">
+                <div class="form-group row p-0 m-0">
+                    <div class="col pl-0" id="container-literals">
+                        <partial model="Model" name="_LiteralCondition" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

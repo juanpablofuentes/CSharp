@@ -1,0 +1,24 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.WorkOrder
+@using Group.Salto.SOM.Web.Extensions
+
+@model int
+
+<div id="sideBar-Menu" class="tab-content bg-som h-100">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-som mt-2">
+                    <a class="nav-link text-white" asp-controller="WorkOrder" asp-action="Edit" asp-route-id="@Model">
+                        <i class="fa fa-pencil fa-lg mr-3"></i> @Html.GetLocalizedText(WorkOrderConstants.WorkOrderEditSideMenu)
+                    </a>
+                </li>
+                <li class="list-group-item bg-som">
+                    <a class="nav-link text-white" asp-controller="WorkOrder" asp-action="Detail" onclick="app.WorkOrderDetail.OpenSummary(@Model)" data-toggle="modal" data-target="#modalSummary">
+                        <i class="nav-icon som-icon icon-som-facturacion mr-3"></i>@Html.GetLocalizedText(WorkOrderConstants.WorkOrderSummarySideMenu)
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

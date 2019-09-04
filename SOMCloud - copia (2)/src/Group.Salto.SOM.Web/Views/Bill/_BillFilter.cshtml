@@ -1,0 +1,76 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Bill
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Bill
+
+@model BillFilterViewModel
+
+<div>
+    <partial model="@Model.FilterHeader" name="_FilterHeader" />
+    <div class="collapse in" id="filterBill">
+        <form asp-action="Filter" asp-controller="Bill" method="post" id="filter-form" class="form-control">
+            <partial model="Model" name="_PagerHiddens" />
+            <partial model="Model" name="_MultiTableHiddens" />
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class="col-form-label">
+                        <span asp-localized-key="@BillConstants.BillFilterWorkOrderId"></span>
+                    </label>
+                    <input type="text" maxlength="6" id="FilterWOId" asp-for="WorkOrderId" class="form-control input-theme-sm"
+                           placeholder="@Html.GetLocalizedText(BillConstants.BillFilterPlaceholderWorkOrderId)" />
+                </div>
+
+                <div class="col-lg-3">
+                    <label class="col-form-label" asp-localized-key="@BillConstants.BillFilterStatus"></label>
+                    <div id="FilterStatus"></div>
+                </div>
+
+                <div class="col-lg-3">
+                    <label class="col-form-label">
+                        <span asp-localized-key="@BillConstants.BillFilterProjectSerie"></span>
+                    </label>
+                    <input id="FilterProjectSerie" asp-for="ProjectSerie" class="form-control input-theme-sm"
+                           placeholder="@Html.GetLocalizedText(BillConstants.BillFilterPlaceholderProjectSerie)" />
+                </div>
+
+                <div class="col-lg-3">
+                    <label class="col-form-label" asp-localized-key="@BillConstants.BillFilterItemId"></label>
+                    <div id="FilterItemId"></div>
+                </div>
+
+                <div class="col-lg-3">
+                    <label class="col-form-label" asp-localized-key="@BillConstants.BillFilterInternalIdentifier"> </label>
+                    <input id="FilterInternalId" asp-for="InternalIdentifier" class="form-control input-theme-sm"
+                           placeholder="@Html.GetLocalizedText(BillConstants.BillFilterPlaceholderInternalIdentifier)" />
+                </div>
+
+                <div class="col-lg-3">
+                    <label class="col-form-label" asp-localized-key="@BillConstants.BillFilterProject"></label>
+                    <div id="ProjectContainer"></div>
+                </div>
+
+                <div class="col-lg-3">
+                    <label class="col-form-label">
+                        <span asp-localized-key="@BillConstants.BillFilterStartDate"></span>
+                    </label>
+                    <input id="FilterStartDate" asp-for="StartDate" type="text" class="form-control" autocomplete="off" />
+                </div>
+
+                <div class="col-lg-3">
+                    <label class="col-form-label">
+                        <span asp-localized-key="@BillConstants.BillFilterEndDate"></span>
+                    </label>
+                    <input id="FilterEndDate" asp-for="EndDate" type="text" class="form-control" autocomplete="off" />
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <br>
+                        <button type="button" id="btnClear" class="btn btn-outline-danger" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                        <button id="btnApplyFilter" class="btn btn-primary" name="btnApplyFilter" asp-localized-key="@LocalizationsConstants.ApplyFilter" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,129 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.WorkOrder
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.SOM.Web.Models.WorkOrder
+@model ResultViewModel<WorkOrderGridResponseViewModel>
+@{
+    var title = @Html.GetLocalizedText(WorkOrderConstants.WorkOrderPageTitle);
+    ViewData["Title"] = title;
+}
+
+<div class="content">
+    <form asp-action="Data" asp-controller="WorkOrder" method="post" id="filter-form">
+        <div class="row">
+            <div class="col-12">
+                <partial name="_QuickFilters" model="@Model.Data.WorkOrderFilterGridViewModel" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <span id="recfound"></span>
+                    <div id="gridbox"></div>
+                </div>
+                <div><span id="pagingArea"></span>&nbsp;<span id="infoArea"></span></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Styles{
+    <link href="~/lib/dhtmlx/suite/codebase/fonts/font_awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/lib/dhtmlx/suite/codebase/dhtmlx.css" rel="stylesheet" />
+    <link href="~/css/grid-custom-style.css" rel="stylesheet" />
+}
+
+@section sideBarMenu {
+    <partial name="_WorkOrderIndexSideBarMenu" />
+}
+
+@section Breadcrumb {
+    <partial name="_ConfigurationView" />
+}
+
+@section scripts {
+    <script src="~/js/Bundle/Commons.js" asp-append-version="true"></script>
+
+    <environment include="Development">
+        <script src="~/js/Common/validations.js"></script>
+        <script src="~/lib/moment-js/moment.min.js"></script>
+        <script src="~/js/WorkOrder/WorkOrderFilters.js"></script>
+        <script src="~/js/MultiSelect.js"></script>
+        <script src="~/js/AutocompleteControl.js"></script>
+        <script src="~/js/AutoCompleteListSelector.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/js/Bundle/WorkOrderIndex.js" asp-append-version="true"></script>
+    </environment>
+
+    <script language="javascript">
+        var myGrid;
+        var datePicker;
+        var projects = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.WorkOrderFilterGridViewModel.Projects));
+        var workOrderCategories = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.WorkOrderFilterGridViewModel.WorkOrderCategories));
+        var states = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.WorkOrderFilterGridViewModel.States));
+        var responsibles = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.WorkOrderFilterGridViewModel.Responsibles));
+        (function ($) {
+            $(document).ready(function () {
+                $('#collapseAdvancedFilter').on('show.bs.collapse', function () {
+                    $('.collapseAdvancedFilter').find('i').removeClass('fa-chevron-down').addClass('fa-chevron-down');
+                })
+
+                app.workorderfilter.CalendarLoad();
+                var options = {
+                    projectCombo: {
+                        selectedItems: projects,
+                        column1Text: '#',
+                        column2Text: '@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterProject)',
+                        getDataMethod: app.workorderfilter.GetWorkOrderFilter
+                    },
+                    workOrderCategoryCombo: {
+                        selectedItems: workOrderCategories,
+                        column1Text: '#',
+                        column2Text: '@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterWOCategory)',
+                        getDataMethod: app.workorderfilter.GetWorkOrderFilter
+                    },
+                    statesCombo: {
+                        selectedItems: states,
+                        column1Text: '#',
+                        column2Text: '@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterState)',
+                        getDataMethod: app.workorderfilter.GetWorkOrderFilter
+                    },
+                    responsobleCombo: {
+                        selectedItems: responsibles,
+                        column1Text: '#',
+                        column2Text: '@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterResponsable)',
+                        getDataMethod: app.workorderfilter.GetPeopleTechniciansFilter
+                    },
+                    grid: {
+                        url: "@Url.Action("Data", "WorkOrder")",
+                        urlToExcel: "@Url.Action("Excel", "WorkOrder")",
+                        paginationNumber: @Model.Data.PaginationNumber,
+                        workOrderFilterStatus: '@WorkOrderConstants.WorkOrderFilterStatus',
+                        workOrderFilterQueue: '@WorkOrderConstants.WorkOrderFilterQueue',
+                        workOrderFilterStatusText: '@Html.GetLocalizedText(@WorkOrderConstants.WorkOrderFilterStatus)',
+                        workOrderFilterQueueText: '@Html.GetLocalizedText(@WorkOrderConstants.WorkOrderFilterQueue)',
+                        slaid: '@WorkOrderConstants.SlaId',
+                        urlDetail: "@Url.Action("Detail", "WorkOrder")",
+                        urlEdit: "@Url.Action("Edit", "WorkOrder")",
+                        detailText: '@Html.GetLocalizedText(LocalizationsConstants.Detail)',
+                        editText: '@Html.GetLocalizedText(LocalizationsConstants.Edit)',
+                        SelectBlockArea: '@WorkOrderConstants.WorkOrderSelectBlockArea',
+                    },
+                    textWorkOrderSearch: [
+                        '@Html.GetLocalizedText(LocalizationsConstants.GeneralHeaderSearchWorkOrder)',
+                        '@Html.GetLocalizedText(LocalizationsConstants.GeneralHeaderSearchLocation)',
+                        '@Html.GetLocalizedText(LocalizationsConstants.GeneralHeaderSearchActive)' ,
+                    ],
+                    appliedFiltersTitle: '@Html.GetLocalizedText(LocalizationsConstants.AppliedFiltersTitle)',
+                    configurationView: {
+                        urlConfigurationView: '@Url.Action("Index","WorkOrderFilter")'
+                    }
+                };
+                app.workorderfilter.Init(options);
+            });
+        })(jQuery);
+    </script>
+}

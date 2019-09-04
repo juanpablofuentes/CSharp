@@ -1,0 +1,70 @@
+﻿@using Group.Salto.SOM.Web.Models.ToolsType;
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Extensions;
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Constants.ToolsType;
+@using Group.Salto.Common.Enums;
+
+@model ResultViewModel<ToolsTypeDetailsViewModel>
+
+@{
+    ViewData["Title"] = @Html.GetLocalizedText(ToolsTypeConstants.ToolsTypeCreateTitle);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-6">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="@ToolsTypeConstants.ToolsTypeCreateTitle">Tools Details</h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="ToolsType" asp-action="Create" method="post" class="form-horizontal">
+                    <partial name="_ToolsTypeForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/MultiComboListSelector.js"></script>
+    <script src="~/js/AutocompleteControl.js"></script>
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/AutoCompleteListSelector.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/ToolsType/ToolsTypeDetail.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+               var selectedKnowledge =
+                    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.KnowledgeSelected));
+
+                function getKnowledgeFilter(text) {
+                    var data = {
+                        QueryType: app.constants.QueryKnowledge,
+                        QueryTypeParameters: {
+                            Value: text,
+                        }
+                    }
+                    return data;
+                }
+                var options = {
+                    knowledgeCombo: {
+                        selectedItems: selectedKnowledge,
+                        column1Text: '#',
+                        column2Text: '@Html.GetLocalizedText(LocalizationsConstants.FullName)',
+                        getDataMethod: getKnowledgeFilter
+                    },
+
+                };
+                app.toolstype.detail.Init(options);
+                var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ToolType, ActionEnum.Create).ToString().ToLower();
+                app.common.authorization.disable("btnSaveToolsType", saveCreate);
+            });
+        })(jQuery);
+    </script>
+}
+

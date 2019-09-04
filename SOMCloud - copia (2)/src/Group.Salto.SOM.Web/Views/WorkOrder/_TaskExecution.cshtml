@@ -1,0 +1,23 @@
+﻿@using Group.Salto.Common.Constants.Task
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Enums;
+
+@{
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+@if (Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Clients, ActionEnum.View))
+{
+    <li class="breadcrumb-menu d-md-down-none d-none" id="combo-task_container">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="cmbtask">@Html.GetLocalizedText(TaskConstants.TaskTaskTitle)</label>
+            </div>
+            <select class="custom-select" id="cmbtask" aria-label="Example select with button addon"></select>
+            <div class="input-group-append">
+                <button type="button" id="excecuteTask" class="btn btn-primary" for="cmbtask">@Html.GetLocalizedText(TaskConstants.TaskExecute)</button>
+            </div>
+        </div>
+    </li>
+}

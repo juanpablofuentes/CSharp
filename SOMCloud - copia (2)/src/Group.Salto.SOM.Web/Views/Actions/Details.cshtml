@@ -1,0 +1,65 @@
+﻿@using Group.Salto.SOM.Web.Models.Actions;
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Extensions;
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Constants.Actions;
+@using Group.Salto.Common.Enums
+
+@model ResultViewModel<ActionViewModel>
+
+@{
+    ViewData["Title"] = @Html.GetLocalizedText(ActionsConstants.ActionsDetailsTitle);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-6">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="ActionsDetailsTitle">Action Details</h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Actions" asp-action="Update" method="post" class="form-horizontal">
+                    @Html.HiddenFor(m => m.Data.Id, new { Id = "id" })
+                    <div class="form-group row">
+                        <label asp-localized-key="ActionsDetailsName" class="col-md-3 col-form-label" for="actionName">Name</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" asp-for="Data.Name">
+                            <span asp-validation-for="Data.Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-localized-key="ActionsDetailsDescription" class="col-md-3 col-form-label" for="actionDescription">Description</label>
+                        <div class="col-md-9">
+                            <textarea asp-for="Data.Description" rows="9" class="form-control"></textarea>
+                            <span asp-validation-for="Data.Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row text-right">
+                        <div class="col-12">
+                            <button asp-localized-key="ActionsDetailsBtnCancel" type="reset" class="btn btn-danger" onclick="location.href = '@Url.Action("Index", "Actions")'">
+                                Cancel
+                            </button>
+                            <input id="btnSaveAction" type="submit" class="btn btn-success" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/Common/authorization.js"></script>
+
+    <script>
+        (function($) {
+            $(document).ready(function() {
+                var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Actions, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSaveAction", saveCreate);
+            });
+        })(jQuery);
+    </script>
+}

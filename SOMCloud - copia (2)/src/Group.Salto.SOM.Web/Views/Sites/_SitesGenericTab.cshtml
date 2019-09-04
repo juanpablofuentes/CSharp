@@ -1,0 +1,57 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Sites
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.SOM.Web.Models.Sites;
+@using Group.Salto.SOM.Web.Models.Contracts;
+@model SitesDetailViewModel
+@{
+    string title = @Html.GetLocalizedText(SitesConstants.SitesPageTitle);
+    ViewData["Title"] = title;}
+
+<div class="row">
+    <div class="col-12">
+        <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+            <li class="nav-item Sites-tab">
+                <a class="nav-link active" id="nav-generic-tab" data-toggle="tab" href="#nav-generic" role="tab" aria-controls="nav-generic" aria-selected="true">@Html.GetLocalizedText(SitesConstants.SitesGenericTab)</a>
+            </li>
+            <li class="nav-item Sites-tab">
+                <a onclick="app.mapGeo.CheckGeoCoder();" class="nav-link" id="nav-geolocation-tab" data-toggle="tab" href="#nav-geolocation" role="tab" aria-controls="nav-geolocation" aria-selected="true">@Html.GetLocalizedText(SitesConstants.SitesGeolocationTab)</a>
+            </li>
+            <li class="nav-item Contacts-tab">
+                <a class="nav-link" id="nav-contacts-tab" data-toggle="tab" href="#nav-contacts" role="tab" aria-controls="nav-contacts" aria-selected="true">@Html.GetLocalizedText(SitesConstants.SitesContactTab)</a>
+            </li>
+            @if (Model.ModeActionType == Group.Salto.Common.Enums.ModeActionTypeEnum.Edit)
+            {
+                <li class="nav-item Sites-tab" id="nav-calendar-li">
+                    <a onclick="setTimeout(function(){ loadScheduler(); }, 500);" class="nav-link" id="nav-calendar-tab" data-toggle="tab" href="#nav-calendar" role="tab" aria-controls="nav-calendar" aria-selected="false">@Html.GetLocalizedText(SitesConstants.SitesCalendarTab)</a>
+                </li>
+            }
+        </ul>
+        <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-generic" role="tabpanel" aria-labelledby="nav-generic-tab">
+                <partial name="_GenericForm" for="GenericDetailViewModel" />
+            </div>
+            <div class="tab-pane fade show" id="nav-geolocation" role="tabpanel" aria-labelledby="nav-geolocation-tab">
+                <partial name="_GeolocationForm" for="GeolocationDetailViewModel" />
+            </div>
+            <div class="tab-pane fade show" id="nav-contacts" role="tabpanel" aria-labelledby="nav-contacts-tab">
+                <partial name="_ContactsForm" for="GenericDetailViewModel" />
+            </div>
+            @if (Model.ModeActionType == Group.Salto.Common.Enums.ModeActionTypeEnum.Edit)
+            {
+                <div class="tab-pane fade" id="nav-calendar" role="tabpanel" aria-labelledby="nav-calendar-tab">
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="button" class="btn btn-success" data-toggle='modal' data-target='#AddCalendarModal'>                                
+                                <span asp-localized-key="@SitesConstants.SitesTabCalendarButtonCreate"></span>
+                            </button>
+                        </div>
+                        <partial name="_Scheduler" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<br />

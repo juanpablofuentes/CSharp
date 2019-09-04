@@ -1,0 +1,21 @@
+﻿@using Group.Salto.ServiceLibrary.Common.Dtos.Base
+
+@model BaseNameIdDto<int>
+
+<div class="row justify-content-between mb-0" id="heading-@Model.Id">
+    <button type="button" id="btnCollapse-@Model.Id" class="btn btn-link" data-toggle="collapse" data-target="#@Model.Id"
+            aria-expanded="false" aria-controls="@Model.Id">
+        @Model.Name
+    </button>
+    <div class="collapse-icons float-right">
+        <a class="collapse-icons_sumary" href="#"><i class="fa fa-eye"></i></a>
+        <a class="collapse-icons_remove" href="#"><i class="fa fa-trash"></i></a>
+        <a class="collapse-icons_chevron viewDetail" href="#" data-target="@Model.Id"><i class="chevron fa fa-chevron-down rotate"></i></a>
+    </div>
+</div>
+
+
+<div id="@Model.Id" class="collapse" aria-labelledby="heading-@Model.Id" data-parent="#accordionTask">
+    <partial model="Model" name="_TaskHeader" />
+    <partial model="Model" name="_TaskGenericTab" />
+</div>

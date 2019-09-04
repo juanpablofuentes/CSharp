@@ -1,0 +1,42 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Warehouses
+@using Group.Salto.SOM.Web.Models.Warehouses
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Common.Enums
+@model ResultViewModel<WarehousesBaseViewModel>
+@{
+    var title = @Html.GetLocalizedText(WarehousesConstants.WarehousesEditPageTitle);
+    ViewData["Title"] = title;
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<h4>@title&nbsp;<span class="small text-muted">@Model.Data?.GeneralViewModel?.Id</span></h4>
+
+<div class="content">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <form asp-controller="Warehouses" asp-action="Edit" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <partial name="_WarehousesDetail" model="Model?.Data" />
+                <div class="form-group row">
+                    <div class="col-12 text-right">
+                        <input type="button" onclick="location.href='@Url.Action("Index", "Warehouses")'" value="@Html.GetLocalizedText(LocalizationsConstants.CancelText)" class="btn btn-outline-danger" />
+                        <input type="submit" class="btn btn-success spinner-loader" id="btnSendMessage" name="sendMessage" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/Common/authorization.js"></script>
+
+    <script>
+        (function($) {
+            $(document).ready(function() {
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Wharehouses, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSendMessage", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

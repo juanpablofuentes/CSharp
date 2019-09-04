@@ -1,0 +1,75 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.ExtraFields
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Models.ExtraFields;
+@using Group.Salto.Common.Enums
+
+@model ResultViewModel<ExtraFieldsDetailViewModel>
+@{
+    var title = @Html.GetLocalizedText(ExtraFieldsConstants.ExtraFieldsCreatePageTitle);
+    ViewData["Title"] = title;
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-9">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2><span asp-localized-key="@ExtraFieldsConstants.ExtraFieldsCreatePageTitle"></span></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="ExtraFields" asp-action="Create" method="post" class="form-horizontal">
+                    <partial name="_ExtraFieldsForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/js/Common/ui.js"></script>
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/ExtraFields/ExtraFieldDetail.js"></script>
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/comboInputListSelector.js"></script>
+    <script src="~/js/MultiSelect.js"></script>
+    <script src="~/js/ExtraFields/ExtraFieldDetail.js"></script>
+    <script src="~/js/ExtraFields/ExtraFieldsConstants.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                var selectedTranslations =
+                    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.TextTranslations));
+                var selectedDescriptionTranslations =
+                    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.DescriptionTranslations));
+
+
+                var options = {
+                    textTranslationsOptions: {
+                        selectedItems: selectedTranslations,
+
+                        column1Text: '@Html.GetLocalizedText(LocalizationsConstants.Languages)',
+                        column2Text: '@Html.GetLocalizedText(LocalizationsConstants.Description)',
+                        column3Text: '',
+                        inputPlaceHolder: '@Html.GetLocalizedText(LocalizationsConstants.Name)',
+                    },
+                    descriptionsTranslationsOptions: {
+                        selectedItems: selectedDescriptionTranslations,
+
+                        column1Text: '@Html.GetLocalizedText(LocalizationsConstants.Languages)',
+                        column2Text: '@Html.GetLocalizedText(LocalizationsConstants.Description)',
+                        column3Text: '',
+                        inputPlaceHolder: '@Html.GetLocalizedText(LocalizationsConstants.Description)',
+                    }
+                }
+                app.extrafields.detail.Init(options);
+
+                var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.ExtraFields, ActionEnum.Create).ToString().ToLower();
+                app.common.authorization.disable("btnSaveExtraFields", saveCreate);
+            });
+        })(jQuery);
+    </script>
+}

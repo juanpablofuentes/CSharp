@@ -1,0 +1,11 @@
+﻿@using Group.Salto.ServiceLibrary.Common.Dtos.Base
+@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Task
+@using Group.Salto.SOM.Web.Extensions
+
+@model BaseNameIdDto<int>
+<div class="row conditions-row">
+    <div class="col-12" id="container-postconditionCollection-@Model.Id">
+        <partial model="Model" name="_PostconditionCollection" />
+    </div>
+</div>

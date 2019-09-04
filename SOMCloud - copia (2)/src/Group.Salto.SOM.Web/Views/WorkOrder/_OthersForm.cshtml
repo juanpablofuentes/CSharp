@@ -1,0 +1,75 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.WorkOrder
+@using Group.Salto.SOM.Web.Models.WorkOrder
+@using Group.Salto.SOM.Web.Extensions
+@model WorkOrderGenericEditViewModel
+
+<div class="row">
+    <div class="col-12 col-sm-4" id="workorderedittypediv">
+        <div class="form-group">
+            <label class="col-form-label"><span asp-localized-key="@WorkOrderConstants.WorkOrderEditType1"></span>&nbsp;</label>
+            <select asp-for="WorkOrderType1Id" class="form-control" disabled onchange="app.WorkOrderEdit.OnWorkOrderTypeChange(this, '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.WorkOrderType2Id)')"></select>
+            <span asp-validation-for="WorkOrderType1Id" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label"><span asp-localized-key="@WorkOrderConstants.WorkOrderEditType2"></span>&nbsp;</label>
+            <select asp-for="WorkOrderType2Id" class="form-control" disabled onchange="app.WorkOrderEdit.OnWorkOrderTypeChange(this, '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.WorkOrderType3Id)')"></select>
+            <span asp-validation-for="WorkOrderType2Id" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label"><span asp-localized-key="@WorkOrderConstants.WorkOrderEditType3"></span>&nbsp;</label>
+            <select asp-for="WorkOrderType3Id" class="form-control" disabled onchange="app.WorkOrderEdit.OnWorkOrderTypeChange(this, '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.WorkOrderType4Id)')"></select>
+            <span asp-validation-for="WorkOrderType3Id" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label"><span asp-localized-key="@WorkOrderConstants.WorkOrderEditType4"></span>&nbsp;</label>
+            <select asp-for="WorkOrderType4Id" class="form-control" disabled></select>
+            <span asp-validation-for="WorkOrderType4Id" class="text-danger"></span>
+        </div>
+
+    </div>
+    <div class="col-12 col-sm-4">
+        <div class="form-group" id="techniciandiv">
+            <label class="col-form-label"><span asp-localized-key="@WorkOrderConstants.WorkOrderEditTechnician"></span></label>
+            <div id="TechnicianComboFilter"></div>
+            <span asp-validation-for="TechnicianId" class="text-danger"></span>
+        </div>
+        <div class="form-group row mb-0">
+            @if (Model.IsDerived)
+            {
+                <label><span asp-localized-key="@WorkOrderConstants.WorkOrderDerivatedInheritTechnician"></span></label>
+                <div class="col">
+                    <label class="switch switch-label switch-pill switch-primary">
+                        <input asp-for="InheritTechnician" type="checkbox" class="switch-input">
+                        <span class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.Yes)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.No)"></span>
+                    </label>
+                </div>
+            }
+            <label><span asp-localized-key="@WorkOrderConstants.WorkOrderEditIsResponibleFixed"></span></label>
+            <div class="col">
+                <label class="switch switch-label switch-pill switch-primary">
+                    <input asp-for="IsResponibleFixed" type="checkbox" class="switch-input">
+                    <span class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.Yes)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.No)"></span>
+                </label>
+            </div>
+        </div>
+        @if (Model.IsDerived)
+        {
+            <div class="form-group">
+                <label class="col-form-label"><span asp-localized-key="@WorkOrderConstants.WorkOrderDerivatedGeneratorServiceDuplicationPolicyItems"></span>&nbsp;</label>
+                <select asp-for="GeneratorServiceDuplicationPolicy" asp-items="@Model.GeneratorServiceDuplicationPolicyItems" class="form-control"></select>
+                <span asp-validation-for="GeneratorServiceDuplicationPolicy" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label"><span asp-localized-key="@WorkOrderConstants.WorkOrderDerivatedOtherServicesDuplicationPolicy"></span>&nbsp;</label>
+                <select asp-for="OtherServicesDuplicationPolicy" asp-items="@Model.OtherServicesDuplicationPolicyItems" class="form-control"></select>
+                <span asp-validation-for="OtherServicesDuplicationPolicy" class="text-danger"></span>
+            </div>
+        }
+
+    </div>
+</div>

@@ -1,0 +1,41 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Vehicles
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Vehicles
+
+@model VehicleDetailsViewModel
+
+@Html.HiddenFor(m => m.Id, new { Id = "id" })
+<div class="form-group row">
+    <label class="col-md-3 col-form-label" asp-for="LicensePlate"><span asp-localized-key="@VehiclesConstants.VehiclesGridTheadLicensePlate"></span><span class="required">*</span></label>
+    <div class="col-md-9">
+        <input type="text" class="form-control" asp-for="LicensePlate" placeholder="@Html.GetLocalizedText(VehiclesConstants.VehiclesGridTheadLicensePlate)">
+        <span asp-validation-for="LicensePlate" class="text-danger"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-localized-key="@VehiclesConstants.VehiclesGridTheadDescription" class="col-md-3 col-form-label" asp-for="Description">Description</label>
+    <div class="col-md-9">
+        <input asp-for="Description" rows="9" class="form-control" placeholder="@Html.GetLocalizedText(VehiclesConstants.VehiclesGridTheadDescription)" />
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-localized-key="@VehiclesConstants.VehiclesGridTheadObservations"  class="col-md-3 col-form-label" asp-for="Observations">Observations</label>
+    <div class="col-md-9">
+        <input asp-for="Observations" rows="9" class="form-control" placeholder="@Html.GetLocalizedText(VehiclesConstants.VehiclesGridTheadObservations)" />
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-localized-key="@VehiclesConstants.VehiclesDriverTitle" class="col-md-3 col-form-label" asp-for="PeopleDriverId">Driver</label>
+    <div class="col-md-9">
+        <select asp-for="PeopleDriverId" asp-items="@Model.Drivers"  rows="9" class="form-control" placeholder="@Html.GetLocalizedText(VehiclesConstants.VehiclesDriverTitle)"></select>
+    </div>
+</div>
+<div class="form-group row text-right">
+    <div class="col-12">
+        <button type="reset" class="btn btn-outline-danger" onclick="location.href = '@Url.Action("Index", "Vehicles")'">
+            <span asp-localized-key="ActionsDetailsBtnCancel"></span>
+        </button>
+        <input id="btnSaveVehicles" type="submit" class="btn btn-success" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+    </div>
+</div>

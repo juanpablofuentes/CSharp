@@ -1,0 +1,189 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.SOM.Web.Models.Projects
+@using Group.Salto.SOM.Web.Models.Technicians
+@using Group.Salto.Common.Constants.Project
+@using Group.Salto.Common.Constants.CalendarEvent
+@using Group.Salto.Common.Constants.Technical
+@using Group.Salto.Common.Constants.Contracts
+@using Group.Salto.Common.Constants.PredefinedServices
+@using Group.Salto.SOM.Web.Models.Contracts
+@using Group.Salto.SOM.Web.Models.PredefinedServices
+@using Group.Salto.Common.Enums
+@model ResultViewModel<ProjectsDetailViewModel>
+
+@{
+    string title = @Html.GetLocalizedText(ProjectConstants.ProjectEditPageTitle);
+    ViewData["Title"] = title;
+    var cultureInfo = Html.GetLanguageCookie().ToLower();
+    var GlobalScriptLang = "/lib/dhtmlx/scheduler/codebase/sources/locale/locale_" + cultureInfo + ".js";
+    var RecurringScriptLang = "/lib/dhtmlx/scheduler/codebase/sources/locale/recurring/locale_recurring_" + cultureInfo + ".js";
+
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<h1>@title&nbsp;<span class="small text-muted">@Model.Data.GenericDetailViewModel.FirstName</span></h1>
+
+<div class="content">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <form asp-controller="Projects" asp-action="Edit" method="post" class="form-horizontal">
+                <partial name="_ProjectGenericTab" model="Model?.Data" />
+                <div class="form-group row">
+                    <div class="col-12 text-right">
+                        <input type="button" onclick="location.href='@Url.Action("Index", "Projects")'" value="@Html.GetLocalizedText(LocalizationsConstants.CancelText)" class="btn btn-outline-danger" />
+                        <input type="submit" class="btn btn-success spinner-loader" id="btnSendMessage" name="sendMessage" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section sideBarMenu {
+    <partial name="_CalendarsAvailable" />
+}
+
+@section Modals {
+    <div id="contactmodal-placeholder"></div>
+    <div id="Techniciansmodal-placeholder"></div>
+    <div id="@PredefinedServicesConstants.PredefinedServicesPlaceholder"></div>
+    <partial name="_CalendarModal" />
+}
+
+@section Styles{
+    <link href="~/lib/dhtmlx/suite/codebase/dhtmlx.css" rel="stylesheet" />
+    <link href="~/lib/dhtmlx/scheduler/codebase/dhtmlxscheduler_material.css" rel="stylesheet" />
+    <link href="~/lib/dhtmlx/scheduler/codebase/dhtmlxscheduler_material__custom.css" rel="stylesheet" />
+}
+
+@section scripts {
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Common/ui.js"></script>
+    <script src="~/js/Common/contrastColor.js"></script>
+    <script src="~/js/Bundle/bundle--colorPicker.js"></script>
+    <script src="~/js/Bundle/bundle--scheduler.js"></script>
+    <script src="~/js/Scheduler/calendar.js"></script>
+    <script src="~/js/Scheduler/Scheduler.js"></script>
+    <script src="~/js/Calendar/calendarConstants.js"></script>
+    <script src="@GlobalScriptLang"></script>
+    <script src="@RecurringScriptLang"></script>
+    <script src="~/js/Projects/ProjectsDetails.js"></script>
+    <script src="~/js/Common/uiConstants.js"></script>
+    <script src="~/js/Controls/ModalFromList.js"></script>
+    <script src="~/js/MultiSelect.js"></script>
+    <script src="~/js/Technician/TechnicianDetails.js"></script>
+    <script src="~/js/Contacts/ContactsDetails.js"></script>
+    <script src="~/js/PredefinedServices/PredefinedServicesDetails.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+
+    <script language="javascript">
+        function loadScheduler() {
+            var optionsSheduler = {
+                id: '@Model.Data.GenericDetailViewModel.Id',
+                url: app.config.Urls.projectCalendar,
+                eventUrl: app.config.Urls.saveCalendarEvents,
+                avariableCalendarUrl: app.config.Urls.getProjectAvailableCalendars,
+                addCalendarUrl: app.config.Urls.addProjectCalendar,
+                initCalendar: true,
+                eventCategory: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.SchedulerViewModel?.CalendarEventCategory)),
+                btnSelect: '@Html.GetLocalizedText(LocalizationsConstants.Select)',
+                btnCancel: '@Html.GetLocalizedText(LocalizationsConstants.CancelText)',
+                SequenceNoMove: '@Html.GetLocalizedText(CalendarEventConstants.CalendarEventSequenceNoMove)',
+                NameEmpty: '@Html.GetLocalizedText(CalendarEventConstants.CalendarEventNameEmpty)',
+                CostHourEmpty: '@Html.GetLocalizedText(CalendarEventConstants.CalendarEventCostHourEmpty)',
+                CostHourNotNumber: '@Html.GetLocalizedText(CalendarEventConstants.CalendarEventCostHourNotNumber)',
+                CalendarEmpty :  '@Html.GetLocalizedText(CalendarEventConstants.CalendarEventCalendarIdEmpty)',
+                startDateEmpty: '@Html.GetLocalizedText(CalendarEventConstants.CalendarEventStartDateEmpty)',
+                endDateEmpty: '@Html.GetLocalizedText(CalendarEventConstants.CalendarEventEndDateEmpty)',
+                endDateGreaterThanStartDate: '@Html.GetLocalizedText(CalendarEventConstants.CalendarEventEndDateGreaterThanStartDate)'
+            };
+            app.Scheduler.Init(optionsSheduler);
+
+            var options = {
+                btnSelect: '@Html.GetLocalizedText(LocalizationsConstants.Select)',
+                btnCancel: '@Html.GetLocalizedText(LocalizationsConstants.CancelText)',
+                color: app.calendar.constants.CalendarColorPickerInitialColor,
+                skin: app.calendar.constants.ColorPickerSkin,
+                parent: app.calendar.constants.CalendarColorPickerParent,
+                input: app.calendar.constants.CalendarColorPickerInput
+            }
+            app.colorPicker.Init(options)
+        }
+
+        (function ($) {
+            $(document).ready(function () {
+                app.ProjectsDetails.CalendarLoad();
+                app.multiselect.Init('@Model?.Data.GenericDetailViewModel.Permissions.Name');
+                var selectedContacts =  @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.GenericDetailViewModel?.ContactsSelected));
+                var onCreateOverride = function () {};
+                var modalList = new modalFromList(onCreateOverride);
+                modalList.Init("#ContactContainer",
+                {
+                    selectedItems: selectedContacts,
+                    collectionPropertyId: "@nameof(ProjectsDetailViewModel.GenericDetailViewModel)_@nameof(ProjectsDetailViewModel.GenericDetailViewModel.ContactsSelected)",
+                    collectionPropertyName:"@nameof(ProjectsDetailViewModel.GenericDetailViewModel).@nameof(ProjectsDetailViewModel.GenericDetailViewModel.ContactsSelected)",
+                    linkText: "@Html.GetLocalizedText(@LocalizationsConstants.CreateButtonText)",
+                    modalName: '@ContractsConstants.ContactModalName',
+                    id: '@nameof(ContactsEditViewModel.ContactsId)',
+                    columnsText : '#,@Html.GetLocalizedText(LocalizationsConstants.Name)',
+                    columnsModal: '@nameof(ContactsEditViewModel.ContactsId),@nameof(ContactsEditViewModel.Name),@nameof(ContactsEditViewModel.FirstSurname),@nameof(ContactsEditViewModel.SecondSurname),@nameof(ContactsEditViewModel.Email),@nameof(ContactsEditViewModel.Telephone),@nameof(ContactsEditViewModel.Position),@nameof(ContactsEditViewModel.FullName)',
+                    columnsValues: '@nameof(ContactsEditViewModel.FullName)',
+                    dataUrl: '@Url.Action("Contact", "Contacts")',
+                    placeholderElement: 'contactmodal-placeholder',
+                    saveButton: '@ContractsConstants.ContactConfirmSave',
+                    initialIdValue: 1
+                });
+
+                var selectedTechnicians = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.TechniciansSelected));
+                var onCreateOverride = function () {};
+                var modalList = new modalFromList(onCreateOverride);
+                modalList.Init("#TechniciansContainer",
+                {
+                    selectedItems: selectedTechnicians,
+                    collectionPropertyId: "@nameof(ProjectsDetailViewModel.TechniciansSelected)",
+                    collectionPropertyName: "@nameof(ProjectsDetailViewModel.TechniciansSelected)",
+                    linkText: "@Html.GetLocalizedText(@LocalizationsConstants.CreateButtonText)",
+                    modalName: 'TechniciansModal',
+                    id: '@nameof(TechniciansEditViewModel.TechniciansId)',
+                    columnsText : '#,@Html.GetLocalizedText(TechnicalConstants.TechniciansNameText),@Html.GetLocalizedText(TechnicalConstants.TechniciansCodeText)',
+                    columnsModal: '@nameof(TechniciansEditViewModel.TechniciansId),@nameof(TechniciansEditViewModel.PeopleId),@nameof(TechniciansEditViewModel.Code),@nameof(TechniciansEditViewModel.TechniciansName)',
+                    columnsValues: '@nameof(TechniciansEditViewModel.TechniciansName),@nameof(TechniciansEditViewModel.Code)',
+                    dataUrl: '@Url.Action("Technicians", "Technicians")',
+                    placeholderElement: 'Techniciansmodal-placeholder',
+                    saveButton: 'TechniciansConfirmSave',
+                    initialIdValue: 1
+                });
+
+                var selectedPredefinedServices = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.PredefinedServicesSelected));
+                var onCreateOverride = function () {};
+                var modalList = new modalFromList(onCreateOverride);
+                modalList.Init("#@PredefinedServicesConstants.PredefinedServicesContainer",
+                {
+                    selectedItems: selectedPredefinedServices,
+                    collectionPropertyId: "@nameof(ProjectsDetailViewModel.PredefinedServicesSelected)",
+                    collectionPropertyName: "@nameof(ProjectsDetailViewModel.PredefinedServicesSelected)",
+                    linkText: "@Html.GetLocalizedText(@LocalizationsConstants.CreateButtonText)",
+                    modalName: '@PredefinedServicesConstants.PredefinedServicesModal',
+                    id: '@nameof(PredefinedServicesEditViewModel.PredefinedServicesId)',
+                    columnsText : '#,@Html.GetLocalizedText(PredefinedServicesConstants.PredefinedServicesNameText),@Html.GetLocalizedText(PredefinedServicesConstants.PredefinedServicesLinkClosingCodeText),@Html.GetLocalizedText(PredefinedServicesConstants.PredefinedServicesBillableText),@Html.GetLocalizedText(PredefinedServicesConstants.PredefinedServicesMustValidateText),@Html.GetLocalizedText(PredefinedServicesConstants.PredefinedServicesExtraFieldCollectionText),@Html.GetLocalizedText(PredefinedServicesConstants.PredefinedServicesPermissionsText)',
+                    columnsValues: '@nameof(PredefinedServicesEditViewModel.PredefinedServicesName),@nameof(PredefinedServicesEditViewModel.PredefinedServicesLinkClosingCode),@nameof(PredefinedServicesEditViewModel.PredefinedServicesBillable),@nameof(PredefinedServicesEditViewModel.PredefinedServicesMustValidate),@nameof(PredefinedServicesEditViewModel.CollectionExtraFieldName),@nameof(PredefinedServicesEditViewModel.PredefinedServicesPermissionsString)',
+                    columnsModal: '@nameof(PredefinedServicesEditViewModel.PredefinedServicesId),@nameof(PredefinedServicesEditViewModel.CollectionExtraFieldId),@nameof(PredefinedServicesEditViewModel.CollectionExtraFieldName),@nameof(PredefinedServicesEditViewModel.PredefinedServicesName),@nameof(PredefinedServicesEditViewModel.PredefinedServicesLinkClosingCode),@nameof(PredefinedServicesEditViewModel.PredefinedServicesBillable),@nameof(PredefinedServicesEditViewModel.PredefinedServicesMustValidate),@nameof(PredefinedServicesEditViewModel.PredefinedServicesPermissionsIds),@nameof(PredefinedServicesEditViewModel.PredefinedServicesPermissionsString)',
+                    dataUrl: '@Url.Action("PredefinedServices", "PredefinedServices")',
+                    placeholderElement: '@PredefinedServicesConstants.PredefinedServicesPlaceholder',
+                    saveButton: '@PredefinedServicesConstants.PredefinedServicesConfirmSave',
+                    initialIdValue: 1,
+                    state: '@nameof(PredefinedServicesEditViewModel.State)',
+                    multiSelect: '@nameof(PredefinedServicesConstants.PredefinedServicesPermission),@nameof(PredefinedServicesEditViewModel.PredefinedServicesPermissionsIds),@nameof(PredefinedServicesEditViewModel.PredefinedServicesPermissionsString)',
+                    textYes: '@Html.GetLocalizedText(LocalizationsConstants.Yes)',
+                    textNo: '@Html.GetLocalizedText(LocalizationsConstants.No)',
+                    canDeleteUrl: app.config.Urls.PredefinedServicesCanDelete
+                    });
+
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Project, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSendMessage", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

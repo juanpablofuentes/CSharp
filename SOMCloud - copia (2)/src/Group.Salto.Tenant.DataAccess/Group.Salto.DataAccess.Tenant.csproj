@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20190225145930_AddRepetitionParameters.cs" />
+    <Compile Remove="Migrations\20190312114622_AddTeamContracts.cs" />
+    <Compile Remove="Migrations\20190418102610_AddRelationalColumnForTypes.cs" />
+    <Compile Remove="Repositories\IWordkOrderCategories.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Context\Configurations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess.Common\DataAccess.Common.csproj" />
+    <ProjectReference Include="..\Group.Salto.Entities.Tenant\Group.Salto.Entities.Tenant.csproj" />
+    <ProjectReference Include="..\Group.Salto.ServiceLibrary.Common\Group.Salto.ServiceLibrary.Common.csproj" />
+  </ItemGroup>
+
+</Project>

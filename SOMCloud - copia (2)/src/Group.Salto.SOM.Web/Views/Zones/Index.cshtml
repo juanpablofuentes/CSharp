@@ -1,0 +1,114 @@
+﻿@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Zones
+@using Group.Salto.SOM.Web.Models.ZoneProject
+@using Group.Salto.SOM.Web.Models.ZoneProjectPostalCode
+@using Group.Salto.SOM.Web.Models.Projects
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Controls.Table
+@using System;
+@using Group.Salto.Common.Constants.Zones
+@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Enums
+
+@model ResultViewModel<ZonesViewModel>
+@{
+    ViewData["Title"] = @Html.GetLocalizedText("ZonesIndexTitle");
+    var title = @Html.GetLocalizedText("ZonesIndexTitle");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var table = Html.GetMultiSelectTableFor(Model.Data.Zones, au => au.Id, Model.Data.ZonesFilters, TranslationHelper.GetTranslationService());
+    table.SetColumns(m => m.Name);
+    table.SetSortingColumns(m => m.Name);
+    table.ShowSelectColumn = false;
+    table.TableCssClass = "table table-striped table-hover";
+    table.TableHeaderCssClass = "thead-som";
+    table.AddColumnTemplateFor(m => m.Id,
+    @<div class="col-update text-right" data-zone="@item.RawValue">
+        <a asp-action="Edit" asp-route-id="@item.RawValue" id="@item.RawValue">
+            <i class="fa fa-pencil fa-lg"></i>
+        </a>
+        <a asp-action="Delete" asp-route-id="@item.RawValue" id="@item.RawValue" class="deleteButtonList"
+           data-toggle="tooltip" data-placement="top">
+            <i class="fa fa-trash-o fa-lg"></i>
+        </a>
+        <input type="hidden" id="zone-id" value="@item.RawValue" />
+    </div>, "");
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <partial name="_ZonesFilter" model="@Model.Data.ZonesFilters" />
+        </div>
+    </div>
+<div class="row">
+    <div class="col-12">
+        @if (Model.Data.Zones.Any())
+        {
+            <div class="table-responsive workstation-table" id="multigridContainerId">
+                @table.Render("ZonesGrid")
+            </div>
+
+            <partial name="_Pager" for="@Model.Data.ZonesFilters" />
+        }
+        else
+        {
+            <partial name="_NoRecords" />
+        }
+    </div>
+</div>
+</div>
+
+<popup Text="@Html.GetLocalizedText(ZonesConstants.ZonesDeleteMessage)" Id="confirmationModal"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"
+       cancel-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)"></popup>
+
+
+@section Scripts{
+    <script src="~/js/Zones/Zones.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                app.zones.Init();
+                 $(".deleteButtonList").on("click",
+                    function (evt) {
+                        evt.preventDefault();
+                        var id = $(this).attr('id');
+                            deleteElement(id, "#confirmationModal",
+                            "#confirmationModalConfirmSave");
+                    });
+                $(".btnClear").on("click",
+                    function (evt) {
+                        app.zones.Init();                       
+                    });
+
+                function deleteElement(id, modalId, saveButtonId) {
+                    $(modalId).modal();
+
+                    $(saveButtonId).on("click",
+                        function () {
+                            $.ajax({
+                                url: '@Url.Action("Delete", "Zones")',
+                                type: 'POST',
+                                dataType: 'json',
+                                cache: false,
+                                data: { id: id },
+                                success: function() {
+                                    $("#btnApplyFilter").click();
+                                },
+                            });
+                            $(modalId).modal();
+                        });
+                }
+
+                $("#confirmationModalConfirmCancel").on("click", function () {
+                    $("#confirmationModal").removeClass("in show");
+                    $("#confirmationModal").css("display", "none");
+                    $("#confirmationModalConfirmSave").off("click");
+                });
+            });
+        })(jQuery);
+    </script>
+}

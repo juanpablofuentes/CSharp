@@ -1,0 +1,33 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.EventCategories
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.EventCategories
+
+@model EventCategoriesFilterViewModel
+
+<div>
+    <partial model="@Model.FilterHeader" name="_FilterHeader" />
+    <div class="collapse in" id="filterEventCategories">
+        <form asp-action="Filter" asp-controller="EventCategories" method="post" id="filter-form" class="form-control">
+            <partial model="Model" name="_PagerHiddens" />
+            <partial model="Model" name="_MultiTableHiddens" />
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class="col-sm-4 col-form-label">
+                        <span asp-localized-key="@LocalizationsConstants.Name"></span>
+                    </label>
+                    <input asp-for="Name" id="ActionsFilterName"
+                           class="form-control input-theme-sm"
+                           placeholder="@Html.GetLocalizedText(LocalizationsConstants.Name)" />
+                </div>
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <br>
+                        <button type="button" id="btnClear" class="btn btn-outline-danger" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                        <button id="btnApplyFilter" class="btn btn-primary" name="btnApplyFilter" asp-localized-key="@LocalizationsConstants.ApplyFilter" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

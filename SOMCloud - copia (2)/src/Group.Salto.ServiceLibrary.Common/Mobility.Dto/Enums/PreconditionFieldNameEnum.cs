@@ -1,0 +1,36 @@
+﻿namespace Group.Salto.ServiceLibrary.Common.Mobility.Dto.Enums
+{
+    public enum PreconditionFieldNameEnum
+    {
+        Billable,
+        ClientFinal,
+        Cua,
+        DataActuacio,
+        DataAssignacio,
+        DataCreacio,
+        DataRecollida,
+        DataTancamentClient,
+        DataTancamentSalto,
+        Equip,
+        EstatOT,
+        EstatOTExtern,
+        Manipulador,
+        MinutsPerFiSLA,
+        ParentWOExternalStatus,
+        ParentWOInternalStatus,
+        ParentWOQueue,
+        Procedencia,
+        Project,
+        Reparacio,
+        State,
+        Tecnic,
+        TipusOTN1,
+        TipusOTN2,
+        TipusOTN3,
+        TipusOTN4,
+        TipusOTN5,
+        UbicacioClientFinal,
+        WOCategory,
+        Zone
+    }
+}

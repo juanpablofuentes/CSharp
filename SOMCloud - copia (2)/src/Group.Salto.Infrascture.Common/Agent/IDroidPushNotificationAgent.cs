@@ -1,0 +1,9 @@
+﻿using System.Collections.Generic;
+
+namespace Group.Salto.Infrastructure.Common.Agent
+{
+    public interface IDroidPushNotificationAgent
+    {
+        void SendNotifications(IEnumerable<string> deviceTokens, string title, string body, bool openWoPage);
+    }
+}

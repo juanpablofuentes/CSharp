@@ -1,0 +1,179 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Project
+@using Group.Salto.Common.Constants.FinalClients
+@using Group.Salto.Common.Constants.Sites
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Common.Constants.WorkOrder
+@using Group.Salto.SOM.Web.Models.WorkOrder
+@using Group.Salto.Common.Enums
+@model ResultViewModel<WorkOrderEditViewModel>
+@{
+    string title = @Html.GetLocalizedText(WorkOrderConstants.WorkOrderEditPageTitle);
+    ViewData["Title"] = title;
+
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<h2>@title&nbsp;<span class="small text-muted">#@Model.Data.WorkOrderGenericEditViewModel.Id</span></h2>
+
+<div class="content">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <form asp-controller="WorkOrder" asp-action="Edit" method="post" class="form-horizontal">
+                <partial name="_WorkOrderGenericTab" model="Model?.Data" />
+                <div class="form-group row">
+                    <div class="col-12 text-right">
+                        <hr />
+                        <input type="button" onclick="location.href='@Url.Action("Index", "WorkOrder")'" value="@Html.GetLocalizedText(LocalizationsConstants.CancelText)" class="btn btn-outline-danger" />
+                        <input type="submit" class="btn btn-success spinner-loader" id="btnSendMessage" name="sendMessage" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Styles{
+    <link href="~/lib/dhtmlx/suite/codebase/fonts/font_awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/lib/dhtmlx/suite/codebase/dhtmlx.css" rel="stylesheet" />
+}
+
+@section Modals {
+    <partial name="_AdvancedSearch" />
+}
+
+@section scripts {
+
+    <script src="~/js/Bundle/Commons.js" asp-append-version="true"></script>
+    <environment include="Development">
+        <script src="~/js/Common/validations.js"></script>
+        <script src="~/lib/dhtmlx/suite/sources/dhtmlxCalendar/codebase/dhtmlxcalendar.js"></script>
+        <script src="~/js/AutocompleteControl.js"></script>
+        <script src="~/js/Controls/advancedSearch.js"></script>
+        <script src="~/js/WorkOrder/WorkOrderEdit.js"></script>
+        <script src="~/js/Common/authorization.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Bundle/WorkOrderCreation.js" asp-append-version="true"></script>
+    </environment>
+    <script language="javascript">
+        (function ($) {
+            $(document).ready(function () {
+
+                var projectSelected = { key: @Model.Data.WorkOrderGenericEditViewModel.ProjectId, value: '@Model.Data.WorkOrderGenericEditViewModel.ProjectName' };
+                var technicianSelected = { key: @Model.Data.WorkOrderGenericEditViewModel.TechnicianId, value: '@Model.Data.WorkOrderGenericEditViewModel.TechnicianName' };
+                var clientSiteSelected = { key: @Model.Data.WorkOrderGenericEditViewModel.ClientSiteId, value: '@Model.Data.WorkOrderGenericEditViewModel.ClientSiteName' };
+                var siteSelected = { key: @Model.Data.WorkOrderGenericEditViewModel.SiteId, value: '@Model.Data.WorkOrderGenericEditViewModel.SiteName' };
+                var assetSelected = { key: @Model.Data.WorkOrderGenericEditViewModel.AssetId , value: '@Model.Data.WorkOrderGenericEditViewModel.AssetName' };
+                var userSiteSelected = { key: @Model.Data.WorkOrderGenericEditViewModel.UserSiteId, value: '@Model.Data.WorkOrderGenericEditViewModel.UserSiteName' };
+
+                var options = {
+                    modeActionType: '@Model.Data.ModeActionType',
+                    isDerived: '@Model.Data.WorkOrderGenericEditViewModel.IsDerived.ToString().ToLower()',
+                    workOrderCategoryValue: '@Model.Data.WorkOrderGenericEditViewModel.WorkOrderCategoryId',
+                    workOrderTypeValue: '@Model.Data.WorkOrderGenericEditViewModel.WorkOrderTypesId',
+                    fields: {
+                        inheritProject: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.InheritProject)',
+                        inheritTechnician: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.InheritTechnician)',
+                        queue: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.QueueId)',
+                        workOrderStatus: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.WorkOrderStatusId)',
+                        workOrderCategory: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.WorkOrderCategoryId)',
+                        workOrderType1: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.WorkOrderType1Id)',
+                        workOrderType2: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.WorkOrderType2Id)',
+                        workOrderType3: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.WorkOrderType3Id)',
+                        workOrderType4: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.WorkOrderType4Id)',
+                        DateResponseSLA : '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.DateResponseSLA)',
+                        DateResolutionSLA : '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.DateResolutionSLA)',
+                        DateUnansweredSLAPenalty : '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.DateUnansweredSLAPenalty)',
+                        DateWithoutPenaltyResolutionSLA: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.DateWithoutPenaltyResolutionSLA)',
+                        DateResponseSLAVisible : '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.DateResponseSLAVisible)',
+                        DateResolutionSLAVisible : '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.DateResolutionSLAVisible)',
+                        DateUnansweredSLAPenaltyVisible : '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.DateUnansweredSLAPenaltyVisible)',
+                        DateWithoutPenaltyResolutionSLAVisible: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.DateWithoutPenaltyResolutionSLAVisible )',
+                        textRepair: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.TextRepair)',
+                        observations: '@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.Observations)'
+                    },
+                    projectCombo: {
+                        itemIdProperty: '@nameof(WorkOrderGenericEditViewModel).@nameof(WorkOrderGenericEditViewModel.ProjectId)',
+                        itemTextProperty: '@nameof(WorkOrderGenericEditViewModel).@nameof(WorkOrderGenericEditViewModel.ProjectName)',
+                        selectedValues: projectSelected
+                    },
+                    projectSearch: {
+                        headerTitle: "@Html.GetLocalizedText(WorkOrderConstants.WorkOrderEditProject)",
+                        urlAdd: "@Url.Action("Create", "Projects")",
+                        advancedSearchUrl: app.config.Urls.getProjectAdvancedSearch,
+                        detail: '@Html.GetLocalizedText(ProjectConstants.ProjectAdvancedSearchName)|@Html.GetLocalizedText(@ProjectConstants.ProjectAdvancedSearchManager)|@Html.GetLocalizedText(@ProjectConstants.ProjectAdvancedSearchContract)'.split("|"),
+                        setEvent: app.WorkOrderEdit.OnProjectSearchChoose,
+                        minimumCharacters: 2
+                    },
+                    technicianCombo: {
+                        itemIdProperty: '@nameof(WorkOrderGenericEditViewModel).@nameof(WorkOrderGenericEditViewModel.TechnicianId)',
+                        itemTextProperty: '@nameof(WorkOrderGenericEditViewModel).@nameof(WorkOrderGenericEditViewModel.TechnicianName)',
+                        selectedValues: technicianSelected
+                    },
+                    clientSiteCombo: {
+                        itemIdProperty: '@nameof(WorkOrderGenericEditViewModel).@nameof(WorkOrderGenericEditViewModel.ClientSiteId)',
+                        itemTextProperty: '@nameof(WorkOrderGenericEditViewModel).@nameof(WorkOrderGenericEditViewModel.ClientSiteName)',
+                        selectedValues: clientSiteSelected
+                    },
+                    clientSiteSearch: {
+                        headerTitle: "@Html.GetLocalizedText(WorkOrderConstants.WorkOrderEditClientSite)",
+                        urlAdd: "@Url.Action("Create", "FinalClients")",
+                        advancedSearchUrl: app.config.Urls.getClientSiteAdvancedSearch,
+                        detail: '@Html.GetLocalizedText(FinalClientsConstants.FinalClientAdvancedSearchName)|@Html.GetLocalizedText(FinalClientsConstants.FinalClientAdvancedSearchDescription)'.split("|"),
+                        setEvent: app.WorkOrderEdit.OnClientSiteSearchChoose,
+                        minimumCharacters: 2,
+                        showSelectValues: [{ key: @((int)ClientSiteAdvancedSearchEnum.Code), value: '@Html.GetLocalizedText(FinalClientsConstants.FinalClientsCode)' },
+                            { key: @((int)@ClientSiteAdvancedSearchEnum.Name), value: '@Html.GetLocalizedText(FinalClientsConstants.FinalClientsName)' },
+                            { key: @((int)@ClientSiteAdvancedSearchEnum.Phone), value: '@Html.GetLocalizedText(FinalClientsConstants.FinalClientsPhone1)' },
+                            { key: @((int)@ClientSiteAdvancedSearchEnum.Fax), value: '@Html.GetLocalizedText(FinalClientsConstants.FinalClientsFax)' },
+                            { key: @((int)@ClientSiteAdvancedSearchEnum.Nif), value: '@Html.GetLocalizedText(FinalClientsConstants.FinalClientsNif)' },
+                            { key: @((int)@ClientSiteAdvancedSearchEnum.ComercialName), value: '@Html.GetLocalizedText(FinalClientsConstants.FinalClientAdvancedSearchComercialName)' },
+                            { key: @((int)@ClientSiteAdvancedSearchEnum.ComercialDNI), value: '@Html.GetLocalizedText(FinalClientsConstants.FinalClientAdvancedSearchComercialDNI)' },
+                            { key: @((int)@ClientSiteAdvancedSearchEnum.ContactName), value: '@Html.GetLocalizedText(FinalClientsConstants.FinalClientAdvancedSearchContactName)' },
+                            { key: @((int)@ClientSiteAdvancedSearchEnum.ContactPhone), value: '@Html.GetLocalizedText(FinalClientsConstants.FinalClientAdvancedSearchContactPhone)' },
+                            { key: @((int)@ClientSiteAdvancedSearchEnum.ContactEmail), value: '@Html.GetLocalizedText(FinalClientsConstants.FinalClientAdvancedSearchContactEmail)' }]
+                    },
+                    siteCombo: {
+                        itemIdProperty: '@nameof(WorkOrderGenericEditViewModel).@nameof(WorkOrderGenericEditViewModel.SiteId)',
+                        itemTextProperty: '@nameof(WorkOrderGenericEditViewModel).@nameof(WorkOrderGenericEditViewModel.SiteName)',
+                        selectedValues: siteSelected
+                    },
+                    siteSearch: {
+                        headerTitle: "@Html.GetLocalizedText(WorkOrderConstants.WorkOrderEditSiteId)",
+                        advancedSearchUrl: app.config.Urls.getSiteAdvancedSearch,
+                        detail: '@Html.GetLocalizedText(SitesConstants.SitesAdvancedSearchName)|@Html.GetLocalizedText(SitesConstants.SitesAdvancedSearchCode)|@Html.GetLocalizedText(SitesConstants.SitesAdvancedSearchLocalization)'.split("|"),
+                        setEvent: app.WorkOrderEdit.OnSiteSearchChoose,
+                        onAdvancedSearchSelectChange: app.WorkOrderEdit.OnAdvancedSearchSelectChange,
+                        minimumCharacters: 2,
+                        showSelectValues: [{ key: @((int)SiteAdvancedSearchEnum.Name), value: '@Html.GetLocalizedText(SitesConstants.SitesAdvancedSearchName)' },
+                            { key: @((int)SiteAdvancedSearchEnum.Code), value: '@Html.GetLocalizedText(SitesConstants.SitesAdvancedSearchCode)' },
+                            { key: @((int)SiteAdvancedSearchEnum.Phone), value: '@Html.GetLocalizedText(SitesConstants.SitesAdvancedSearchPhone)' }]
+                    },
+                    assetCombo: {
+                        itemIdProperty: '@nameof(WorkOrderGenericEditViewModel).@nameof(WorkOrderGenericEditViewModel.AssetId)',
+                        itemTextProperty: '@nameof(WorkOrderGenericEditViewModel).@nameof(WorkOrderGenericEditViewModel.AssetName)',
+                        selectedValues: assetSelected
+                    },
+                    userSiteCombo: {
+                        itemIdProperty: '@nameof(WorkOrderGenericEditViewModel).@nameof(WorkOrderGenericEditViewModel.UserSiteId)',
+                        itemTextProperty: '@nameof(WorkOrderGenericEditViewModel).@nameof(WorkOrderGenericEditViewModel.UserSiteName)',
+                        selectedValues: userSiteSelected,
+                        enabled : (@Model.Data.WorkOrderGenericEditViewModel.SiteId !== 0)
+                    },
+                    calendar: {
+                        objects: ["@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.CreationDate)","@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.PickUpTime)", "@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.AssignmentDate)", "@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.ActuationDate)", "@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.ActuationEndDate)", "@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.FinalClientClosingTime)", "@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.InternalClosingTime)", "@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.DateResponseSLA)", "@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.DateResolutionSLA)", "@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.DateUnansweredSLAPenalty)", "@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.DateWithoutPenaltyResolutionSLA)"],
+                    }
+                };
+                app.WorkOrderEdit.Init(options);
+                app.WorkOrderEdit.InitEdit();
+
+                var editWOQueue = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.PersonEditOTQueue, ActionEnum.View).ToString().ToLower();
+                app.common.authorization.disable("@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.QueueId)", editWOQueue);
+                var editWOState = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.PersonEditOTState, ActionEnum.View).ToString().ToLower();
+                app.common.authorization.disable("@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.WorkOrderStatusId)", editWOState);
+                var editWOExternalState = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.PersonEditOTExternalState, ActionEnum.View).ToString().ToLower();
+                app.common.authorization.disable("@nameof(WorkOrderGenericEditViewModel)_@nameof(WorkOrderGenericEditViewModel.ExternalWorkOrderStatusId)", editWOExternalState);                
+            });
+        })(jQuery);
+    </script>
+}

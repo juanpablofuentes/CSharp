@@ -1,0 +1,77 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Assets
+@using Group.Salto.SOM.Web.Models.Assets
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.Controls.Table
+@model SecondaryDetailViewModel
+
+<h4><label asp-localized-key="@AssetsConstants.AssetsWarrantyTitle"></label></h4>
+<div class="row">
+    <div class="col-3">
+        <div class="form-group">
+            <input asp-for="Warranty.Id" type="hidden" />
+            <label asp-localized-key="@AssetsConstants.AssetsWarrantyNumber"></label>
+            <input asp-for="Warranty.IdExternal" class="form-control"/>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card border-primary">
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-localized-key="@AssetsConstants.AssetsWarrantyStandardTitle"></label>
+                    <input asp-for="Warranty.Standard" type="text" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-localized-key="@AssetsConstants.AssetsWarrantyStartDate"></label>
+                    <input asp-for="Warranty.StdStartDate" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-localized-key="@AssetsConstants.AssetsWarrantyEndDate"></label>
+                    <input asp-for="Warranty.StdEndDate" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card border-primary">
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-localized-key="@AssetsConstants.AssetsWarrantyMaintenanceTitle"></label>
+                    <input asp-for="Warranty.Armored" type="text" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-localized-key="@AssetsConstants.AssetsWarrantyStartDate"></label>
+                    <input asp-for="Warranty.BlnStartDate" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-localized-key="@AssetsConstants.AssetsWarrantyEndDate"></label>
+                    <input asp-for="Warranty.BlnEndDate" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card border-primary">
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-localized-key="@AssetsConstants.AssetsWarrantyManufacturerTitle"></label>
+                    <input asp-for="Warranty.Provider" type="text" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-localized-key="@AssetsConstants.AssetsWarrantyStartDate"></label>
+                    <input asp-for="Warranty.ProStartDate" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-localized-key="@AssetsConstants.AssetsWarrantyEndDate"></label>
+                    <input asp-for="Warranty.ProEndDate" type="text" class="form-control">
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+<h4><label asp-localized-key="@AssetsConstants.AssetsHiredServicesTitle"></label></h4>
+<div id="containerDescription">
+    <div id="hiredServicesContainer"></div>
+    <span asp-validation-for="HiredServices" class="text-danger"></span>
+</div>

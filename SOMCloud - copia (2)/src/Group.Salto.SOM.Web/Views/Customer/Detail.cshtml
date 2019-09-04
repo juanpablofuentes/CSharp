@@ -1,0 +1,71 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Customer
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Common.Enums
+@model ResultViewModel<CustomerDetailViewModel>
+@{
+    ViewBag.Title = @Html.GetLocalizedText("CustomerDetailTitle");
+
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<div class="content">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-9">
+            <div class="card card-accent-warning">
+                <div class="card-header">
+                    <h2>@ViewBag.Title</h2>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Update", "Customer", FormMethod.Post, new
+                    { @class = "form-horizontal", role = "form", enctype = "multipart/form-data", id = "customerEditForm" }))
+                    {
+                        <partial name="_CustomerForm" model="Model.Data" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/tabModule.js"></script>
+    <script src="~/js/countryCitySelector.js"></script>
+    <script>
+        (function($) {
+            $(document).ready(function() {
+                var selectedModules =
+                    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.Customer?.ModulesAssigned?.Select(x => new {id = x})));
+                var arrayModules =
+                    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.Modules?.Select(x => new {id = x.Id, text = x.Description})));
+                    list.ModulesSelector.Init({ dataCmbModules: selectedModules, allModules: arrayModules });
+                var countries = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.Countries?.Select(x=>new{key=x.Key, value=x.Value})));
+
+                new countryCitySelector().Init("#countrySelector",
+                    {
+                        countriesToSelect: countries,
+                        countrySelectedProperty: "CountrySelected",
+                        citySelectedProperty: "MunicipalitySelected",
+                        stateSelectedProperty: "StateSelected",
+                        regionSelectedProperty: "RegionSelected",
+                        urlCities: '@Url.Action("GetMunicipalitiesByState", "Country")',
+                        urlRegions: '@Url.Action("GetRegionsByCountry", "Country")',
+                        urlStates: '@Url.Action("GetStatesByRegion", "Country")',
+                        defaultOptionText: '@Html.GetLocalizedText(LocalizationsConstants.DefaultOption)',
+                        selectedCountry: '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.CountrySelected ?? 0))',
+                        selectedCity: '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.MunicipalitySelected ?? 0))',
+                        selectedState: '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.StateSelected ?? 0))',
+                        selectedRegion: '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.RegionSelected ?? 0))',
+                        countryText : '@Html.GetLocalizedText(LocalizationsConstants.Country)',
+                        regionText : '@Html.GetLocalizedText(LocalizationsConstants.Region)',
+                        stateText : '@Html.GetLocalizedText(LocalizationsConstants.State)',
+                        cityText : '@Html.GetLocalizedText(LocalizationsConstants.City)',
+                    });
+
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Customers, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSaveCustomer", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

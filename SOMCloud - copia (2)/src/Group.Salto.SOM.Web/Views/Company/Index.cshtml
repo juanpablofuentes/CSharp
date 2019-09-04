@@ -1,0 +1,122 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Company
+@using Group.Salto.Controls.Table
+@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Company
+@using Group.Salto.SOM.Web.Models.Result
+@model ResultViewModel<CompaniesViewModel>
+
+@{
+    var title = @Html.GetLocalizedText(CompanyConstants.CompanyPageTitle);
+    ViewData["Title"] = title;
+}
+
+<h1 class="page-title">@title</h1>
+@{
+    var table = Html.GetMultiSelectTableFor(Model.Data.Companies, au => au.Id, Model.Data.Filters, TranslationHelper.GetTranslationService());
+    table.SetColumns(m => m.Name, m => m.CostKm);
+    table.SetSortingColumns(m => m.Name, m => m.Name);
+    table.ShowSelectColumn = false;
+    table.TableCssClass = "table table-striped table-hover";
+    table.TableHeaderCssClass = "thead-som";
+
+    table.AddColumnTemplateFor(m => m.Id,
+    @<div class="col-update text-right">
+        <a asp-action="Detail" asp-route-id="@item.RawValue" id="@item.RawValue">
+            <i class="fa fa-pencil fa-lg"></i>
+        </a>
+        <a asp-action="Delete" asp-route-id="@item.RawValue" id="@item.RawValue" class="deleteButton">
+            <i class="fa fa-trash-o fa-lg" fa-lg></i>
+        </a>
+    </div>, "");
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <partial name="_CompanyFilter" model="@Model.Data.Filters" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Data.Companies.Any())
+            {
+                <div class="table-responsive workstation-table">
+                    @table.Render("CompanyGrid")
+                </div>
+                <partial name="_Pager" for="@Model.Data.Filters" />
+            }
+            else
+            {
+                <partial name="_NoRecords" />
+            }
+        </div>
+    </div>
+</div>
+<popup Text="@Html.GetLocalizedText(CompanyConstants.CompanyDeleteMessage)" Id="confirmationModal"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"
+       cancel-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)"></popup>
+<popup Text="@Html.GetLocalizedText(CompanyConstants.CompanyDeleteWithPeopleMessage)" Id="confirmationModalWithPeople"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"
+       cancel-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)"></popup>
+
+@section scripts {
+
+    <script src="~/js/Company/Company.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                app.company.main.Init();
+                MultiTableScript("CompanyGrid");
+                var page = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.Filters));
+                var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.Companies
+                                                        .Items.Select(x=>new {id = x.Id, needConfirmDelete = x.HasPeopleAssigned})));
+                pager.PagerSelector.Init({ PageData: page });
+                $(".deleteButton").on("click",
+                    function (evt) {
+                        evt.preventDefault();
+                        var id = $(this).attr('id');
+                        var item = values.find(o => o.id == id);
+                        if (item != null) {
+                            if (item.needConfirmDelete) {
+                                deleteElement(item.id, "#confirmationModalWithPeople",
+                                                        "#confirmationModalWithPeopleConfirmSave");
+                            } else {
+                                deleteElement(item.id, "#confirmationModal",
+                                    "#confirmationModalConfirmSave");
+                            }
+                        }
+                    });
+                function deleteElement(id, modalId, saveButtonId)
+                {
+                    $(modalId).modal("toggle");
+                    $(saveButtonId).on("click",
+                        function () {
+                            $.ajax({
+                                url: '@Url.Action("Delete", "Company")',
+                                type: 'POST',
+                                dataType: 'json',
+                                cache: false,
+                                data: { id: id },
+                                success: function() {
+                                    $("#btnApplyFilter").trigger("click");
+                                },
+                            });
+                            $(modalId).modal("toggle");
+                        });
+                }
+                $("#confirmationModalConfirmCancel").on("click", function ()
+                {
+                    $("#confirmationModal").modal("toggle");
+                    $("#confirmationModalConfirmSave").off("click");
+                });
+                $("#confirmationModalWithPeopleConfirmCancel").on("click", function () {
+                    $("#confirmationModal").modal("toggle");
+                    $("#confirmationModalWithPeopleConfirmSave").off("click");
+                });
+            });
+        })(jQuery);
+    </script>
+}

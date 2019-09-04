@@ -1,0 +1,60 @@
+﻿@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.SOM.Web.Models.Account
+@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Extensions
+
+@model ResultViewModel<LoginViewModel>
+@{
+    ViewData["Title"] = @Html.GetLocalizedText(AccountConstants.LoginTitle);
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+@section Styles{
+}
+
+<form asp-action="/Login" method="post">
+    <div class="container-login">
+        <div id="block-login" class="bg-som">
+            <div id="login-form" class="card">
+                <div class="card-body">
+                    <div class="login-logo">
+                        <img src="~/images/brand/logo-som.png" id="BrandLogo" alt="logo som" width="200">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="icon-user"></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for=Data.Email placeholder="@Html.GetLocalizedText(AccountConstants.LoginUserNameFormPlaceHolder)" />
+                        <span asp-validation-for="Data.Email" class="text-danger col-12"></span>
+                    </div>
+                    <div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="icon-lock"></i>
+                            </span>
+                        </div>
+                        <input type="password" class="form-control" asp-for=Data.Password placeholder="@Html.GetLocalizedText(AccountConstants.LoginPasswordFormPlaceHolder)">
+                        <span asp-validation-for="Data.Password" class="text-danger col-12"></span>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-primary px-4" value="@Html.GetLocalizedText(AccountConstants.LoginButtonLogin)" />
+                            <a asp-controller="Account" asp-action="ForgotPassword" asp-localized-key="LoginFormLinkForgotPassword" class="btn btn-link float-right"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer id="login-footer" class="bg-som">
+                <div class="text-center">
+                    <i class="som-icon icon-som-logo_som"></i>
+                    <p>Versión 1.0.0</p>
+                    <p asp-localized-key="LoginFooterTextCopyright"></p>
+                </div>
+            </footer>
+        </div>
+        <div id="imgShowcase"></div>
+    </div>
+
+</form>

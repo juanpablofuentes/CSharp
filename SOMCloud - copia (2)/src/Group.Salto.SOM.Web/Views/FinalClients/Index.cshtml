@@ -1,0 +1,90 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.FinalClients
+@using Group.Salto.Common.Constants.Company
+@using Group.Salto.Controls.Table
+@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.FinalClients
+@using Group.Salto.SOM.Web.Models.Result
+@model ResultViewModel<FinalClientsListViewModel>
+
+@{
+    var title = @Html.GetLocalizedText(FinalClientsConstants.FinalClientsPageTitle);
+    ViewData["Title"] = title;
+}
+
+<h1 class="page-title">@title</h1>
+
+@{
+    var table = Html.GetMultiSelectTableFor(Model.Data.FinalClientsList, au => au.Id, Model.Data.Filters, TranslationHelper.GetTranslationService());
+
+    table.SetColumns(m => m.Name, m => m.Nif, m => m.Description, m => m.Phone1, m => m.Fax, m => m.Observations);
+    table.SetSortingColumns(m => m.Name);
+    table.ShowSelectColumn = false;
+    table.TableCssClass = "table table-striped table-hover";
+    table.TableHeaderCssClass = "thead-som";
+
+    table.AddColumnTemplateFor(m => m.Id,
+    @<div class="col-update text-right">
+        <a asp-controller="Sites" asp-action="Index" asp-route-id="@item.RawValue" id="@item.RawValue" class="btn btn-ghost-info">
+            @FinalClientsConstants.FinalClientsSites
+        </a>
+        <a asp-action="Edit" asp-route-id="@item.RawValue" id="@item.RawValue">
+            <i class="fa fa-pencil fa-lg"></i>
+        </a>
+        <a asp-action="Delete" asp-route-id="@item.RawValue" id="@item.RawValue" class="deleteButton">
+            <i class="fa fa-trash-o fa-lg" fa-lg></i>
+        </a>
+    </div>, "");
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <partial name="_FinalClientsFilter" model="@Model.Data.Filters" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Data.FinalClientsList.Any())
+            {
+                <div class="table-responsive workstation-table" id="multigridContainerId">
+                    @table.Render("FinalClientsGrid")
+                </div>
+                <partial name="_Pager" for="@Model.Data.Filters" />
+            }
+            else
+            {
+                <partial name="_NoRecords" />
+            }
+        </div>
+    </div>
+</div>
+
+<popup Text="@Html.GetLocalizedText(FinalClientsConstants.FinalclientsEditErrorMessage)" Id="ErrorModal"
+       show-cancel-button="false"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)">
+</popup>
+
+<popup Text="@Html.GetLocalizedText(FinalClientsConstants.FinalClientsDeleteMessage)" Id="confirmationModalFinalClients"
+       cancel-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"></popup>
+
+@section scripts {
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/FinalClients/FinalClients.js"></script>
+
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                var urlDeleteFinalClients = "@(Url.Action("Delete", "FinalClients"))";
+                app.finalclients.Init(urlDeleteFinalClients);
+                MultiTableScript("FinalClientsGrid");
+                var page = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.Filters));
+                pager.PagerSelector.Init({ PageData: page });
+            });
+        })(jQuery);
+    </script>
+}

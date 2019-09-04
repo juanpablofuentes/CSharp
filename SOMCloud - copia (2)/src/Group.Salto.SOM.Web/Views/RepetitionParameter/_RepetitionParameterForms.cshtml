@@ -1,0 +1,40 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.RepetitionParameter
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.RepetitionParameter
+
+@model RepetitionParameterDetailsViewModel
+
+<div class="form-group row">
+    <label class="col-md-3 col-form-label" asp-for="Days"><span asp-localized-key="@RepetitionParameterConstants.RepetitionParameterGridTheadDays"></span><span class="required">*</span></label>
+    <div class="col-md-9">
+        <input type="text" class="form-control" asp-for="Days">
+        <span asp-validation-for="Days" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-localized-key="@RepetitionParameterConstants.RepetitionParameterGridTheadCalculationType" class="col-md-3 col-form-label"><span class="required">*</span></label>
+    <div class="col-md-9">
+        <select asp-for="IdCalculationType" asp-items="@Model.CalculationTypeItems" rows="9" class="form-control"></select>
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-localized-key="@RepetitionParameterConstants.RepetitionParameterGridTheadDamagedEquipment" class="col-md-3 col-form-label"><span class="required">*</span></label>
+    <div class="col-md-9">
+        <select asp-for="IdDamagedEquipment" asp-items="@Model.DamagedEquipmentItems" rows="9" class="form-control"></select>
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-localized-key="@RepetitionParameterConstants.RepetitionParameterGridTheadDaysTipe" class="col-md-3 col-form-label"><span class="required">*</span></label>
+    <div class="col-md-9">
+        <select asp-for="IdDaystype" asp-items="@Model.DaystypeItemsItems" rows="9" class="form-control"></select>
+    </div>
+</div>
+<div class="form-group row text-right">
+    <div class="col-12">
+        <button type="reset" class="btn btn-outline-danger" onclick="location.href = '@Url.Action("Index", "RepetitionParameter")'">
+            <span asp-localized-key="ActionsDetailsBtnCancel"></span>
+        </button>
+        <input type="submit" class="btn btn-success" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+    </div>
+</div>

@@ -1,0 +1,157 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.WorkOrder
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.WorkOrder
+@model WorkOrderFilterGridViewModel
+
+<div>
+    <partial model="@Model.FilterHeader" name="_FilterHeader" />
+    <div class="collapse in" id="filterWorkOrder">
+        <partial model="Model" name="_PagerHiddens" />
+        <partial model="Model" name="_MultiTableHiddens" />
+        <input asp-for="WorkOrderSearch.SearchString" type="hidden" />
+        <input asp-for="WorkOrderSearch.SearchType" type="hidden" />
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <div class="row">
+                    <div class="col-12 col-sm-4">
+                        <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterId"></span></label>
+                        <input asp-for="WorkOrderId" class="form-control input-theme-sm" placeholder="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterId)"
+                               data-filter="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterId)" />
+                    </div>
+
+                    <div class="col-12 col-sm-4">
+                        <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterInternalIdentifier"></span></label>
+                        <input asp-for="InternalIdentifier" class="form-control input-theme-sm" placeholder="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterInternalIdentifier)"
+                               data-filter="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterInternalIdentifier)" />
+                    </div>
+
+                    <div class="col-12 col-sm-4">
+                        <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterSerialNumber"></span></label>
+                        <input asp-for="SerialNumber" class="form-control input-theme-sm" placeholder="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterSerialNumber)"
+                               data-filter="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterSerialNumber)" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-4">
+                        <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterLocationCode"></span></label>
+                        <input asp-for="LocationCode" class="form-control input-theme-sm" placeholder="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterLocationCode)"
+                               data-filter="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterLocationCode)" />
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterResolutionDateSla"></span></label>
+                        <input asp-for="ResolutionDateSla" class="form-control input-theme-sm" placeholder="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterResolutionDateSla)"
+                               data-filter="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterResolutionDateSla)" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <div class="row">
+                    <div class="col-12 col-sm-4">
+                        <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterCreationDate"></span>&nbsp;</label>
+                        <input asp-for="CreationDate" type="text" class="form-control" autocomplete="off"
+                               data-filter="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterCreationDate)" />
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterCreationDateStartDate"></span>&nbsp;</label>
+                        <input asp-for="CreationStartDate" type="text" class="form-control" autocomplete="off"
+                               data-filter="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterCreationDateStartDate)" />
+                    </div>
+
+                    <div class="col-12 col-sm-4">
+                        <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterCreationDateEndDate"></span>&nbsp;</label>
+                        <input asp-for="CreationEndDate" type="text" class="form-control" autocomplete="off"
+                               data-filter="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterCreationDateEndDate)" />
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-4">
+                        <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterActionDate"></span>&nbsp;</label>
+                        <input asp-for="ActionDateDate" type="text" class="form-control" autocomplete="off"
+                               data-filter="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterActionDate)" />
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterActionDateStartDate"></span>&nbsp;</label>
+                        <input asp-for="ActionDateStartDate" type="text" class="form-control" autocomplete="off"
+                               data-filter="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterActionDateStartDate)" />
+                    </div>
+
+                    <div class="col-12 col-sm-4">
+                        <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterActionDateEndDate"></span>&nbsp;</label>
+                        <input asp-for="ActionDateEndDate" type="text" class="form-control" autocomplete="off"
+                               data-filter="@Html.GetLocalizedText(WorkOrderConstants.WorkOrderFilterActionDateStartDate)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center">
+                    <a class="collapseAdvancedFilter" data-toggle="collapse" href="#collapseAdvancedFilter" role="button" aria-expanded="false" aria-controls="collapseAdvancedFilter">
+                        <i class="fa fa-chevron-down"></i> Advanced Filter
+                    </a>
+                </div>
+                <div class="mt-2 collapse" id="collapseAdvancedFilter">
+                    <div class="card card-body">
+                        <div class="row">
+                            <div class="col-12 col-sm-3">
+                                <div id="containerProject">
+                                    <label class="font-weight-bold">
+                                        <span asp-localized-key="@WorkOrderConstants.WorkOrderFilterProject"></span>
+                                    </label>
+                                    <div id="projectContainer"></div>
+                                </div>
+                                <div id="containerResponsibles">
+                                    <label class="font-weight-bold">
+                                        <span class="card-title" asp-localized-key="@WorkOrderConstants.WorkOrderFilterResponsable"></span>
+                                    </label>
+                                    <div id="ResponsiblesContainer"></div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-3">
+                                <div id="containerWorOrderCategory">
+                                    <label class="font-weight-bold">
+                                        <span class="card-title" asp-localized-key="@WorkOrderConstants.WorkOrderFilterWOCategory"></span>
+                                    </label>
+                                    <div id="worOrderCategoryContainer"></div>
+                                </div>
+                                <div id="containerStates">
+                                    <label class="font-weight-bold">
+                                        <span class="card-title" asp-localized-key="@WorkOrderConstants.WorkOrderFilterState"></span>
+                                    </label>
+                                    <div id="StatesContainer"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-3">
+                                <div class="form-group">
+                                    <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterStatus"></span></label>
+                                    <partial name="_MultiSelectControl" for="WorkOrderStatus" />
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-3">
+                                <div class="form-group">
+                                    <label><span asp-localized-key="@WorkOrderConstants.WorkOrderFilterQueue"></span></label>
+                                    <partial name="_MultiSelectControl" for="WorkOrderQueue" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <hr />
+                <div class="pull-right">
+                    <button type="button" class="btn btn-outline-danger" id="btnClear" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                    <button type="button" class="btn btn-primary" id="btnApplyFilter" name="btnApplyFilter" asp-localized-key="@LocalizationsConstants.ApplyFilter" onclick="app.workorderfilter.Search()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

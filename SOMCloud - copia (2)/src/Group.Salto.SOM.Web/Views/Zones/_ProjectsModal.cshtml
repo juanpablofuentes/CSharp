@@ -1,0 +1,37 @@
+﻿@using Group.Salto.Common.Constants.Model
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Zones
+@using Group.Salto.Common.Constants.Project
+@using Group.Salto.SOM.Web.Models.ZoneProject
+
+@model ZoneProjectViewModel
+<div class="modal fade" id="ProjectModal" tabindex="-1" style="display:none;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="ProjectForm" name="ProjectForm" asp-controller="Zones" asp-action="Project">
+                    <input id="IsValid" name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label asp-localized-key="@ZonesConstants.ZonesProjectText" class="col-md-3 col-form-label"></label>
+                                <select asp-for="ProjectId" asp-items="@Model.ProjectsList"  rows="9" class="form-control"></select>
+                                <input id="FinalId" asp-for="ProjectId" type="hidden" />
+                                <input asp-for="ProjectName" type="hidden" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <input asp-for="ZoneProjectId" type="hidden" readonly="readonly" />
+                    <input asp-for="ZoneId" type="hidden" value="@Model.ZoneId" readonly="readonly" />
+                    <script src="~/js/Zones/ZonesProjectModal.js"></script>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="ProjectConfirmCancel" class="btn btn-outline-danger" type="button" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.CancelText)</button>
+                <button id="ProjectConfirmSave" class="btn btn-primary" type="button">@Html.GetLocalizedText(LocalizationsConstants.SaveText)</button>
+            </div>
+        </div>
+    </div>
+</div>

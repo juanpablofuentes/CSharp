@@ -1,0 +1,35 @@
+﻿@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants.Flows
+@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Models.MultiSelect;
+
+<div class="modal fade" id="billingRuleModal" tabindex="-1" style="display:none;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-primary" role="document">
+        <form asp-controller="BillingRule" asp-action="PostBillingRule" method="post" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><span asp-localized-key="@FlowsConstants.FlowsBillingRuleTitle"></span></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="billingrule-rule-id" type="hidden" />
+                    <input id="billingrule-rule-task" type="hidden" />
+                    <div class="form-group">
+                        <label asp-localized-key="@FlowsConstants.FlowsBillingRuleCondition"></label>
+                        <textarea id="billingrule-rule-condition" class="form-control" rows="2" ></textarea>
+                    </div>
+                    <div class="form-group">                        
+                        <label asp-localized-key="@FlowsConstants.FlowsBillingRuleERPSystem"></label>
+                        <select id="billingrule-rule-erpsystems" class="form-control"></select>                            
+                    </div>                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.Close)</button>
+                        <button type="button" id="billing-rule-submit" class="btn btn-primary" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.Confirm)</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants.Flows
+@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Models.MultiSelect;
+
+@model MultiSelectViewModel
+
+<div class="modal fade" id="literalModal" tabindex="-1" style="display:none;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-primary" role="document">
+        <form asp-controller="LiteralPrecondition" asp-action="PostLiteral" method="post" class="form-horizontal">
+            <input id="literalPreconditionId" value="0" type="hidden" />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><span asp-localized-key="@FlowsConstants.FlowsLiteralModalTitle"></span></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <select id="precondition-combo-types" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <partial name="_MultiSelectControl" for="@Model" />
+                        </div>
+                    </div>
+                    <div id="boolean-literalValue" class="col">
+                        <label class="switch switch-som switch-label switch-pill switch-primary">
+                            <input id="switch-value" type="checkbox" class="switch-input">
+                            <span for="switch-value" class="switch-slider" data-checked="@Html.GetLocalizedText(LocalizationsConstants.IsActive)" data-unchecked="@Html.GetLocalizedText(LocalizationsConstants.Disabled)"></span>
+                        </label>
+                    </div>
+                    <div id="data-literalValue" class="col d-none">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <select id="data-comparisonOperator" class="custom-select">
+                                    <option value="MajorQue">@FlowsConstants.FlowsComparisonOperatorGreaterThan</option>
+                                    <option value="MenorQue">@FlowsConstants.FlowsComparisonOperatorLessThan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-3 text-right">
+                                <span asp-localized-key="@FlowsConstants.FlowsSystemDate"></span>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <input id="data-value" type="number" class="form-control" placeholder="number" aria-label="number" aria-describedby="basic-addon">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon"><span asp-localized-key="@FlowsConstants.FlowsMinutes"></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.Close)</button>
+                        <button type="button" class="btn btn-primary" onclick="app.modalControl.PostModalData()" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.Confirm)</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Items
+@using Group.Salto.SOM.Web.Models.Items
+@using Group.Salto.SOM.Web.Extensions
+@model SerialNumbersTrackingViewModel
+
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <h4><label asp-localized-key="@ItemsConstants.ItemsDetailsSerialTitle"></label></h4>
+        <div id="containerDescription">
+            <div id="ItemsSerialNumbersContainer"></div>
+            <span asp-validation-for="SerialNumbers" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        @* TODO add attributes *@
+    </div>
+</div>

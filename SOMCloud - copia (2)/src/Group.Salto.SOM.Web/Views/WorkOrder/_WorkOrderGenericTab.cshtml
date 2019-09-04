@@ -1,0 +1,38 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.WorkOrder
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.SOM.Web.Models.WorkOrder;
+@model WorkOrderEditViewModel
+
+@{
+    string title = @Html.GetLocalizedText(WorkOrderConstants.WorkOrderEditPageTitle);
+    ViewData["Title"] = title;
+}
+
+<div class="row">
+    <div class="col-12">
+        <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+            <li class="nav-item project-tab">
+                <a class="nav-link active" id="nav-generalinfo-tab" data-toggle="tab" href="#nav-generalinfo" role="tab" aria-controls="nav-generalinfo" aria-selected="true">@Html.GetLocalizedText(WorkOrderConstants.WorkOrderGeneralInfoTab)</a>
+            </li>
+            <li class="nav-item project-tab">
+                <a class="nav-link" id="nav-Others-tab" data-toggle="tab" href="#nav-Others" role="tab" aria-controls="nav-Others" aria-selected="true">@Html.GetLocalizedText(WorkOrderConstants.WorkOrderOthersTab)</a>
+            </li>
+            <li class="nav-item project-tab">
+                <a class="nav-link project-tab" id="nav-temporalization-tab" data-toggle="tab" href="#nav-temporalization" role="tab" aria-controls="nav-temporalization" aria-selected="false">@Html.GetLocalizedText(WorkOrderConstants.WorkOrderTemporalizationTab)</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-generalinfo" role="tabpanel" aria-labelledby="nav-generalinfo-tab">
+                <partial name="_GeneralInformationForm" for="WorkOrderGenericEditViewModel" />
+            </div>
+            <div class="tab-pane fade" id="nav-Others" role="tabpanel" aria-labelledby="nav-Others-tab">
+                <partial name="_OthersForm" for="WorkOrderGenericEditViewModel" />
+            </div>
+            <div class="tab-pane fade" id="nav-temporalization" role="tabpanel" aria-labelledby="nav-temporalization-tab">
+                <partial name="_TemporalizationForm" for="WorkOrderGenericEditViewModel" />
+            </div>
+        </div>
+    </div>
+</div>

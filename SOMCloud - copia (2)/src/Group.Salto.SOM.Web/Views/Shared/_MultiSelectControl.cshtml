@@ -1,0 +1,55 @@
+﻿@using Group.Salto.SOM.Web.Models.MultiSelect
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants
+
+@model MultiSelectViewModel
+
+<input asp-for="Name" type="hidden" />
+
+<div id="@Model.Name" class="custom-multiselect">
+
+    @*TODO: no modificar estructura id*@
+    <div id="Container_@Model.Name" class="custom-multiselect-options-container">
+
+        @if (Model.Items != null)
+        {
+            @for (var i = 0; i < Model.Items.Count(); i++)
+            {
+                <div class="custom-control custom-checkbox">
+                    <input asp-for="Items[i].IsChecked" type="checkbox" onclick="app.multiselect.evalShowMatches('@Model.Name')" class="custom-control-input" />
+                    <label asp-for="Items[i].IsChecked" class="custom-control-label">@Model.Items[i].LabelName</label>
+                    <input asp-for="Items[i].Value" type="hidden" />
+                    <input asp-for="Items[i].LabelName" type="hidden" />
+                </div>
+            }
+        }
+
+    </div>
+
+    <div class="form-inline">
+        <div class="form-group">
+            <div class="btn btn-light py-1 px-2">
+                <div class="custom-control custom-checkbox">
+                    <input id="CheckBoxId_@Model.Name" type="checkbox" class="custom-control-input showmatches" onclick="app.multiselect.selectAll('@Model.Name')">
+                    <label for="CheckBoxId_@Model.Name" class="custom-control-label p-0">@Html.GetLocalizedText(LocalizationsConstants.SelectAll)</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group mx-2">
+            <a href="javascript:void(0);" onclick="app.multiselect.refresh('@Model.Name')" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="@Html.GetLocalizedText(LocalizationsConstants.RefreshSelected)">
+                <i class="fa fa-refresh fa-lg"></i>
+            </a>
+        </div>
+        <div class="form-group">
+            <a id="onlySelected" class="btn btn-light" href="javascript:void(0);" onclick="app.multiselect.onlySelected('@Model.Name')" data-toggle="tooltip" data-placement="top" title="@Html.GetLocalizedText(LocalizationsConstants.OnlySelected)">
+                <i class="fa fa-eye fa-lg"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="row my-2">
+        <div class="col-12 pl-0">
+            <input type="text" id="InputId_@Model.Name" class="form-control" placeholder="@Html.GetLocalizedText(LocalizationsConstants.Search)" onkeyup="app.multiselect.updateShownOptions('@Model.Name')">
+        </div>
+    </div>
+</div>

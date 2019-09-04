@@ -1,0 +1,268 @@
+﻿.dhx_cal_light.dhx_cal_light_wide.dhx_cal_light_rec {
+    top: 10% !important;
+    z-index: 1020;
+}
+
+.dhtmlx_modal_box.dhtmlx-confirm {
+    z-index: 1022;
+}
+
+.dhx_now .dhx_month_body, .dhx_now .dhx_month_head {
+    background-color: #e1f4ff;
+}
+
+.dhx_year_box .dhx_year_grid .dhx_year_body table tbody .dhx_before, .dhx_year_box .dhx_year_grid .dhx_year_body table tbody td {
+    cursor: pointer;
+}
+
+.dhx_scale_holder_now .dhx_body {
+    color: #444444;
+}
+
+.dhx_cal_light_rec.dhx_cal_light_wide {
+    width: 730px !important;
+}
+
+.dhx_cal_light_wide .dhx_cal_lsection {
+    width: 125px !important;
+}
+
+.dhx_repeat_left, .dhx_repeat_center, .dhx_repeat_right {
+    width: 100% !important;
+}
+
+    .dhx_repeat_right label:nth-child(3) {
+        width: auto !important;
+    }
+
+    .dhx_repeat_center #dhx_repeat_month label {
+        width: inherit !important;
+    }
+
+.dhx_form_repeat {
+    margin-top: 50px;
+}
+
+.dhx_cal_light_wide .dhx_section_time {
+    padding-left: 145px !important;
+}
+
+.live-demo-container {
+    overflow-x: auto;
+}
+
+.dhxwins_vp_material {
+    overflow: visible !important;
+}
+/*Menu contectual - people calendar*/
+div#calendarAccordion {
+    position: relative;
+    min-height: 70vh;
+    height: 100%;
+}
+
+.events {
+    position: relative;
+    width: 330px;
+    min-height: 350px;
+    margin: 0 auto;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
+}
+
+div.dhx_list {
+    overflow: auto !important;
+}
+
+div.dhx_list_item {
+    font-family: Roboto, Arial, Helvetica;
+    font-size: 14px;
+    line-height: 23px;
+    color: #404040;
+}
+
+.dhx_list .dhx_list_default_item,
+.dhx_list .dhx_list_default_item_selected {
+    border-right-width: 0px;
+}
+
+div.dhx_list_item div.single_item {
+    position: relative;
+    padding-left: 115px;
+    padding-top: 20px;
+}
+
+div.dhx_list_item div.info_item {
+    position: relative;
+    padding-left: 115px;
+    padding-top: 10px;
+}
+
+div.dhx_list_item span.item_name {
+    color: #3399cc;
+}
+
+div.dhx_list_item img.item_pic {
+    position: absolute;
+    left: 8px;
+    top: 4px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+div.dhx_list_item div.info_item img.item_pic {
+    top: 14px;
+}
+/*header menu contextual*/
+.cell_hdr_text {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: auto 1fr;
+    grid-template-columns: auto 1fr;
+    justify-items: start;
+}
+
+.cell_hdr_icons > i,
+.cell_hdr_icons > a {
+    width: 30px;
+}
+
+.cell_hdr_icons .som-colored-square {
+    padding: 5px;
+}
+
+.dhxacc_base_material div.dhx_cell_acc div.dhx_cell_hdr .cell_hdr_icons i {
+    position: relative;
+    left: 0;
+    width: auto;
+    height: auto;
+    line-height: initial;
+    text-align: center;
+    cursor: pointer;
+    font-size: initial;
+    color: inherit;
+    margin: 0 0.313rem;
+}
+
+.cell_hdr_title {
+    padding-left: 1.25rem;
+}
+
+div.dhx_year_tooltip {
+    background: #f1f1f1 !important;
+}
+
+    div.dhx_year_tooltip .dhx_tooltip_line {
+        padding: 2px 0 2px 48px !important;
+    }
+
+        div.dhx_year_tooltip .dhx_tooltip_line .dhx_event_icon.icon_details {
+            top: -8px !important;
+        }
+
+.dhx_tooltip_date {
+    padding-right: 5px;
+}
+/*year view - event*/
+.icon_details_default {
+    background: url(imgs_dhx_material/agenda-calendar.svg) center center no-repeat !important;
+}
+
+.icon_details_white {
+    background: url(imgs_dhx_material/agenda-calendar-white.svg) center center no-repeat !important;
+    width: 22px !important;
+    left: 13px !important;
+}
+
+/*modal  dhtmlx_modal_box dhtmlx-alert*/
+.dhtmlx_popup_controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: space-between;
+}
+
+.dhtmlx_popup_button {
+    text-align: center;
+    white-space: nowrap;
+    width: auto;
+}
+
+    .dhtmlx_popup_button:hover {
+        border: 1px solid #0288d1;
+    }
+
+    .dhtmlx_popup_button.dhtmlx_ok_button div {
+        background-color: transparent;
+        border: 0;
+    }
+
+    .dhx_save_btn_set,
+    .dhtmlx_popup_button.dhtmlx_ok_button {
+        padding: .375rem .75rem;
+        color: #fff;
+        border: 1px solid #28a745;
+        background-color: #28a745;
+    }
+
+        .dhx_save_btn_set:hover,
+        .dhtmlx_popup_button.dhtmlx_ok_button:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+            .dhx_save_btn_set:hover div,
+            .dhtmlx_popup_button.dhtmlx_ok_button:hover div {
+                background-color: transparent;
+                border-color: transparent;
+                transition: all .1s ease-in-out;
+            }
+
+.dhx_delete_btn_set,
+.dhtmlx_modal_box .dhtmlx_popup_controls .dhtmlx_popup_button.dhtmlx_cancel_button {
+    padding: .375rem .75rem;
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+    .dhx_delete_btn_set:hover,
+    .dhtmlx_modal_box .dhtmlx_popup_controls .dhtmlx_popup_button.dhtmlx_cancel_button:hover {
+        color: #fff;
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+.dhtmlx_popup_button.dhtmlx_cancel_button div {
+    background-color: transparent;
+    border-color: transparent;
+    color: #dc3545;
+}
+
+    .dhtmlx_popup_button.dhtmlx_cancel_button div:active {
+        background-color: transparent;
+        border-color: none;
+        outline: 0;
+    }
+
+.dhtmlx_popup_button.dhtmlx_cancel_button:hover div {
+    color: white;
+}
+
+.dhx_cancel_btn_set {
+    padding: .375rem .75rem;
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+
+    .dhx_cancel_btn_set:hover {
+        color: #fff;
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+@media (max-width: 992px) {
+    .dhx_cal_light.dhx_cal_light_wide.dhx_cal_light_rec {
+        top: 20% !important;
+    }
+}

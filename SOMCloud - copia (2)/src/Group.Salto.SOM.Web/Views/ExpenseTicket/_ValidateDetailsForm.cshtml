@@ -1,0 +1,47 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Expense
+@using Group.Salto.Common.Constants.ExpenseTicket
+@using Group.Salto.Common.Constants.Model
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Expense
+
+@model ExpenseDetailsViewModel
+
+
+
+
+@if (Model.ValidateExpenseTicketPending())
+{
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketNoValidation"></span></p>
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketActualStatus" class="mr-2"> </span><span class="font-weight-bold text-warning" asp-localized-key="@ExpenseTicketConstants.ExpenseTicketPendingText"></span></p>
+}
+else if (Model.ValidateExpenseTicketAccepted())
+{
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketText" class="mr-2"> </span><span class="font-weight-bold">@Model.PeopleValidator</span></p>
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketValidationDate" class="mr-2"> </span><span> @Model.ValidationDate</span></p>
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketActualStatus" class="mr-2"> </span><span class="font-weight-bold text-success" asp-localized-key="@ExpenseTicketConstants.ExpenseTicketAcceptedText"></span></p>
+}
+else if (Model.ValidateExpenseTicketPaid())
+{
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketText" class="mr-2"> </span><span class="font-weight-bold">@Model.PeopleValidator</span></p>
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketValidationDate" class="mr-2"> </span><span>@Model.ValidationDate</span></p>
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketActualStatus" class="mr-2"> </span><span class="font-weight-bold text-info" asp-localized-key="@ExpenseTicketConstants.ExpenseTicketPaidText"></span></p>
+}
+else if (Model.ValidateExpenseTicketEscaled())
+{
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketText" class="mr-2"> </span><span class="font-weight-bold">@Model.PeopleValidator</span></p>
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketValidationDate" class="mr-2"> </span><span> @Model.ValidationDate</span></p>
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketActualStatus" class="mr-2"> </span><span class="font-weight-bold" asp-localized-key="@ExpenseTicketConstants.ExpenseTicketPaidText"></span></p>
+}
+else if (Model.ValidateExpenseTicketFinished())
+{
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketText" class="mr-2"> </span><span class="font-weight-bold">@Model.PeopleValidator</span></p>
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketValidationDate" class="mr-2"> </span><span asp-localized-key="@Model.ValidationDate"></span></p>
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketActualStatus"> </span><span class="font-weight-bold text-primary" asp-localized-key="@ExpenseTicketConstants.ExpenseTicketFinishedText"></span></p>
+}
+else if (Model.ValidateExpenseTicketRejected())
+{
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketText" class="mr-2"> </span><span class="font-weight-bold">@Model.PeopleValidator</span></p>
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketValidationDate" class="mr-2"> </span><span>@Model.ValidationDate</span></p>
+    <p class="lead"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketActualStatus" class="mr-2"> </span><span class="font-weight-bold text-danger" asp-localized-key="@ExpenseTicketConstants.ExpenseTicketRejectedText"></span></p>
+}

@@ -1,0 +1,87 @@
+﻿@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Warehouses
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Controls.Table
+@using System;
+@using Group.Salto.Common.Constants.Warehouses
+@using Group.Salto.Common.Constants
+@model ResultViewModel<WarehousesViewModel>
+@{
+    var title = WarehousesConstants.WarehousesIndexTitle;
+    ViewData["Title"] = title;
+}
+
+<h1 class="page-title">@title</h1>
+
+@{
+    var table = Html.GetMultiSelectTableFor(Model.Data.Warehouses, au => au.Id, Model.Data.Filters, TranslationHelper.GetTranslationService());
+    table.SetColumns(m => m.Name, m => m.Code, m => m.ERPReference);
+    table.SetSortingColumns(m => m.Name, m => m.ERPReference);
+    table.ShowSelectColumn = false;
+    table.TableCssClass = "table table-striped table-hover";
+    table.TableHeaderCssClass = "thead-som";
+
+    table.AddColumnTemplateFor(m => m.Id,
+    @<div class="col-update text-right">
+        <a asp-action="Index" asp-controller="WarehouseMovements" asp-route-id="@item.RawValue" id="@item.RawValue">
+            <i class="fa fa-truck fa-lg"></i>
+        </a>
+        <a asp-action="Edit" asp-route-id="@item.RawValue" id="@item.RawValue">
+            <i class="fa fa-pencil fa-lg"></i>
+        </a>
+        <a asp-action="Delete" asp-route-id="@item.RawValue" id="@item.RawValue" class="deleteButton"
+           data-toggle="tooltip" data-placement="top">
+            <i class="fa fa-trash-o fa-lg"></i>
+        </a>
+    </div>, "");
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <partial name="_WarehousesFilter" model="@Model.Data.Filters" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Data.Warehouses.Any())
+            {
+                <div class="table-responsive workstation-table" id="multigridContainerId">
+                    @table.Render("WarehousesGrid")
+                </div>
+                <partial name="_Pager" for="@Model.Data.Filters" />
+            }
+            else
+            {
+                <partial name="_NoRecords" />
+            }
+        </div>
+    </div>
+</div>
+
+<popup Id="ErrorModal"
+       show-cancel-button="false"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)">
+</popup>
+
+<popup Text="@Html.GetLocalizedText(WarehousesConstants.WarehousesDeleteTitle)" Id="confirmationModalWarehouses"
+       cancel-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"></popup>
+
+@section scripts {
+    <script src="~/js/Warehouses/WarehousesList.js"></script>
+    <script src="~/js/Common/config.js"></script>
+
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                var urlDeleteWarehouses = "@(Url.Action("Delete", "Warehouses"))";
+                app.warehouses.Init(urlDeleteWarehouses);
+                MultiTableScript("WarehousesGrid");
+                var page = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.Filters));
+                pager.PagerSelector.Init({ PageData: page });
+            });
+        })(jQuery);
+    </script>
+}

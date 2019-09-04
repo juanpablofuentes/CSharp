@@ -1,0 +1,35 @@
+﻿@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants.Flows
+@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Models.MultiSelect;
+
+<div class="modal fade" id="billingRuleItemModal" tabindex="-1" style="display:none;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-primary" role="document">
+        <form asp-controller="BillingRuleItem" asp-action="PostBillingRuleItem" method="post" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><span asp-localized-key="@FlowsConstants.FlowsBillingRuleItemTitle"></span></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="billingruleitem-item-id" type="hidden" />
+                    <input id="billingruleitem-rule-id" type="hidden" />
+                    <div class="form-group">
+                        <label asp-localized-key="@FlowsConstants.FlowsBillingRuleItemName"></label>
+                        <div id="billingruleitem-item-name"></div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-localized-key="@FlowsConstants.FlowsBillingRuleItemUnits"></label>
+                        <textarea id="billingruleitem-item-units" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.Close)</button>
+                        <button type="button" id="billingruleitem-btn-submit" class="btn btn-primary" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.Confirm)</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

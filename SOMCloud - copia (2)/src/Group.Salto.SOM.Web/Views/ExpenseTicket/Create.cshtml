@@ -1,0 +1,58 @@
+﻿@using Group.Salto.SOM.Web.Models.Expense;
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Extensions;
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Constants.Expense;
+
+@model ResultViewModel<ExpenseDetailsViewModel>
+
+@{
+    ViewData["Title"] = @Html.GetLocalizedText(ExpenseConstants.ExpenseCreateTitle);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-9 col-lg-6">
+        <div class="card card-accent-info">
+            <div class="card-header">
+                <h2 asp-localized-key="ExpenseCreateTitle"></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="ExpenseTicket" asp-action="Create" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <partial name="_ExpenseTicketForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/js/Expense/ExpenseCalendar.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                app.expensecalendar.Init();
+                if ($('select[name="ExpenseTypeId"]').val() == 2) {
+                    $('[id="ImportInput"] label').text("@Html.GetLocalizedText(ExpenseConstants.ExpenseGridTheadKilometer)");
+                    $('[id="ImportInput"] input').attr("placeholder", "@Html.GetLocalizedText(ExpenseConstants.ExpenseGridTheadKilometer)");
+
+                } else {
+                    $('[id="ImportInput"] label').text("@Html.GetLocalizedText(ExpenseConstants.ExpenseGridTheadAmount)");
+                    $('[id="ImportInput"] input').attr("placeholder", "@Html.GetLocalizedText(ExpenseConstants.ExpenseGridTheadAmount)");
+                }
+            });
+            $('select[name="ExpenseTypeId"]').change(function() {
+                if ($('select[name="ExpenseTypeId"]').val() == 2) {
+                    $('[id="ImportInput"] label').text("@Html.GetLocalizedText(ExpenseConstants.ExpenseGridTheadKilometer)");
+                    $('[id="ImportInput"] input').attr("placeholder", "@Html.GetLocalizedText(ExpenseConstants.ExpenseGridTheadKilometer)");
+                } else {
+                    $('[id="ImportInput"] label').text("@Html.GetLocalizedText(ExpenseConstants.ExpenseGridTheadAmount)");
+                    $('[id="ImportInput"] input').attr("placeholder", "@Html.GetLocalizedText(ExpenseConstants.ExpenseGridTheadAmount)");
+                }
+            });
+        })(jQuery);
+    </script>
+}
+@section Styles{
+    <link href="~/lib/dhtmlx/suite/codebase/dhtmlx.css" rel="stylesheet" />
+}

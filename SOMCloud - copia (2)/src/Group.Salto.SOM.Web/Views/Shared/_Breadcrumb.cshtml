@@ -1,0 +1,14 @@
+﻿@using Group.Salto.SOM.Web.Models.Result
+@model IResultBreadcrumbViewModel
+<!-- Breadcrumb-->
+@if (Model?.Breadcrumbs != null && Model.Breadcrumbs.Any())
+{
+    @foreach (BreadcrumbViewModel item in Model.Breadcrumbs)
+    {
+        <li class="breadcrumb-item">@item.Label</li>
+    }
+}
+else
+{
+    <li class="breadcrumb-item"></li>
+}

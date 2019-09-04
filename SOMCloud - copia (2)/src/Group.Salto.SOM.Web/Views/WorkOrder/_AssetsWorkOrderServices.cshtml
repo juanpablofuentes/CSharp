@@ -1,0 +1,76 @@
+﻿@using Group.Salto.SOM.Web.Models.WorkOrder
+@using Group.Salto.Common.Constants.WorkOrder
+@using Group.Salto.SOM.Web.Extensions
+@model AssetsDetailWorkOrderServicesViewModel
+
+<div id="assetServices-container">
+    <div class="row">
+        <div id="assetServices" class="col-12 p-0">
+            <div id="aObservation" class="som-panel">
+                <div class="som-panel-title bg-info">
+                    <span asp-localized-key="@WorkOrderConstants.WorkOrderAssetsObservations"></span>
+                </div>
+                <div class="som-panel-text">
+                    <p>@Model.Observations</p>
+                </div>
+            </div>
+            <div id="aRepair" class="som-panel">
+                <div class="som-panel-title bg-info">
+                    <span asp-localized-key="@WorkOrderConstants.WorkOrderAssetsRepair"></span>
+                </div>
+                <div class="som-panel-text">
+                    <p>@Model.Repair</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @foreach (var service in Model.Service)
+    {
+        <div id="service-@service.ServiceId" class="border border-info mb-3">
+            <div class="row">
+                <div class="col-12 p-0 form-inline align-items-start mb-3">
+                    <div id="aService" class="col-3 p-0 som-panel">
+                        <div class="som-panel-title bg-info">
+                            <span asp-localized-key="@WorkOrderConstants.WorkOrderAssetsServiceId"></span>
+                        </div>
+                        <div class="som-panel-text">
+                            <p>@service.ServiceId</p>
+                        </div>
+                    </div>
+                    <div id="aStatus" class="col p-0 som-panel">
+                        <div class="som-panel-title bg-info">
+                            <span asp-localized-key="@WorkOrderConstants.WorkOrderAssetsServiceStatus"></span>
+                        </div>
+                        <div class="som-panel-text">
+                            <p>
+                                @service.Status
+                            </p>
+                            <div class="text-center">
+                                <span class="label round @Model.FormStateClass(service.FormState)">@Html.GetLocalizedText(service.FormState)</span>
+                                @if (!string.IsNullOrEmpty(service.DeliveryNumber))
+                                {
+                                    <span class="label round">@service.DeliveryNumber</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div id="aResponsibleName" class="col p-0 som-panel">
+                        <div class="som-panel-title bg-info">
+                            <span asp-localized-key="@WorkOrderConstants.WorkOrderAssetsServiceResponsableName"></span>
+                        </div>
+                        <div class="som-panel-text">
+                            <p>@service.ResponsibleName</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <partial name="_ExtraFieldsValuesForm" model="service.ExtraFieldValues" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,22 @@
+﻿@using Group.Salto.Common.Constants.ExpenseTicket
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Models.Expense
+
+@model ExpenseDetailsViewModel
+
+<input id="IsValid" name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+
+<div class="row">
+    <div class="col-12">
+        <div class="form-group">
+            <partial name="_ExpenseFields" model="Model" />               
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 text-center">
+        <button id="ExpenseTicketConfirmCancel" class="btn btn-outline-danger" type="button" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.CancelText)</button>
+        <input type="submit" class="btn btn-primary" asp-for="NextStatus" value="@ExpenseTicketConstants.ExpenseTicketFinished">
+        </div>
+</div>

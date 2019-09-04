@@ -1,0 +1,38 @@
+﻿@using Group.Salto.Common.Constants.Assets
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Models.Assets
+
+@model HiredServicesViewModel
+<div class="modal fade" id="HiredServicesModal" tabindex="-1" style="display:none;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="HiredServicesForm" name="HiredServicesForm" asp-controller="HiredServices" asp-action="HiredServices">
+                    <input id="IsValid" name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <div class="row">
+                        <input type="hidden" asp-for="HiredServicesId" class="form-control" readonly="readonly" />
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label><span asp-localized-key="@AssetsConstants.AssetsHiredServicesName"></span><span class="required">*</span></label>
+                                <input asp-for="HiredServicesName" class="form-control" placeholder="@Html.GetLocalizedText(AssetsConstants.AssetsHiredServicesName)" />
+                                <span asp-validation-for="HiredServicesName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label><span asp-localized-key="@AssetsConstants.AssetsHiredServicesObservations"></span></label>
+                                <input asp-for="HiredServicesObservations" class="form-control" placeholder="@Html.GetLocalizedText(AssetsConstants.AssetsHiredServicesObservations)" />
+                                <span asp-validation-for="HiredServicesObservations" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="HiredServicesConfirmCancel" class="btn btn-outline-danger" type="button" data-dismiss="modal">@Html.GetLocalizedText(LocalizationsConstants.CancelText)</button>
+                <button id="HiredServicesConfirmSave" class="btn btn-primary" type="button">@Html.GetLocalizedText(LocalizationsConstants.SaveText)</button>
+            </div>
+        </div>
+    </div>
+</div>

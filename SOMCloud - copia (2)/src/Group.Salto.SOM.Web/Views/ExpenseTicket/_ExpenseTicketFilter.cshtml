@@ -1,0 +1,52 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.ExpenseTicket
+@using Group.Salto.Common.Constants.Actions
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.ExpenseTicket
+
+@model ExpenseTicketFilterViewModel
+
+<div>
+    <partial model="@Model.FilterHeader" name="_FilterHeader" />
+    <div class="collapse in" id="filterExpenseTicket">
+        <form asp-action="Filter" asp-controller="ExpenseTicket" method="post" id="filter-form" class="form-control">
+            <partial model="Model" name="_PagerHiddens" />
+            <partial model="Model" name="_MultiTableHiddens" />
+            <div class="row">
+                <div class="col-12 col-sm-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketEditInitialDateForm"></span></label>
+                        <input id="InitialDate" asp-for="InitialDate" type="text" class="form-control" placeholder="@Html.GetLocalizedText(ExpenseTicketConstants.ExpenseTicketEditInitialDateForm)">
+                        <span asp-validation-for="InitialDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold"><span asp-localized-key="@ExpenseTicketConstants.ExpenseTicketEditFinalDateForm"></span></label>
+                        <input id="FinalDate" asp-for="FinalDate" type="text" class="form-control" placeholder="@Html.GetLocalizedText(ExpenseTicketConstants.ExpenseTicketEditFinalDateForm)" />
+                        <span asp-validation-for="FinalDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label class="font-weight-bold" asp-localized-key="@ExpenseTicketConstants.ExpenseTicketPeopleTitle"></label>
+                    <div id="container">
+                        <div id="peopleContainer"></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <label class="font-weight-bold" asp-localized-key="@ExpenseTicketConstants.ExpenseTicketStatesTitle"></label>
+                    <div id="container">
+                        <div id="statesContainer"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <br>
+                        <button formaction="ResetFilter" type="button" id="btnClear" class="btn btn-outline-danger" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                        <button formaction="Filter" id="btnApplyFilter" class="btn btn-primary" name="btnApplyFilter" asp-localized-key="@LocalizationsConstants.ApplyFilter" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

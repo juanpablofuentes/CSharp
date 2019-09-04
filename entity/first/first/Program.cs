@@ -10,7 +10,8 @@ namespace first
     {
         static void Main(string[] args)
         {
-            buscarAlumnosSQL("Alum");
+            escuelaContext context = new escuelaContext();
+            var lista = from al in context.Alumno where true;
         }
         static void cursoAlumnos(string nombre, List<int> alumnos)
         {
@@ -38,8 +39,8 @@ namespace first
         {
             using (var context = new escuelaContext())
             {
-                var res = context.Alumno.FromSql("select * from alumno where nombre like '%"+nombre+"%'");
-                   
+                var res = context.Alumno.FromSql("select * from alumno where nombre like '%" + nombre + "%'");
+
                 foreach (Alumno al in res)
                 {
                     Console.WriteLine(al.Nombre);
@@ -50,7 +51,7 @@ namespace first
         {
             using (var context = new escuelaContext())
             {
-                var res = context.Alumno.Where(el => el.Nombre.Contains("Alumno"))
+                var res = context.Alumno.Where(el => el.Nombre.Contains(nombre))
                      .Include(el => el.Curso);
                 foreach (Alumno al in res)
                 {

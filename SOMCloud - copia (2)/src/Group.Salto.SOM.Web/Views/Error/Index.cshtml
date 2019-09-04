@@ -1,0 +1,9 @@
+﻿@using Group.Salto.SOM.Web.Models.Result
+@model ResultViewModel<ErrorViewModel>
+
+<div class="content">
+    <div class="content-error">
+        <span class="error-code">@Model.Data.ErrorCode</span>
+        <span class="error-message">@Model.Data.Message</span>
+    </div>
+</div>

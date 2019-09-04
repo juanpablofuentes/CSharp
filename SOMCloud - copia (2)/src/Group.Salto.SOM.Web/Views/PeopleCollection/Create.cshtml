@@ -1,0 +1,72 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.PeopleCollection
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.PeopleCollection
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Common.Enums
+@model ResultViewModel<PeopleCollectionDetailViewModel>
+@{
+    var title = @Html.GetLocalizedText(PeopleCollectionConstants.PeopleCollectionCreateTitle);
+    ViewData["Title"] = title;
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-9">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="@PeopleCollectionConstants.PeopleCollectionCreateTitle"></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="PeopleCollection" asp-action="Create" method="post" class="form-horizontal">
+                    <partial name="_PeopleCollectionForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/AutocompleteControl.js"></script>
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/AutoCompleteListSelector.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/PeopleCollection/peopleCollectionConstants.js"></script>
+    <script src="~/js/PeopleCollection/peopleCollectionDetail.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+                $(document).ready(function () {
+                    var administrators =
+                        @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.PeopleAdministrator));
+                    var peopleSelected =
+                        @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.People));
+                    function getPeopleFilter(text) {
+                        var data = {
+                            QueryType: app.constants.AutoComplete,
+                            QueryTypeParameters: {
+                                Text: text
+                            }
+                        }
+                        return data;
+                    };
+                    var options = {
+                        administratorCombo: {
+                            selectedItems: administrators,
+                            column1Text: '#',
+                            column2Text: '@Html.GetLocalizedText(LocalizationsConstants.FullName)',
+                            getDataMethod: getPeopleFilter
+                        },
+                        peopleCombo: {
+                            selectedItems: peopleSelected,
+                            column1Text: '#',
+                            column2Text: '@Html.GetLocalizedText(LocalizationsConstants.FullName)',
+                        getDataMethod: getPeopleFilter
+                    }
+                };
+                    app.peopleCollection.detail.Init(options);
+                    var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.PeopleGroup, ActionEnum.Create).ToString().ToLower();
+                    app.common.authorization.disable("btnSavePeopleCollection", saveCreate);
+            });
+        })(jQuery);
+    </script>
+}

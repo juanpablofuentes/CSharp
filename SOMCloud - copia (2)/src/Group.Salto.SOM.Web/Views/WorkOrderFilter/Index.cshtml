@@ -1,0 +1,60 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Models.WorkOrderFilter
+@using Group.Salto.Common.Constants.WorkOrderFilter
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result
+@model ResultViewModel<IList<WorkOrderFilterListViewModel>>
+
+<div class="row">
+    <section class="col-3">
+        <partial name="_ViewsList" model="Model.Data" />
+    </section>
+    <main class="col-9" id="viewFilterContainer"></main>
+</div>
+
+<popup Text="@Html.GetLocalizedText(WorkOrderFilterConstants.WorkOrderFilterDeleteMessage)" Id="confirmationModal"
+    submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"
+    cancel-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)"></popup>
+
+@section Styles{
+    <link href="~/css/work-order_custom-views.css" rel="stylesheet" />
+    <link href="~/lib/dhtmlx/suite/codebase/dhtmlx.css" rel="stylesheet" />
+}
+
+@section Modals {
+    
+    <partial name="_ModalEditDates" />
+    <partial name="_ModalEditMultiSelect" />
+}
+
+@section scripts {
+    <script src="~/js/Bundle/Commons.js" asp-append-version="true"></script>
+    <environment include="Development">
+        <script src="~/lib/dhtmlx/suite/sources/dhtmlxCalendar/codebase/dhtmlxcalendar.js"></script>
+        <script src="~/js/MultiSelect.js"></script>
+        <script src="~/js/WorkOrderFilter/WorkOrderFilter.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/js/Bundle/WorkOrderViewsIndex.js" asp-append-version="true"></script>
+    </environment>
+
+    <script language="javascript">
+    (function ($) {
+        $(document).ready(function () {
+            var options = {
+                general: {
+                    urlViewFilters: '@Url.Action("Filters", "WorkOrderFilter")',
+                    urlCreate: '@Url.Action("Create", "WorkOrderFilter")',
+                    urlEdit: '@Url.Action("Edit", "WorkOrderFilter")',
+                    urlDelete: '@(Url.Action("Delete", "WorkOrderFilter"))',
+                    urlMultiSelect: '@Url.Action("MultiSelect", "WorkOrderFilter")',
+                    modalMultiSelect: '@WorkOrderFilterConstants.WorkOrderFilterModalMultiSelect',
+                    dateToolTip: '@Html.GetLocalizedText(@WorkOrderFilterConstants.WorkOrderFilterDateToolTip)'
+                } 
+            };
+            app.WorkOrderFilter.Init(options);
+        });
+    })(jQuery);
+    </script>
+}

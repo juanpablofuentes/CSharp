@@ -1,0 +1,17 @@
+﻿@using Group.Salto.Common.Constants.WorkOrder
+
+<div class="modal fade" id="modalEditForm" tabindex="-1" style="display:none;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><span asp-localized-key="@WorkOrderConstants.WorkOrderFormsEditTitle"></span></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="editForm-placeholder"></div>
+            </div>
+        </div>
+    </div>
+</div>

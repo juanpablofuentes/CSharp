@@ -1,0 +1,93 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Items
+@using Group.Salto.SOM.Web.Models.Items
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.Common.Enums
+@model ResultViewModel<ItemsDetailViewModel>
+@{
+    var title = @Html.GetLocalizedText(ItemsConstants.ItemsCreatePageTitle);
+    ViewData["Title"] = title;
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<h4>@title</h4>
+
+<div class="content">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <form asp-controller="Items" asp-action="Create" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <partial name="_ItemsDetail" model="Model?.Data" />
+                <div class="form-group row">
+                    <div class="col-12 text-right">
+                        <input type="button" onclick="location.href='@Url.Action("Index", "Items")'" value="@Html.GetLocalizedText(LocalizationsConstants.CancelText)" class="btn btn-outline-danger" />
+                        <input type="submit" class="btn btn-success spinner-loader" id="btnSendMessage" name="sendMessage" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Modals {
+    <partial name="_ModalWithImage" />
+}
+
+@section Scripts{
+    <script src="~/js/AutocompleteControl.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/Items/ItemDetails.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+
+                function getFamilyFilter(text) {
+                    var data = {
+                        QueryType: app.constants.AutoComplete,
+                        QueryTypeParameters: {
+                            Text: text
+                        }
+                    }
+                    return data;
+                };
+
+                var familiesSelected = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.GeneralViewModel.Family));
+                var subfamiliesSelected = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.GeneralViewModel.SubFamily));
+
+                var Families = {
+                    hasdefaultItem: familiesSelected == undefined,
+                    value: (familiesSelected == undefined) ? null : familiesSelected.Text,
+                    key: (familiesSelected == undefined) ? null : familiesSelected.Value,
+                    itemIdProperty: 'GeneralViewModel.Family.Value',
+                    itemTextProperty: 'GeneralViewModel.Family.Text',
+                    getDataMethod: getFamilyFilter
+                };
+
+                var SubFamilies = {
+                    hasdefaultItem: subfamiliesSelected == undefined,
+                    value: (subfamiliesSelected == undefined) ? null : subfamiliesSelected.Text,
+                    key: (subfamiliesSelected == undefined) ? null : subfamiliesSelected.Value,
+                    selectedItems: subfamiliesSelected,
+                    itemIdProperty: 'GeneralViewModel.SubFamily.Value',
+                    itemTextProperty: 'GeneralViewModel.SubFamily.Text',
+                    getDataMethod: getFamilyFilter
+                };
+
+                var Mode = false;
+
+                var options = {
+                    Families,
+                    SubFamilies,
+                    Mode
+                }
+
+                app.items.detail.Init(options);
+                var saveCreate = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.Items, ActionEnum.Create).ToString().ToLower();
+		        app.common.authorization.disable("btnSendMessage", saveCreate);
+            });
+        })(jQuery);
+    </script>
+}

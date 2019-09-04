@@ -1,0 +1,46 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.WorkOrderCategoriesCollection
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Models.WorkOrderCategoriesCollection;
+@using Group.Salto.Common.Enums
+
+@model ResultViewModel<WorkOrderCategoriesCollectionBaseViewModel>
+@{
+    var title = @Html.GetLocalizedText(WorkOrderCategoriesCollectionConstants.WorkOrderCategoriesCollectionEditPageTitle);
+    ViewData["Title"] = title;
+
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-9">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2><span asp-localized-key="@WorkOrderCategoriesCollectionConstants.WorkOrderCategoriesCollectionEditPageTitle"></span>&nbsp;<span class="text-muted">#@Model.Data.Id</span></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="WorkOrderCategoriesCollection" asp-action="Edit" method="post" class="form-horizontal">
+                    <partial name="_WorkOrderCategoriesCollectionForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<popup Text="@Html.GetLocalizedText(WorkOrderCategoriesCollectionConstants.WorkOrderCategoriesCollectionCannotDeleteClosingCodeMessage)"
+       Id="confirmationModal"
+       show-cancel-button="false"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"></popup>
+@section scripts {
+    <script src="~/js/Common/validations.js"></script>
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+
+    <script>
+        (function($) {
+            $(document).ready(function() {
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.WOCategoryCollection, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSaveWorkOrderCateoryCollection", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

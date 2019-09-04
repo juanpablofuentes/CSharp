@@ -1,0 +1,11 @@
+﻿@using Group.Salto.SOM.Web.Models.Task
+
+
+<div class="accordion" id="accordionTask">
+    <div class="task">
+        <div id="@Model.Id" class="collapse" aria-labelledby="headingOne" data-parent="#accordionTask">
+            <partial name="_TaskHeader" />
+            <partial name="_TaskGenericTab" />
+        </div>
+    </div>
+</div>

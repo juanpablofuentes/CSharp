@@ -1,0 +1,86 @@
+﻿@using Group.Salto.Common.Constants.WorkOrderCategory
+@using Group.Salto.Common.Constants
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.WorkOrderCategory
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.Controls.Table
+@model ResultViewModel<WorkOrderCategoryListViewModel>
+
+@{
+    var title = Html.GetLocalizedText(WorkOrderCategoryConstants.WOCategoryPageTitle);
+    ViewData["Title"] = title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="page-title">@title</h1>
+@{
+    var table = Html.GetMultiSelectTableFor(Model.Data.WorkOrderCategoriesList, au => au.Id, Model.Data.Filters, TranslationHelper.GetTranslationService());
+    table.SetColumns(m => m.Name, m => m.Info, m => m.EstimatedDuration);
+    table.SetSortingColumns(m => m.Name, m => m.Info, m => m.EstimatedDuration);
+    table.ShowSelectColumn = false;
+    table.TableCssClass = "table table-striped table-hover";
+    table.TableHeaderCssClass = "thead-som";
+
+    table.AddColumnTemplateFor(m => m.Id,
+    @<div class="col-update text-right">
+        <a asp-action="Edit" asp-route-id="@item.RawValue" id="@item.RawValue">
+            <i class="fa fa-pencil fa-lg"></i>
+        </a>
+        <a asp-action="Delete" asp-route-id="@item.RawValue" id="@item.RawValue" class="deleteButton"
+           data-toggle="tooltip" data-placement="top">
+            <i class="fa fa-trash-o fa-lg"></i>
+        </a>
+    </div>, "");
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <partial name="_WorkOrderCategoryFilter" model="@Model.Data.Filters" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Data.WorkOrderCategoriesList.Any())
+            {
+                <div class="table-responsive workstation-table">
+                    @table.Render("WorkOrderCategoriesGrid")
+                </div>
+
+                <partial name="_Pager" for="@Model.Data.Filters" />
+            }
+            else
+            {
+                <partial name="_NoRecords" />
+            }
+        </div>
+    </div>
+</div>
+
+<popup Text=""
+       Id="confirmationModalCannotDelete"
+       show-cancel-button="false"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"></popup>
+
+<popup Text="@Html.GetLocalizedText(WorkOrderCategoryConstants.WorkOrderCategoryDeleteMessage)"
+       Id="confirmationModal"
+       submit-button-text="@Html.GetLocalizedText(LocalizationsConstants.Confirm)"
+       cancel-button-text="@Html.GetLocalizedText(LocalizationsConstants.Close)"></popup>
+
+@section scripts {
+    <script src="~/js/Common/config.js"></script>
+    <script src="~/js/Common/constants.js"></script>
+    <script src="~/js/WorkOrderCategories/WorkOrderCategoriesList.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                var urlDelete = "@Url.Action("Delete", "WorkOrderCategory")";
+                app.workOrderCategories.Init(urlDelete);
+                MultiTableScript("WorkOrderCategoriesGrid");
+                var page = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.Filters));
+                pager.PagerSelector.Init({ PageData: page });
+            });
+        })(jQuery);
+    </script>
+}

@@ -1,0 +1,35 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.PurchaseRate
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.PurchaseRate
+
+@model PurchaseRateDetailsViewModel
+
+@Html.HiddenFor(m => m.Id, new { Id = "id" })
+<div class="form-group row">
+    <label class="col-md-3 col-form-label" asp-for="Name"><span asp-localized-key="@PurchaseRateConstants.PurchaseRateGridTheadName"></span><span class="required">*</span></label>
+    <div class="col-md-9">
+        <input type="text" class="form-control" asp-for="Name">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-localized-key="@PurchaseRateConstants.PurchaseRateGridTheadDescription" class="col-md-3 col-form-label" asp-for="Description"></label>
+    <div class="col-md-9">
+        <input asp-for="Description" rows="9" class="form-control">
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-localized-key="@PurchaseRateConstants.PurchaseRateGridTheadErpReference"  class="col-md-3 col-form-label" asp-for="ReferenceErp"></label>
+    <div class="col-md-9">
+        <input asp-for="ReferenceErp" rows="9" class="form-control">
+    </div>
+</div>
+<div class="form-group row text-right">
+    <div class="col-12">
+        <button type="reset" class="btn btn-outline-danger" onclick="location.href = '@Url.Action("Index", "PurchaseRate")'">
+            <span asp-localized-key="ActionsDetailsBtnCancel"></span>
+        </button>
+        <input id="btnSavePurchaseRate" type="submit" class="btn btn-success" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+    </div>
+</div>

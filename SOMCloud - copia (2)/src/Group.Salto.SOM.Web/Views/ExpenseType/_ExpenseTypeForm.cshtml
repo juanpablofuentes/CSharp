@@ -1,0 +1,33 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.ExpenseType
+@using Group.Salto.Common.Constants.Model
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.ExpenseType
+
+@model ExpenseTypeViewModel
+
+<input type="hidden" asp-for="Id" />
+
+<div class="form-group row">
+    <label class="col-12 col-sm-3 col-form-label" asp-for="Type"><span asp-localized-key="@ExpenseTypeConstants.ExpenseTypeGridTheadType"></span><span class="required">*</span></label>
+    <div class="col-12 col-sm-6">
+        <input type="text" class="form-control" asp-for="Type">
+        <span asp-validation-for="Type" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-12 col-sm-3 col-form-label" asp-localized-key="@ExpenseTypeConstants.ExpenseTypeGridTheadUnit" asp-for="Unit"></label>
+    <div class="col-12 col-sm-6">
+        <input asp-for="Unit" rows="9" class="form-control">
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-12 text-right">
+        <hr />
+        <button type="reset" class="btn btn-outline-danger" onclick="location.href ='@Url.Action("Index", "ExpenseType")'">
+            <span asp-localized-key="ActionsDetailsBtnCancel"></span>
+        </button>
+        <input id="btnSaveExpenseType" type="submit" class="btn btn-success" value="@Html.GetLocalizedText(LocalizationsConstants.SaveText)" />
+    </div>
+</div>

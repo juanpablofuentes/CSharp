@@ -1,0 +1,12 @@
+﻿@using Group.Salto.ServiceLibrary.Common.Dtos.Base
+@using Group.Salto.SOM.Web.Extensions
+
+@model BaseNameIdDto<int>
+<div class="row billingrules-row">
+    <div class="col-12 mb-2 mt-2" id="container-billingrules-@Model.Id" data-hasdata="false">
+        <partial model="Model" name="_BillingRule" />
+        <div id="br-rule-add-btn" class="btn btn-sm btn-block btn-outline-secondary bg-white pt-1">
+            <a href="#"><i class="fa fa-plus"></i></a>
+        </div>
+    </div>
+</div>

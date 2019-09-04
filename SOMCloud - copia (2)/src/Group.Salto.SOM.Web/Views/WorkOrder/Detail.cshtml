@@ -1,0 +1,157 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.WorkOrder
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.WorkOrder
+@using Group.Salto.SOM.Web.Models.Result
+@model ResultViewModel<WorkOrderDetailViewModel>
+
+@{
+    var title = @Html.GetLocalizedText(WorkOrderConstants.WorkOrderDetailTitle);
+    ViewData["Title"] = title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row mb-sm-4">
+    <div class="col">
+        <form asp-controller="WorkOrder" asp-action="Detail" method="post" class="form-horizontal">
+            <partial name="_WorkOrderHeaderDetails" model="Model?.Data.GenericDetailViewModel" />
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <form asp-controller="WorkOrder" asp-action="Detail" method="post">
+            <partial name="_WorkOrderDetailTab" model="Model?.Data" />
+        </form>
+    </div>
+</div>
+@section sideBarMenu {
+    <partial name="_WorkOrderDetailSideBarMenu" model="Model?.Data.GenericDetailViewModel.Id" />
+}
+
+@section Modals {
+    <partial name="_SummaryModal" model="Model?.Data.GenericDetailViewModel" />
+    <partial name="_editFormModal" />
+    <partial name="_PerformTaskModal" />
+}
+
+@section Breadcrumb {
+    <partial name="_TaskExecution" />
+}
+
+@section Styles{
+    <link href="~/lib/dhtmlx/suite/codebase/fonts/font_awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/lib/dhtmlx/suite/codebase/dhtmlx.css" rel="stylesheet" />
+    <link href="~/css/grid-custom-style.css" rel="stylesheet" />
+    <link href="~/css/work-orders.css" rel="stylesheet" />
+}
+
+@section scripts {
+    <script src="~/js/Bundle/Commons.js" asp-append-version="true"></script>
+
+    <environment include="Development">
+        <script src="~/js/Common/validations.js"></script>
+        <script src="~/js/Common/contrastColor.js"></script>
+        <script src="~/lib/dhtmlx/suite/sources/dhtmlxCalendar/codebase/dhtmlxcalendar.js"></script>
+        <script src="~/js/WorkOrder/WorkOrderDetail.js"></script>
+        <script src="~/js/WorkOrder/PerformTask.js"></script>
+        <script src="~/js/WorkOrder/PerformTaskForms.js"></script>
+        <script src="~/js/AutocompleteControlFromJson.js"></script>
+        <script src="~/js/AutocompleteControl.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/js/Bundle/WorkOrderDetails.js" asp-append-version="true"></script>
+    </environment>
+
+    <script language="javascript">
+        (function ($) {
+            $(document).ready(function () {
+                var idWo = parseInt('@Model?.Data.GenericDetailViewModel.Id');
+                const performTaskModal = new performTask();
+                const performTaskFormsModal = new performTaskForms();
+
+                    var setting = {
+                        supplantTechnicianList: {
+                            selectControlId: '#inputSupplantTechnician',
+                            withoutButton: false,
+                            placeholder: 'Seleccionar técnico suplente...'
+                        }
+                    };
+                    performTaskModal.Init("#supplantTechnician", setting);
+
+                $('#excecuteTask').on('click', function () {
+                    var container = '#performTaskModal';
+                    var nameAssignationTechnician;
+                    $(container).html('');
+                    $('#perfomTaskTitle').text($('#cmbtask option:selected').text());
+
+                    var url = app.config.Urls.getPerformTaskInfo;
+                    var infoWO = apiCall(app.config.Urls.getSummary, 'GET', 'json', { id: idWo });
+                    var data = {
+                        TaskId: parseInt($('#cmbtask option:selected').val()),
+                        WorkOrderId: idWo,
+                        assignationTechnician: nameAssignationTechnician
+                    };
+
+                    var getTask = apiCall(url, 'GET', 'json', data);
+
+                    infoWO.done(function (doneResult) {
+                        getTask.done(function (jsonData) {
+                            var settingGeneric = {
+                                arrTypes: jsonData,
+                                woId: idWo,
+                                assignationTechnician : doneResult.assignationTechnician
+                            };
+                            var settingServices = {
+                                arrTypes: jsonData.service,
+                                woId: idWo
+                            };
+                            if (jsonData.service !== null) {
+                                //TODO: quitar console.log - walter
+                                console.info(jsonData.service);
+                                $('#perfomTask').children('.modal-dialog').addClass('modal-big');
+                                performTaskFormsModal.Init(container, settingServices);
+                            } else {
+                                $('#perfomTask').children('.modal-dialog').removeClass('modal-big');
+                                performTaskModal.Init(container, settingGeneric);
+                            }
+                        }).fail(function (jqXHR, textStatus) {
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                        });
+                    });
+                })
+
+                var options = {
+                    general: {
+                        id: @Model.Data.GenericDetailViewModel.Id,
+                        assetId: @Model.Data.GenericDetailViewModel.AssetId,
+                        referenceOtherService: @Model.Data.GenericDetailViewModel.ReferenceOtherService.ToString().ToLower(),
+                        generatedService: @Model.Data.GenericDetailViewModel.GeneratedService.ToString().ToLower(),
+                        fatherId: @Model.Data.GenericDetailViewModel.FatherId,
+                        generatedServiceId: @Model.Data.GenericDetailViewModel.GeneratedServiceId,
+                        urlForm: "@Url.Action("Forms", "WorkOrder")",
+                        urlAsset: "@Url.Action("Assets", "WorkOrder")",
+                        urlAssetsWorkOrderServices: "@Url.Action("AssetsWorkOrderServices", "WorkOrder")",
+                        urlNoData: "@Url.Action("NoData", "WorkOrder")",
+                        urlOperations:"@Url.Action("Operations", "WorkOrder")",
+                    },
+                    grid: {
+                        urlDetail: "/WorkOrder/Detail",
+                        urlEdit: "@Url.Action("Edit", "WorkOrder")",
+                        detailText: '@Html.GetLocalizedText(LocalizationsConstants.Detail)',
+                        editText: '@Html.GetLocalizedText(LocalizationsConstants.Edit)'
+                    },
+                    color: {
+                        labelContainerId : "#woHeaderDetails",
+                        containerBgColor: "@Model.Data.GenericDetailViewModel.StatusColor",
+                        defaultClassColor: 'bg-label-detail'
+                    }
+                };
+                app.WorkOrderDetail.Init(options);
+            });
+        })(jQuery);
+    </script>
+}

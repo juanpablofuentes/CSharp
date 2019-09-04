@@ -1,0 +1,29 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Contracts
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Contracts
+@model ContractsFilterViewModel
+<div>
+    <partial model="@Model.FilterHeader" name="_FilterHeader" />
+    <div class="collapse in" id="filterSection">
+        <form asp-action="Filter" asp-controller="Contracts" method="post" id="filter-form" class="form-control">
+            <partial model="Model" name="_PagerHiddens" />
+            <partial model="Model" name="_MultiTableHiddens" />
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class="col-sm-4 col-form-label">
+                        <span asp-localized-key="@ContractsConstants.ContractsListObject"></span>
+                    </label>
+                    <input asp-for="Object" id="ContractsFilterObject" class="form-control input-theme-sm" placeholder="@Html.GetLocalizedText(ContractsConstants.ContractsListObject)" />
+                </div>
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <br>
+                        <button type="button" class="btn btn-outline-danger" id="btnClear" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                        <button id="btnApplyFilter" name="btnApplyFilter" class="btn btn-primary" asp-localized-key="@LocalizationsConstants.ApplyFilter" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

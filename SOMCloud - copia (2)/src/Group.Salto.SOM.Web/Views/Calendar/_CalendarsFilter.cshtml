@@ -1,0 +1,39 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Calendar
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.SOM.Web.Models.Calendar;
+@model CalendarFilterViewModel
+<div>
+    <partial model="@Model.FilterHeader" name="_FilterHeader" />
+    <div class="collapse in" id="filterCalendar">
+        <form asp-action="Filter" asp-controller="Calendar" method="post" id="filter-form" class="form-control">
+            <partial model="Model" name="_PagerHiddens" />
+            <partial model="Model" name="_MultiTableHiddens" />
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class="col-sm-4 col-form-label">
+                        <span asp-localized-key="@CalendarsConstants.CalendarFilterName"></span>
+                    </label>
+                    <input asp-for="Name" id="CalendarFilterName"
+                           class="form-control input-theme-sm"
+                           placeholder="@Html.GetLocalizedText(CalendarsConstants.CalendarFilterNamePlaceHolder)" />
+                </div>
+                <div class="col-lg-4">
+                    <label class="col-sm-4 col-form-label">
+                        <span asp-localized-key="@CalendarsConstants.CalendarFilterDescription"></span>
+                    </label>
+                    <input asp-for="Description" id="CalendarFilterDescription"
+                           class="form-control input-theme-sm"
+                           placeholder="@Html.GetLocalizedText(CalendarsConstants.CalendarFilterDescriptionPlaceHolder)" />
+                </div>
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <br>
+                        <button type="button" class="btn btn-outline-danger" id="btnClear" asp-localized-key="@LocalizationsConstants.ClearFilter" />
+                        <button id="btnCalendarApplyFilter" name="btnCalendarApplyFilter" class="btn btn-primary" asp-localized-key="@LocalizationsConstants.ApplyFilter" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

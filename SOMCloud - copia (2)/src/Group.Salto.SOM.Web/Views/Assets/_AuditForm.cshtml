@@ -1,0 +1,59 @@
+﻿@using Group.Salto.Common.Constants
+@using Group.Salto.Common.Constants.Assets
+@using Group.Salto.SOM.Web.Models.AssetsAudit
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.ServiceLibrary.Helpers
+@using Group.Salto.Controls.Table
+@model List<AssetsAuditViewModel>
+
+<div class="row">
+    <div class="col-12">
+        @if (Model.Count > 0)
+        {
+            <div class="table-responsive">
+                <table id="timeTable" class="table table-stripped">
+                    <thead class="thead-som">
+                        <tr>
+                            <th asp-localized-key="@AssetsConstants.AssetsAuditDate"></th>
+                            <th asp-localized-key="@AssetsConstants.AssetsAuditUser"></th>
+                            <th asp-localized-key="@AssetsConstants.AssetsAuditType"></th>
+                            <th asp-localized-key="@AssetsConstants.AssetsAuditOldValue"></th>
+                            <th asp-localized-key="@AssetsConstants.AssetsAuditNewValue"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var audit in Model)
+                        {
+                            var changecount = audit.Changes?.Count;
+                            foreach (var change in audit.Changes)
+                            {
+                                if (change == audit.Changes?.First())
+                                {
+                                <tr>
+                                    <td rowspan="@changecount"><span>@audit.Registry</span></td>
+                                    <th rowspan="@changecount"><span>@audit.UserName</span></th>
+                                    <td><span asp-localized-key="@audit.Changes?.First().Property"></span></td>
+                                    <td><span>@audit.Changes?.First().OldValue</span></td>
+                                    <td><span>@audit.Changes?.First().NewValue</span></td>
+                                </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td><span asp-localized-key="@change.Property"></span></td>
+                                        <td><span>@change.NewValue</span></td>
+                                        <td><span>@change.OldValue</span></td>
+                                    </tr>
+                                }
+                            }
+                         }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <partial name="_NoRecords" />
+        }
+    </div>
+</div>

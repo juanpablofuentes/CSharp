@@ -1,0 +1,42 @@
+﻿@using Group.Salto.SOM.Web.Models.PointRate;
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Extensions;
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Constants.PointRate;
+@using Group.Salto.Common.Enums;
+
+@model ResultViewModel<PointRateViewModel>
+
+@{
+    ViewData["Title"] = @Html.GetLocalizedText(PointRateConstants.PointRateDetailsTitle);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-6">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2 asp-localized-key="@PointRateConstants.PointRateDetailsTitle">Point Rate Details</h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="PointRate" asp-action="Update" method="post" class="form-horizontal">
+                    <partial name="_PointRateForm" for="Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/Common/authorization.js"></script>
+
+    <script>
+        (function($) {
+            $(document).ready(function() {
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.PointRates, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSavePointRate", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

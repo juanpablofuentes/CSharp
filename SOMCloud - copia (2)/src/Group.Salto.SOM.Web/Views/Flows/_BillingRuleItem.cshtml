@@ -1,0 +1,22 @@
+﻿@using Group.Salto.ServiceLibrary.Common.Dtos.Base
+@using Group.Salto.Common.Constants.Flows
+@using Group.Salto.SOM.Web.Extensions
+
+@model BaseNameIdDto<int>
+
+<div class="row mb-2" id="t-@Model.Id-BillingRuleItem">
+    <div class="col-12 conditions">
+        <div class="form-group row pt-2 pb-2 m-0">
+            <div class="col p-0" id="t-@Model.Id-RuleItem-Edit">
+                <div class="font-weight-bold"><span asp-localized-key="@FlowsConstants.FlowsBillingRuleItemName"></span></div>
+                <div id="t-@Model.Id-BRI-Name"></div>
+                <div class="collaps-icons float-right d-flex align-items-center text-right">
+                    <a  id="bri-item-edit-@Model.Id" href="#" class="mr-2"><i class="fa fa-pencil"></i></a>
+                    <a  id="bri-item-delete-@Model.Id" href="#"><i class="fa fa-trash-o"></i></a>
+                </div>
+                <div class="font-weight-bold"><span asp-localized-key="@FlowsConstants.FlowsBillingRuleItemUnits"></span></div>
+                <div class="col-10 pl-0" id="t-@Model.Id-BRI-Units"></div>
+            </div>
+        </div>
+    </div>        
+</div>

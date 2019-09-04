@@ -1,0 +1,60 @@
+﻿@using Group.Salto.SOM.Web.Models.AssetStatuses;
+@using Group.Salto.SOM.Web.Models.Result;
+@using Group.Salto.SOM.Web.Extensions;
+@using Group.Salto.Common.Constants;
+@using Group.Salto.Common.Constants.AssetStatuses;
+@using Group.Salto.Common.Enums;
+
+@model ResultViewModel<AssetStatusesViewModel>
+
+@{
+    ViewData["Title"] = @Html.GetLocalizedText(AssetStatusesConstants.AssetStatusesDetailsTitle);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var claimUserConfigurationId = ((System.Security.Claims.ClaimsIdentity)User.Identity).GetSpecificClaim(AppIdentityClaims.UserId);
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-6">
+        <div class="card card-accent-warning">
+            <div class="card-header">
+                <h2><span asp-localized-key="AssetStatusesDetailsTitle"></span>&nbsp;<small class="text-muted">#@Model.Data.Id</small></h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="AssetStatuses" asp-action="Edit" method="post" class="form-horizontal">
+                    <partial name="_AssetStatusesForm" model="Model?.Data" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/Bundle/bundle--colorPicker.js"></script>
+    <script src="~/js/Common/colorPickerContrast.js"></script>
+    <script src="~/js/Common/authorization.js"></script>
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                var initialColor = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Data?.Color));
+                var options = {
+                    btnSelect : '@Html.GetLocalizedText(LocalizationsConstants.Select)',
+                    btnCancel: '@Html.GetLocalizedText(LocalizationsConstants.CancelText)',
+                    color: initialColor,
+                    parent: app.calendar.constants.ColorPickerParent,
+                    skin: app.calendar.constants.ColorPickerSkin,
+                    input: app.calendar.constants.ColorPickerInput,
+                }
+                app.colorPicker.Init(options);
+
+                app.colorPickerContrast.Init(
+                    {
+                        idContent: "colorPickerInput",
+                        bgColor: initialColor,
+                        colorTxt: $('#' + idContent).css('color')
+                    });
+
+                var saveEdit = @Html.CanDoAction(claimUserConfigurationId, ActionGroupEnum.AssetStatus, ActionEnum.Update).ToString().ToLower();
+                app.common.authorization.disable("btnSaveAssetStatuses", saveEdit);
+            });
+        })(jQuery);
+    </script>
+}

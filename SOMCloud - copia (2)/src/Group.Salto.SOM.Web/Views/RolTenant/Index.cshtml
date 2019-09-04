@@ -1,0 +1,69 @@
+﻿@using Group.Salto.SOM.Web.Models.RolTenant
+@using Group.Salto.SOM.Web.Models.Result
+@using Group.Salto.SOM.Web.Extensions
+@using Group.Salto.Common.Constants.RolTenant
+@using Group.Salto.Controls.Table
+@using Group.Salto.ServiceLibrary.Helpers
+
+@model ResultViewModel<RolTenantListViewModel>
+
+@{
+    var title = @Html.GetLocalizedText(RolTenantConstants.RolTenantPageTitle);
+    ViewData["Title"] = title;
+}
+
+<h1 class="page-title">@title</h1>
+@{
+    var table = Html.GetMultiSelectTableFor(Model.Data.RolesTenant, au => au.Id, Model.Data.RolTenantFilters, TranslationHelper.GetTranslationService());
+    table.SetColumns(m => m.Name, m => m.Description);
+    table.SetSortingColumns(m => m.Name, m => m.Description);
+    table.ShowSelectColumn = false;
+    table.TableCssClass = "table table-striped table-hover";
+    table.TableHeaderCssClass = "thead-som";
+
+    table.AddColumnTemplateFor(m => m.Id,
+    @<div class="col-update text-right">
+        <a asp-action="Edit" asp-route-id="@item.RawValue" id="@item.RawValue">
+            <i class="fa fa-pencil fa-lg"></i>
+        </a>
+    </div>, "");
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <partial name="_RolTenantFilter" model="@Model.Data.RolTenantFilters" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Data.RolesTenant.Any())
+            {
+                <div class="table-responsive workstation-table" id="multigridContainerId">
+                    @table.Render("RolTenantGrid")
+                </div>
+                <partial name="_Pager" for="@Model.Data.RolTenantFilters" />
+            }
+            else
+            {
+                <partial name="_NoRecords" />
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/RolTenant/RolTenant.js"></script>
+
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                app.roltenant.Init();
+                MultiTableScript("RolTenantGrid");
+                var page = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.RolTenantFilters));
+                pager.PagerSelector.Init({ PageData: page });
+            });
+        })(jQuery);
+    </script>
+}
