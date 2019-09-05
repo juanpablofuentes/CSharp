@@ -1,1 +1,0 @@
-﻿///<binding BeforeBuild='wwwroot/css/bundle.css, wwwroot/js/bundle.js' AfterBuild='wwwroot/js/bundle.js' />
