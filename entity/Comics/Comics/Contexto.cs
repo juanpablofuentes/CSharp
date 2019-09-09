@@ -5,15 +5,17 @@ using System.Text;
 
 namespace Comics
 {
-    class Contexto:DbContext
+   public class Contexto:DbContext
     {
         public Contexto()
         {
+          
         }
 
         public Contexto(DbContextOptions<Contexto> options)
             : base(options)
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
 
         public virtual DbSet<Comic> Comic { get; set; }
@@ -26,6 +28,7 @@ namespace Comics
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=comics;Trusted_Connection=True;");
+
             }
         }
     }

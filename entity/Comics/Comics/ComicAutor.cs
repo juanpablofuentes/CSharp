@@ -11,5 +11,6 @@ namespace Comics
         public Autor Autor { get; set; }
         public int ComicId { get; set; }
         public Comic Comic { get; set; }
+        public string Rol { get; set; }
     }
 }
