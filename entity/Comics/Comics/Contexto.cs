@@ -15,7 +15,7 @@ namespace Comics
         public Contexto(DbContextOptions<Contexto> options)
             : base(options)
         {
-            this.Configuration.LazyLoadingEnabled = false;
+          
         }
 
         public virtual DbSet<Comic> Comic { get; set; }

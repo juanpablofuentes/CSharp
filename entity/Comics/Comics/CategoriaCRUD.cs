@@ -65,10 +65,10 @@ namespace Comics
         {
             try
             {
-                Console.WriteLine("id\t\tNombre\t\t\tDescripción");
+                Console.WriteLine("id\tNombre\t\t\tDescripción");
                 foreach (Categoria cat in _contexto.Categoria)
                 {
-                    Console.WriteLine($"{cat.Id}\t\t{cat.Nombre}\t\t\t{cat.Descripcion}");
+                    Console.WriteLine($"{cat.Id}\t{cat.Nombre,-50}\t{cat.Descripcion}");
                 }
                 return true;
             }

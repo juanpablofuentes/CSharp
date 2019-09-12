@@ -33,6 +33,7 @@ namespace Comics
                             break;
                     }
                     //Entidad= (CRUD) Activator.CreateInstance(Type.GetType("CategoriaCRUD"), contexto);
+                    
                     MethodInfo mi = Entidad.GetType().GetMethod(methods[accion-1]);
                     mi.Invoke(Entidad, null);
                     
