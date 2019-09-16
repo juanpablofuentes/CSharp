@@ -12,9 +12,10 @@ namespace Asincrono
         {
             DoSynchronousWork();
             var someTask = DoSomethingAsync();
-            DoSynchronousWorkAfterAwait();
-            someTask.Wait(); 
-            
+            var foo=callArbol();
+            Console.WriteLine("Fin árbol");
+            someTask.Wait();
+            Console.WriteLine("Se acabó");
         }
         public static void DoSynchronousWork()
         {
@@ -39,8 +40,11 @@ namespace Asincrono
                 Console.WriteLine($"6. {result.Length} caracteres");
             }
         }
-
-        static void DoSynchronousWorkAfterAwait()
+        static async Task callArbol()
+        {
+            await DoSynchronousWorkAfterAwait();
+        }
+        static async Task DoSynchronousWorkAfterAwait()
         {
              Console.WriteLine("7. Mientras esperamos se pueden hacer otras cosas...");
             for (var i = 0; i <= 5; i++)
