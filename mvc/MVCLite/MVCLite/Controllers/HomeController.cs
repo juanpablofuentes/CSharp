@@ -12,7 +12,7 @@ namespace MVCLite.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View("Saludo");
         }
 
         public IActionResult About()
@@ -45,6 +45,8 @@ namespace MVCLite.Controllers
             ViewBag.nombre = nombre;
             ViewBag.apellidos = apellidos;
             ViewData["saludo"] = "Hey bro!";
+            IList<string> alumnos = new List<string> { "Pep", "Iu", "Jan", "Ot" };
+            ViewBag.alumnos = alumnos;
             return View();
         }
     }
