@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "Saludo";
+}
+
+<h2>Saludo</h2>
+<p>@ViewData["saludo"] @ViewBag.nombre @ViewBag.apellidos @@que tal estas yo estoy muy bien. Soy feliz porque te voy a quitar el trabajo</p>
+<h1>MUAUAUAUAUAUAUAU</h1>
+
+@{ 
+    int a = 11;
+    string nombre = "Juan";
+    IList<string> alumnos = new List<string> { "Ana", "Eva", "Rosa", "Juan" };
+}
+
+@for(int i = 0; i < a; i++)
+{
+    <p>@nombre</p>
+}
+
+@if (a % 2 == 0)
+{
+    <p>Es par</p>
+}
+else
+{
+    <h3>@a  es impar</h3>
+}
+<ul>
+    @foreach (string alumno in alumnos)
+    {
+        <li>@alumno</li>
+    }
+</ul>

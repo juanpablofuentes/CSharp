@@ -8,6 +8,7 @@ namespace ContarAsincrono
     {
         private static string[] URL = new string[] { "https://docs.microsoft.com/", "http://trifulcas.com",
                             "https://amazon.es","https://elpais.com"};
+        private static int totalChar = 0;
 
         static void Main(string[] args)
         {
@@ -19,6 +20,7 @@ namespace ContarAsincrono
 
 
             Task.WaitAll(tareas);
+            Console.WriteLine("Total de letras: "+totalChar);
         }
         
         static async Task DoSomethingAsync(String url)
@@ -34,6 +36,7 @@ namespace ContarAsincrono
                 
                 Console.Write($"La url {url} tiene ");
                 Console.WriteLine($" {result.Length} caracteres");
+                totalChar += result.Length;
             }
         }
         
