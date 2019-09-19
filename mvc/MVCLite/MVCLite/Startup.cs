@@ -54,9 +54,14 @@ namespace MVCLite
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute("Atajo",
+                  "Atajo/", new { controller = "Rutas",action="Index" });
+                routes.MapRoute("TablaLado",
+                "Tabla/{lado}", new { controller = "Rutas", action = "Tabla" });
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+              
             });
         }
     }

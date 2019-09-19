@@ -12,7 +12,7 @@ namespace MVCLite.Controllers
     {
         public IActionResult Index()
         {
-            return View("Saludo");
+            return View();
         }
 
         public IActionResult About()
