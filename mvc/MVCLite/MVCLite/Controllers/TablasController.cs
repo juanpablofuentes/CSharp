@@ -24,6 +24,25 @@ namespace MVCLite.Controllers
             ViewBag.lado = lado;
             return View("Global");
         }
+        [Route("/diamante/{lado}")]
+        public IActionResult Diamante(int lado)
+        {
+            int[,] tabla = new int[lado, lado];
+            for (int i = 0; i < lado/2+ lado % 2; i++)
+            {
+                for (int j = 0; j < lado/2+lado%2; j++)
+                {
+                   
+                    tabla[ i, j] = i +j+ 1;
+                    tabla[i,lado-j-1]= i + j + 1;
+                    tabla[lado-i-1, j] = i + j + 1;
+                    tabla[lado - i - 1, lado - j - 1] = i + j + 1;
+                }
+            }
+            ViewBag.tabla = tabla;
+            ViewBag.lado = lado;
+            return View("Global");
+        }
         [Route("/random/{lado}")]
         public IActionResult Random(int lado)
         {
