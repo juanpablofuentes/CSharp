@@ -1,0 +1,60 @@
+﻿@model MVCComics.Autor
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Autor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nacionalidad)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nacionalidad)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AnyNacimiento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AnyNacimiento)
+        </dd>
+    </dl>
+</div>
+<div>
+    <h4>Comics</h4>
+    <hr />
+    @foreach (var c in Model.ComicAutor)
+    {
+        <p>@c.Comic.Titulo (@c.Rol)</p>
+    }
+    <hr />
+</div>
+<form asp-action="AddComic"  asp-route-id="@Model.Id" method="post">
+   
+    <div class="form-group">
+        <label class="control-label">Comic:</label>
+        <select name="ComicId" class="form-control" asp-items="ViewBag.ComicId"></select>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Rol:</label>
+        <input type="text" name="Rol" class="form-control">
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Añadir" class="btn btn-default" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Volver al índice</a>
+</div>

@@ -1,0 +1,39 @@
+﻿@model MVCComics.Autor
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Autor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nacionalidad)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nacionalidad)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AnyNacimiento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AnyNacimiento)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-default" /> |
+        <a asp-action="Index">Volver al índice</a>
+    </form>
+</div>
