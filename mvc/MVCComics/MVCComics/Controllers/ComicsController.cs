@@ -36,7 +36,7 @@ namespace MVCComics.Controllers
             var comic = await _context.Comic
                 .Include(c => c.Categoria)
                 .Include(c=>c.ComicAutor)
-                .ThenInclude(ComicAutor=>ComicAutor.Autor)
+                .ThenInclude(ca=>ca.Autor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             ViewData["AutorId"] = new SelectList(_context.Autor, "Id", "Nombre");
 
@@ -84,7 +84,7 @@ namespace MVCComics.Controllers
 
             try
             {
-                _context.Update(comicautor);
+                _context.ComicAutor.Add(comicautor);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

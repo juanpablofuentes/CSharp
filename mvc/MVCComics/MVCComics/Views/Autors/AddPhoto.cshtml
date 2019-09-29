@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Autor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddPhoto" asp-route-id="@ViewBag.Id" method="post" enctype = "multipart/form-data">
+
+           
+            <div class="form-group">
+                <label class="control-label">Foto:</label>
+                <input type="file" name="Photo" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Añadir" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver al índice</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

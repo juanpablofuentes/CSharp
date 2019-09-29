@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +34,7 @@ namespace MVCComics.Controllers
                 return NotFound();
             }
 
-            var autor = await _context.Autor.Include(Autor=> Autor.ComicAutor)
+            var autor = await _context.Autor.Include(Autor => Autor.ComicAutor)
                 .ThenInclude(ComicAutor => ComicAutor.Comic)
                 .FirstOrDefaultAsync(m => m.Id == id);
             ViewData["ComicId"] = new SelectList(_context.Comic, "Id", "Titulo");
@@ -117,6 +119,30 @@ namespace MVCComics.Controllers
             return View(autor);
         }
 
+        public ActionResult AddPhoto(int id)
+        {
+            ViewBag.id = id;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddPhoto(int id, IFormFile Photo)
+        {
+           if (Photo != null && Photo.Length > 0)
+            {
+               
+                var fileName = id+".jpg";
+                
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images", fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    Photo.CopyTo(fileStream);
+                }
+             
+            }
+            return RedirectToAction("Details", new { Id = id }); 
+        }
         // POST: Autors/AddComic/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -126,20 +152,20 @@ namespace MVCComics.Controllers
         {
             comicautor.AutorId = id;
 
-           
-                try
-                {
-                    _context.Update(comicautor);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                  
-                        throw;
-                    
-                }
-                return RedirectToAction("Details",new { Id = id });
-            
+
+            try
+            {
+                _context.Update(comicautor);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
+                throw;
+
+            }
+            return RedirectToAction("Details", new { Id = id });
+
         }
 
         // GET: Autors/Delete/5
