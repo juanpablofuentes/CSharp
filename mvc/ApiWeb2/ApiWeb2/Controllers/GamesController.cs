@@ -5,65 +5,62 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MVCLite.Models;
+using ApiWeb2.Models;
 
-namespace APIWeb.Controllers
+namespace ApiWeb2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AlumnoesController : ControllerBase
+    public class GamesController : ControllerBase
     {
         private readonly Contexto _context;
 
-        public AlumnoesController(Contexto context)
+        public GamesController(Contexto context)
         {
             _context = context;
         }
 
-        // GET: api/Alumnoes
+        // GET: api/Games
         [HttpGet]
-        public IEnumerable<Alumno> GetAlumnos()
+        public IEnumerable<Game> GetGames()
         {
-            return _context.Alumnos;
+            return _context.Games.Include(c=>c.Category);
         }
 
-        // GET: api/Alumnoes/5
+        // GET: api/Games/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAlumno([FromRoute] int id)
+        public async Task<IActionResult> GetGame([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var alumno = await _context.Alumnos.FindAsync(id);
+            var game = await _context.Games.FindAsync(id);
 
-            if (alumno == null)
+            if (game == null)
             {
                 return NotFound();
             }
 
-            return Ok(alumno);
+            return Ok(game);
         }
 
-        // PUT: api/Alumnoes/5
+        // PUT: api/Games/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAlumno([FromRoute] int id, [FromBody] Alumno alumno)
+        public async Task<IActionResult> PutGame([FromRoute] int id, [FromBody] Game game)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-          
-            var mialumno = await _context.Alumnos.FindAsync(id);
-            if (mialumno == null)
-            {
-                return NotFound();
-            }
-            mialumno.Nombre = alumno.Nombre;
-            mialumno.Nota = alumno.Nota;
 
-            _context.Entry(mialumno).State = EntityState.Modified;
+            if (id != game.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(game).State = EntityState.Modified;
 
             try
             {
@@ -71,7 +68,7 @@ namespace APIWeb.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AlumnoExists(id))
+                if (!GameExists(id))
                 {
                     return NotFound();
                 }
@@ -81,48 +78,48 @@ namespace APIWeb.Controllers
                 }
             }
 
-            return Ok(mialumno);
+            return NoContent();
         }
 
-        // POST: api/Alumnoes
+        // POST: api/Games
         [HttpPost]
-        public async Task<IActionResult> PostAlumno([FromBody] Alumno alumno)
+        public async Task<IActionResult> PostGame([FromBody] Game game)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Alumnos.Add(alumno);
+            _context.Games.Add(game);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAlumno", new { id = alumno.Id }, alumno);
+            return CreatedAtAction("GetGame", new { id = game.Id }, game);
         }
 
-        // DELETE: api/Alumnoes/5
+        // DELETE: api/Games/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAlumno([FromRoute] int id)
+        public async Task<IActionResult> DeleteGame([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var alumno = await _context.Alumnos.FindAsync(id);
-            if (alumno == null)
+            var game = await _context.Games.FindAsync(id);
+            if (game == null)
             {
                 return NotFound();
             }
 
-            _context.Alumnos.Remove(alumno);
+            _context.Games.Remove(game);
             await _context.SaveChangesAsync();
 
-            return Ok(alumno);
+            return Ok(game);
         }
 
-        private bool AlumnoExists(int id)
+        private bool GameExists(int id)
         {
-            return _context.Alumnos.Any(e => e.Id == id);
+            return _context.Games.Any(e => e.Id == id);
         }
     }
 }

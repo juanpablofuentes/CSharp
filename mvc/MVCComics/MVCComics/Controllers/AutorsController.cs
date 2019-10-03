@@ -38,7 +38,13 @@ namespace MVCComics.Controllers
                 .ThenInclude(ComicAutor => ComicAutor.Comic)
                 .FirstOrDefaultAsync(m => m.Id == id);
             ViewData["ComicId"] = new SelectList(_context.Comic, "Id", "Titulo");
-            if (autor == null)
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images", id+".jpg");
+            ViewBag.image = "0.jpg";
+            if (System.IO.File.Exists(filePath))
+            {
+                ViewBag.image = id + ".jpg";
+            } 
+                if (autor == null)
             {
                 return NotFound();
             }
@@ -129,7 +135,7 @@ namespace MVCComics.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddPhoto(int id, IFormFile Photo)
         {
-           if (Photo != null && Photo.Length > 0)
+           if (Photo != null && Photo.Length > 0 &&  Photo.ContentType.Contains("image"))
             {
                
                 var fileName = id+".jpg";
