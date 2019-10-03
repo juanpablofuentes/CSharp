@@ -32,6 +32,13 @@ namespace ApiWeb2.Controllers
                            NumJuegos = c.Games.Count
         };
             return cats;
+            //Otra manera old school
+            IList<CategoryDTO> lista = new List<CategoryDTO>();
+            foreach(var cat in _context.Categories.Include(c => c.Games))
+            {
+                lista.Add(new CategoryDTO() { Nombre = cat.Nombre, NumJuegos = cat.Games.Count });
+            }
+            return lista;
         }
 
 
