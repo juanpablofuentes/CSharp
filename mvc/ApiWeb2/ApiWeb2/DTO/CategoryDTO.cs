@@ -7,6 +7,7 @@ namespace ApiWeb2.DTO
 {
     public class CategoryDTO
     {
+        public int Id { get; set; }
         public String Nombre { get; set; }
         public int NumJuegos { get; set; }
     }

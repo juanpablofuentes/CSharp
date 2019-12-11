@@ -28,6 +28,7 @@ namespace ApiWeb2.Controllers
             var cats = from c in _context.Categories.Include(c=>c.Games)
                        select new CategoryDTO()
                        {
+                           Id=c.Id,
                            Nombre = c.Nombre,
                            NumJuegos = c.Games.Count
         };
@@ -64,7 +65,7 @@ namespace ApiWeb2.Controllers
                 return NotFound();
             }
 
-            CategoryDTO catDTO = new CategoryDTO { Nombre = category.Nombre, NumJuegos =games.Count };
+            CategoryDTO catDTO = new CategoryDTO {Id=category.Id,Nombre = category.Nombre, NumJuegos =games.Count };
 
             return Ok(catDTO);
         }
